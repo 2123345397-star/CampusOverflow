@@ -1,6 +1,6 @@
-# Hello，我是 durandal
+# Hello，我是 qing963666
 
-- **GitHub**：`durandal`
+- **GitHub**：`qing963666`
 - **团队角色**：Developer
 - **本学期目标**：熟悉 DDD 分层与团队协作流程，按 Sprint 完成分配到的开发任务。
 - **协作约定**：不直接推 main；每个任务走 feature 分支 + PR 评审；勤拉取、小步提交。
