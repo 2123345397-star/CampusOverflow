@@ -19,6 +19,10 @@
 | US004 | As a 在校学生, I want 提交回答, So that 我可以回复别人的提问 | P0 |  | Sprint1 |
 
 | US005 | As a 在校学生, I want 给回答点赞, So that 我可以标记优质回答 | P1 |  | Sprint1 |
+| US005 | As a 在校学生, I want 给回答点赞, So that 我可以标记优质回答 | P1 | Sprint1 |
+| US006 | As a 在校学生, I want 收藏问题, So that 我可以快速找到感兴趣的问题 | P1 | Sprint1 |
+| US007 | As a 在校学生, I want 通过标签筛选问题, So that 我可以找到对应主题内容 | P1 | Sprint1 |
+| US008 | As a 提问学生, I want 采纳满意回答, So that 标记问题已经解决 | P1 | Sprint1 |
 
 
 
