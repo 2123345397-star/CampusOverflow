@@ -1,0 +1,10 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: campus-overflow
+  datasource:
+    url: jdbc:mysql://localhost:3306/campus_overflow?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
