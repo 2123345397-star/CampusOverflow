@@ -14,18 +14,30 @@
 - 默认分支：`develop`（集成分支；`main` 为发布分支）
 - 成员：5 人均已参与分支推送与 PR 协作
 - 分支保护：已配置，截图见 [`screenshots/branch-protection.png`](screenshots/branch-protection.png)
+  （截图为规则列表页，仅证明 `main`、`develop` 存在保护规则；规则内容以 2026-10-28 的 API 核验结果为准）
 
-分支保护规则（按 V3 要求配置）：
+分支保护规则（2026-10-28 通过 GitHub API 核验）：
 
-| 分支 | 规则 | 配置 |
+| 分支 | 规则 | 实际配置 |
 | --- | --- | --- |
-| `main` | PR 审批人数 | ≥ 2 个 Approve（其中至少 1 名 SM/PO） |
-| `main` | 禁止绕过 | ✅ 不允许 bypass |
+| `main` | PR 审批人数 | ≥ 2 个 Approve；“至少 1 名 SM/PO”为团队约定，GitHub 无法按角色强制 |
+| `main` | 禁止绕过 | ✅ Enforce for administrators 已开启 |
 | `main` | 直推 | ❌ 禁止，必须走 PR |
-| `develop` | PR 审批人数 | ≥ 1 个 Approve，且不能由作者本人批准 |
+| `main` | 强推 / 删除分支 | ❌ 均禁止 |
+| `main` | 必需状态检查（CI） | 未启用；CI 结果作为参考，不阻断合并 |
+| `develop` | PR 审批人数 | ≥ 1 个 Approve，且作者不能批准自己的 PR |
 | `develop` | 直推 | ❌ 禁止，必须走 PR |
+| `develop` | 强推 / 删除分支 | ❌ 均禁止 |
+| `develop` | 管理员绕过 | 允许（Enforce for administrators 未开启） |
+| `develop` | 必需状态检查（CI） | 未启用；CI 结果作为参考，不阻断合并 |
+| 两分支 | 新提交使旧 Approve 失效 | ✅ Dismiss stale approvals 已开启 |
+| 两分支 | 合并前必须解决会话 | ✅ 已开启 |
 
 设置入口：仓库 **Settings → Branches → Branch protection rules**（新版为 **Rules → Rulesets**）。
+当前仓库没有 Ruleset，仅使用经典分支保护规则。
+
+**核验方式**：2026-10-28 调用 GitHub API `GET /repos/{owner}/{repo}/branches/{branch}/protection`
+读取 `main`、`develop` 的实际配置，上表据此整理。
 
 **生效验证**：直接向受保护分支推送会被拒绝，返回
 `GH006: Protected branch update failed ... Changes must be made through a pull request.`
@@ -76,7 +88,7 @@
 
 | # | 提交物 | 路径 | 状态 | 负责人 |
 | --- | --- | --- | --- | --- |
-| 1 | 仓库 URL + 分支保护 | 本页第 1 节 + `screenshots/branch-protection.png` | ✅ 已配置并截图 | 刘俊琒 |
+| 1 | 仓库 URL + 分支保护 | 本页第 1 节（含 2026-10-28 API 核验表）+ `screenshots/branch-protection.png` | ✅ 已配置并核验 | 刘俊琒 |
 | 2 | 看板截图 | `lab1-board.png` | ✅ | 陈明哲 |
 | 3 | 团队章程 v1.0 | `docs/team/charter-v1.0.md` | ✅ 已合并 | 魏志国 |
 | 4 | 角色承诺书 | `docs/team/role-commitment.md` | ✅ 已补全 | 陈明哲 |
@@ -108,7 +120,7 @@ git ls-files | grep -E '(^|/)\.env$|node_modules/|/target/|/dist/'
 - [x] 章程经 PR #6 合并，评审含 Approve
 - [x] 角色承诺书内容已补全
 - [x] 看板截图 `lab1-board.png` 已就位
-- [x] 分支保护截图 `screenshots/branch-protection.png` 已就位
+- [x] 分支保护截图 `screenshots/branch-protection.png` 已就位（规则列表页；规则内容见第 1 节 API 核验表）
 - [x] 每位成员的 PR 合并截图：5 张齐全
 
 ---
@@ -119,10 +131,21 @@ git ls-files | grep -E '(^|/)\.env$|node_modules/|/target/|/dist/'
 
 1. 仓库地址更新为组织仓库 `hbuas-se-2026fall/cs2412-team04-campus-overflow`
 2. 默认分支更正为 `develop`（`main` 为发布分支）
-3. 分支保护规则按 V3 更新：`main` ≥2 Approve（含 SM/PO）、`develop` ≥1 非作者 Approve、不允许绕过
+3. 分支保护规则按 V3 更新：`main` ≥2 Approve（“含 SM/PO”为约定项）、`develop` ≥1 非作者 Approve、不允许绕过
 4. 分支保护截图路径为 `screenshots/branch-protection.png`
 5. 青岑 PR 截图文件名更正为 `pr-qingcen.png`
 6. 删除“角色承诺书（内容待补全）”等过期表述
+
+---
+
+## 2026-10-28 修订记录
+
+针对评审反馈（分支保护截图在，但 Settings 规则未确认）：
+
+1. 通过 GitHub API 核验 `main`、`develop` 的实际保护配置，更新第 1 节规则表；
+2. 明确“至少 1 名 SM/PO”为团队约定——GitHub 无法按角色强制审批（Code Owner 审批未开启）；
+3. 明确两个分支均未启用“必需状态检查（CI）”：团队决定不开启 CI 门禁，CI 结果仅作参考、不阻断合并；
+4. 原截图仅包含规则列表，不能单独证明规则内容，第 1 节已补充核验方式与核验日期。
 
 ---
 
