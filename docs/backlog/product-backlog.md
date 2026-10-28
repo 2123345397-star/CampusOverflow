@@ -1,50 +1,37 @@
 # Product Backlog 产品待办列表
+项目：CampusOverflow 校园问答平台
+范围：Sprint0 启动 + Sprint1 问答核心
 
-> 项目：CampusOverflow 校园问答平台　迭代：Sprint 1
-> 编号规则：统一使用 `US-<两位数字>`，与 `docs/backlog/stories/` 下的 `.feature` 文件名一一对应。
+| ID    | 用户故事 | 优先级 | SP | 归属迭代 |
+| ----- | -------- | ------ | -- | -------- |
+| PB-01 | 搭建团队私有仓库、配置受保护分支与CI看板 | Must | 3 | Sprint0 |
+| PB-02 | 本地环境一键启动MySQL/Redis、前后端跑通 | Must | 2 | Sprint0 |
+| PB-03 | 完成DDD事件风暴、产出统一语言与上下文映射 | Must | 3 | Sprint0 |
+| PB-04 | 配置渐进式CI质量门禁流水线 | Must | 2 | Sprint0 |
+| PB-05 | 完成注册、登录、加入课程基础身份流程 | Must | 3 | Sprint0 |
+| PB-06 | 学生发布带标签、关联课程的求助问题 | Must | 5 | Sprint1 |
+| PB-07 | 用户分页浏览公开问题列表 | Must | 3 | Sprint1 |
+| PB-08 | 用户查看问题详情（含回答、评论、投票状态） | Must | 5 | Sprint1 |
+| PB-09 | 学生对未删除问题提交回答 | Must | 3 | Sprint1 |
+| PB-10 | 提问者/课程管理者采纳最佳答案标记问题已解决 | Must | 5 | Sprint1 |
+| PB-11 | 用户对问题/回答投票、改投、撤销 | Must | 5 | Sprint1 |
+| PB-12 | 作者/课程管理者编辑问题和回答内容 | Should | 3 | Sprint1 |
+| PB-13 | 作者/课程管理者软删除问题和回答 | Should | 3 | Sprint1 |
+| PB-15 | 用户对问题/回答发表一层评论回复 | Must | 3 | Sprint1 |
 
-| ID | 用户故事（As a / I want / So that） | 优先级 | SP | 迭代 | 验收标准 |
-| --- | --- | --- | --- | --- | --- |
-| US-01 | As a 未注册用户, I want 注册账号, So that 我可以提问和浏览内容 | P0 | 3 | Sprint 1 | `US-01.feature` |
-| US-02 | As a 在校学生, I want 发布问答问题, So that 我可以在平台提问寻求解答 | P0 | 5 | Sprint 1 | `US-02.feature` |
-| US-03 | As a 在校学生, I want 浏览问题列表, So that 我可以查看别人提出的问题 | P0 | 3 | Sprint 1 | `US-03.feature` |
-| US-04 | As a 在校学生, I want 查看问题详情, So that 我可以阅读问题描述和已有回答 | P0 | 2 | Sprint 1 | `US-04.feature` |
-| US-05 | As a 在校学生, I want 给回答点赞, So that 我可以标记优质回答 | P1 | 2 | Sprint 2 | `US-05.feature` |
-| US-06 | As a 在校学生, I want 收藏问题, So that 我可以快速找到感兴趣的问题 | P1 | 2 | Sprint 2 | `US-06.feature` |
-| US-07 | As a 在校学生, I want 通过标签筛选问题, So that 我可以找到对应主题内容 | P1 | 3 | Sprint 2 | `US-07.feature` |
-| US-08 | As a 提问学生, I want 采纳满意回答, So that 标记问题已经解决 | P1 | 3 | Sprint 2 | `US-08.feature` |
-| US-09 | As a 在校学生, I want 提交回答, So that 我可以回复别人的提问 | P1 | 5 | Sprint 2 | 待补 `US-09.feature` |
+---
 
-**Sprint 1 承诺**：US-01 ~ US-04（P0），合计 **13 点**，与 `docs/sprint/sprint-1-plan.md` 一致。
+## 与验收标准文件的对应
 
-## P0 选取依据
+`.feature` 文件按故事命名，与本文档编号对应如下（无对应文件的条目在 Sprint 2 补齐）：
 
-Sprint 1 交付「用户从未注册到成为活跃贡献者」的最小闭环（Walking Skeleton），见 `docs/backlog/story-map.png`：
-
-```
-注册（US-01） → 发布问题（US-02） → 问题列表（US-03） → 问题详情（US-04）
-```
-
-- 不包含「提交回答」「点赞」「收藏」「标签筛选」「采纳」——这些属于 Sprint 2。
-- 判断标准：缺任何一环，闭环就跑不通；多任何一环，Sprint 1 就做不完。
-
-## 编号变更说明（2026-10-28 统一）
-
-原文件编号与 `.feature` 文件名不一致，且存在重复行，本次以 `.feature` 文件名为准统一重编号：
-
-| 原编号 | 新编号 | 说明 |
+| Backlog | 说明 | 验收标准 |
 | --- | --- | --- |
-| （无） | US-01 | 注册（原 backlog 漏列，但已有 `US-01.feature`） |
-| US001 | US-02 | 发布问题 |
-| US002 | US-03 | 问题列表 |
-| US003 | US-04 | 问题详情 |
-| US004 | US-09 | 提交回答（原编号与 US-04.feature 撞车，顺延为 US-09） |
-| US005（重复两行） | US-05 | 点赞（删除重复行） |
-| US006 | US-06 | 收藏 |
-| US007 | US-07 | 标签筛选 |
-| US008 | US-08 | 采纳 |
-
-## 待补项
-
-- **US-09 提交回答**：暂无 `US-09.feature`，Sprint 2 开始前补齐（≥3 个场景：提交成功 / 内容为空 / 问题已关闭不可回答）。
-- 所有 `.feature` 文件须含 `# language: zh-CN` 头、一个文件对应一条故事、每条 ≥3 个 Given-When-Then 场景。
+| PB-05 | 注册、登录、加入课程 | `US-01.feature` |
+| PB-06 | 发布问题 | `US-02.feature` |
+| PB-07 | 问题列表 | `US-03.feature` |
+| PB-08 | 问题详情 | `US-04.feature` |
+| PB-09 | 提交回答 | 待补 `US-09.feature` |
+| PB-10 | 采纳答案 | `US-08.feature` |
+| PB-11 | 投票 | `US-05.feature` |
+| PB-15 | 评论 | 待补 |
