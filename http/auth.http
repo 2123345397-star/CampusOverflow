@@ -1,0 +1,52 @@
+### 0. 获取 CSRF
+GET http://localhost:8080/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  client.global.set("csrfToken", response.body.token);
+%}
+
+### 1. 注册
+POST http://localhost:8080/api/v1/auth/register
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "username": "student2026",
+  "displayName": "测试学生",
+  "email": "student2026@example.com",
+  "password": "Passw0rd123",
+  "college": "计算机学院",
+  "className": "软工2401"
+}
+
+### 2. 登录
+POST http://localhost:8080/api/v1/auth/login
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "username": "student2026",
+  "password": "Passw0rd123"
+}
+
+### 3. 当前用户
+GET http://localhost:8080/api/v1/auth/me
+
+### 4. 课程列表
+GET http://localhost:8080/api/v1/courses
+> {%
+  if (response.body.length > 0) {
+    client.global.set("courseId", response.body[0].id);
+  }
+%}
+
+### 5. 登录后重新获取 CSRF
+GET http://localhost:8080/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  client.global.set("csrfToken", response.body.token);
+%}
+
+### 6. 加入课程
+POST http://localhost:8080/api/v1/courses/{{courseId}}/join
+{{csrfHeader}}: {{csrfToken}}

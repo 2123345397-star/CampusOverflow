@@ -1,21 +1,33 @@
 # CampusOverflow 上下文映射（Context Map）
 
-本项目对齐《CampusOverflow实验指导书V3》Arc42要求，共划分4个限界上下文：
+> 负责人：青岑（Dev-1）
+> 依据：《实验指导书 V3》第 3.2 节
 
-## 限界上下文清单
-1. **Identity**（身份与权限）：负责用户注册、登录、权限校验、账号信息管理
-2. **Q&A**（问答核心）：负责提问、回答、评论、点赞、采纳等核心问答业务逻辑
-3. **Reputation**（声誉）：负责用户积分、声望值、徽章等级计算与展示
-4. **Discovery**（内容发现）：包含搜索检索、消息通知、内容推荐/co-discovery相关能力，不拆分独立上下文
+## 一、限界上下文
 
-## 上下文关系
-| 上游上下文 | 下游上下文 | 关系类型 | 说明 |
-|---|---|---|---|
-| Q&A | Identity | 合作关系（Partnership） | 问答操作依赖身份上下文的登录态与权限校验 |
-| Q&A | Reputation | 客户-供应商（Customer-Supplier） | 问答业务产生的行为事件通知声誉上下文更新用户积分/声望 |
-| Q&A | Discovery | 合作关系（Partnership） | 问答内容同步到内容发现上下文，提供检索、通知、推荐所需的数据源 |
-| Identity | Reputation | 共享内核（Shared Kernel） | 用户基础标识信息在两个上下文之间共享，保证用户ID全局一致 |
+| 上下文 | 模块 | 职责 |
+|---|---|---|
+| Identity | `co-identity` | 用户、课程、角色、会话 |
+| Q&A | `co-qa` | 问题、回答、投票、评论、采纳 |
+| Reputation | `co-reputation` | 声誉账本、徽章、悬赏 |
+| Discovery | `co-discovery` | 搜索、通知、排行榜（不拆成独立上下文） |
 
-## 说明
-- 不存在独立的「检索」「通知」「内容治理」限界上下文，检索/通知能力统一归属Discovery
-- 不存在独立的「内容治理」模块，内容审核相关逻辑归属Q&A核心域内实现
+## 二、上下文关系
+
+| 上游 → 下游 | 关系类型 | 集成方式 |
+|---|---|---|
+| Identity → Q&A / Reputation / Discovery | OHS/PL | 同步 IdentityApi；异步 UserRegisteredEvent；只给 UserSummary |
+| Q&A → Reputation | 客户/供应商（Customer/Supplier） | Answer* / VoteCast 事件；QaQueryApi.findQuestion |
+| Q&A → Discovery | 遵奉者（Conformist） | Question* / Answer* / Vote / Comment / ContentDeleted 事件 |
+| Reputation → Discovery | 遵奉者（Conformist） | Bounty* / BadgeAwarded 事件 |
+| 全部上下文 → Shared Kernel | 共享内核（Shared Kernel） | 依赖 `co-shared-kernel`；修改需全组评审 |
+
+## 三、共享内核
+
+`co-shared-kernel` 提供：Actor、DomainEvent、领域异常、分页。
+
+## 四、说明
+
+- 不存在独立的“检索”“通知”“内容治理”限界上下文
+- 检索、通知属于 Discovery 的能力
+- 内容审核属于 Q&A 核心域内的业务逻辑

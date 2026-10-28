@@ -1,9 +1,8 @@
 # Lab 3 领域建模：聚合识别与不变式
 
 > 负责人：青岑（Dev-1 后端视角）
-> 范围：Q&A 限界上下文
-> 依据：`backend/co-qa/co-qa-domain` 现有类与领域测试
-
+> 范围：Q&A + Reputation 限界上下文
+> 依据：`backend/co-qa/co-qa-domain` 与 `backend/co-reputation/co-reputation-domain`
 ## 1. 领域事件（橙色卡，10 个）
 
 | # | 事件（过去时） | 中文 | 所属聚合 |
@@ -67,7 +66,14 @@
     2. 回复最多一层：不能回复一条已经是回复的评论。
     3. 评论正文不能为空，长度不超过 600 个字符。
 
+### ReputationAccount（根：ReputationAccount）
+
+- 不变式：
+  1. 声誉余额不能为负；冻结积分不能超过可用积分。
+  2. 同一 `(event_id, user_id, reason)` 只能入账一次（幂等）。
+  3. 冻结积分只能由对应悬赏的结算或退款释放。
 ## 4. 聚合与上下文归属
+
 
 | 聚合 | 根实体 | 限界上下文 | Maven 模块 |
 |---|---|---|---|
