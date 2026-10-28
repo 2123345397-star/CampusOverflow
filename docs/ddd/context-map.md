@@ -16,7 +16,7 @@
 
 | 上游 → 下游 | 关系类型 | 集成方式 |
 |---|---|---|
-| Identity → Q&A / Reputation / Discovery | OHS/PL | 同步 IdentityApi；异步 UserRegisteredEvent；只给 UserSummary |
+| Identity → Q&A / Reputation / Discovery | OHS/PL | 同步 IdentityApi；异步 UserRegisteredEvent；只给 UserSummary；下游各自通过 ACL 转换 |
 | Q&A → Reputation | 客户/供应商（Customer/Supplier） | Answer* / VoteCast 事件；QaQueryApi.findQuestion |
 | Q&A → Discovery | 遵奉者（Conformist） | Question* / Answer* / Vote / Comment / ContentDeleted 事件 |
 | Reputation → Discovery | 遵奉者（Conformist） | Bounty* / BadgeAwarded 事件 |
@@ -26,7 +26,13 @@
 
 `co-shared-kernel` 提供：Actor、DomainEvent、领域异常、分页。
 
-## 四、说明
+## 四、ACL 防腐层
+
+- Q&A、Reputation、Discovery 在消费 `IdentityApi` 时各自实现 ACL，把上游的 `UserSummary` 转换为本地只读模型，避免上游 DTO 进入领域层。
+- Reputation 在消费 `QaQueryApi.findQuestion` 时同样通过 ACL 转换 `QuestionRef`。
+- ACL 不改变上表的上下游关系，只说明下游如何隔离上游模型。
+
+## 五、说明
 
 - 不存在独立的“检索”“通知”“内容治理”限界上下文
 - 检索、通知属于 Discovery 的能力
