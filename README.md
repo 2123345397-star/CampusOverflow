@@ -23,6 +23,26 @@ cd ../frontend && npm install && npm run dev      # http://localhost:5173
 
 接口文档：http://localhost:8080/swagger-ui.html
 
+### 1.1 测试账号
+
+**学生账号（现在就能用）**：打开 <http://localhost:5173/login>，切到“注册”页，填写学号/工号（4–20 位）、密码（8–64 位）、昵称、校园邮箱、学院、班级，点“注册并登录”。教师/管理员账号没有自助注册入口，不能用这个入口创建。
+
+**demo 演示账号**（`demo` profile 自动生成，密码统一为 `Campus2026`）：
+
+| 账号 | 角色 | 昵称 |
+| --- | --- | --- |
+| `admin01` | 管理员 | 系统管理员 |
+| `T2001` | 教师 | 王老师 |
+| `TA3001` | 助教 | 李助教 |
+| `2023001` | 学生 | 小明 |
+| `2023002` | 学生 | 小红 |
+| `2023003` | 学生 | 小刚 |
+
+启用方式：启动后端时把 profile 换成 `demo`（`mvn spring-boot:run -pl co-bootstrap -Dspring-boot.run.profiles=demo`，需先起 MySQL/Redis）。
+
+> 注意：demo 种子会创建课程、问题、回答等演示数据，依赖 Q&A 应用层。Sprint 2 的相关 TODO 实现前启动会抛 `UnsupportedOperationException`，此时请先用上面的学生注册路径登录。
+> 教师/管理员也可以由已登录的管理员调用 `POST /api/v1/admin/users` 创建（字段：`username`、`displayName`、`email`、`password`、`role`、`college`）。
+
 ## 2. 已经给你们的 vs 需要你们写的
 
 | 已提供（读懂它，不要重写） | 需要你们实现 |
