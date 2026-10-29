@@ -2,7 +2,7 @@
 
 > 团队：TeamX　项目：CampusOverflow 校园问答平台
 > 仓库：<https://github.com/2123345397-star/CampusOverflow>
-> 提交日期：2026-10-26　最近更新：2026-10-27　对应实验：Lab 1 团队组建与协作工具链（Sprint 0）
+> 提交日期：2026-10-26　最近更新：2026-10-28　对应实验：Lab 1 团队组建与协作工具链（Sprint 0）
 
 本文件是 Lab 1 的**提交索引**：老师按本页即可找到全部材料，不必翻聊天记录。
 
@@ -88,6 +88,23 @@
 
 > 截图中应能看出 PR 标题、Author、Reviewer 的评论/Approve、Merged 状态。
 
+## 6. 开发环境版本汇总（角色卡 E3）
+
+- 文件：[`env-matrix.md`](env-matrix.md)　状态：⚠️ 采集口径与表格已就绪，**5 人版本与 `mvn clean test` 证据待采集**
+- 采集脚本：[`scripts/dev-env/collect-env.ps1`](../../scripts/dev-env/collect-env.ps1) / [`collect-env.sh`](../../scripts/dev-env/collect-env.sh)
+- 通过标准：Git 2.40+、JDK 21、Node.js 20+、Docker 可用；每人一份 `env-<拼音>.png` + 一份 `mvn-test-<拼音>.png`
+- 已知情况：后端整体 `mvn clean test` 现阶段为红，原因是 `co-qa-domain` 的 `TODO(S2)` 桩尚未实现（TDD 先落测试），
+  交付时按"整体红（附原因）+ 已实现模块绿"两段取证，避免被误判为环境问题。
+
+## 7. 身份绑定核查（角色卡 E4）
+
+- 文件：[`identity-audit.md`](identity-audit.md)　状态：⚠️ 已定位问题，整改进行中
+- 审计脚本：[`scripts/dev-env/audit-authors.ps1`](../../scripts/dev-env/audit-authors.ps1) / [`audit-authors.sh`](../../scripts/dev-env/audit-authors.sh)
+- 已有结论：仓库中存在作者 `baigui <W13636786666@163.com>`（如 `57dd52c`、`0c8f980`），该邮箱未在 GitHub 账号
+  `2177023844` 内验证，贡献不会被统计；其余 4 人（`2123345397-star`、`cmz666-BOT`、`Liujunfeng520`、`qing963666`）待核查。
+- 判定标准：`git config user.email` = GitHub 账号已验证邮箱（或 `用户名+ID@users.noreply.github.com`），
+  且网页提交记录能点进本人主页。
+
 ---
 
 ## 提交物状态
@@ -100,6 +117,8 @@
 | 4 | 角色承诺书 | `docs/team/role-commitment.md` | ✅ 已在 `main` | 陈明哲 |
 | 5 | 成员 PR 合并截图 | `screenshots/pr-<拼音>.png` | ✅ 5 张齐备 | 各成员 |
 | + | 初始 Backlog | `backlog.md` | ✅ | 魏志国 |
+| + | 环境版本汇总（E3） | `env-matrix.md` | ⚠️ 表格就绪，待 5 人采集 | 房国栋 |
+| + | 身份绑定核查（E4） | `identity-audit.md` | ⚠️ 已定位 1 人未绑定 | 房国栋 |
 
 图例：✅ 完成　⚠️ 部分完成　⬜ 待完成
 
@@ -137,10 +156,13 @@ git ls-files | grep -E '(^|/)\.env$|node_modules/|/target/|/dist/'
 
 ## 还差什么
 
-只剩 1 项：
+只剩 3 项：
 
 1. **补分支保护截图**：Settings → Branches，确认 `main` 的规则（禁止直推 + PR 至少 1 人审批 + CI 通过）
    存在；截图保存为 `screenshots/branch-protection.png`，然后更新本页第 1 节状态。
+2. **E3 环境采集**：5 人各跑一次 `scripts/dev-env/collect-env.ps1`（或 `.sh`），把输出行贴进
+   [`env-matrix.md`](env-matrix.md)，并补 `env-*.png` / `mvn-test-*.png` 截图。
+3. **E4 身份整改**：房国栋按 [`identity-audit.md`](identity-audit.md) 第 5 节绑定邮箱，其余 4 人填核查表。
 
 ---
 
