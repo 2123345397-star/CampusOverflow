@@ -51,7 +51,7 @@
 ## 3. 团队章程 v1.0
 
 - 文件：[`docs/team/charter-v1.0.md`](../team/charter-v1.0.md)
-- 合并记录：PR [#6](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/6)，合并提交 `e1caa47`
+- 合并记录：PR [#6](https://github.com/2123345397-star/CampusOverflow/pull/6)，合并提交 `e1caa47`
 - 签署：全体 5 人（魏志国、陈明哲、刘俊琒、青岑、房国栋），评审中含 1 个 Approve
 - 覆盖章节：团队价值观、角色与职责、沟通约定、开发规约、DoD 初版、签字
 
@@ -63,24 +63,24 @@
 
 ## 5. 成员 PR 合并截图
 
-每人一个 hello PR，均已合并。截图文件命名 `pr-<拼音>.png`，放在本目录。
+每人一个 hello PR，均在**旧个人仓库**（`2123345397-star/CampusOverflow`）合并。本章两个表格中的 PR 编号与合并提交均属于该仓库，链接已指向旧仓库；截图文件命名 `pr-<拼音>.png`，放在本目录。
 
 | 成员 | 角色 | PR | 分支 | 合并提交 | 评审记录 | 截图 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 魏志国 | PO | [#5](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/5) | `feature/weizhiguo-hello` | `ee0b1a3` | Liujunfeng520 评论 | `pr-weizhiguo.png` |
-| 陈明哲 | SM | [#9](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/9) | `cmz666-BOT-patch-1` | `bc82971` | 无正式 Review ⚠️ | `pr-chenmingzhe.png` |
-| 刘俊琒 | SM | [#7](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/7) | `feature/liujunfeng-hello` | `35c711e` | cmz666-BOT **Approve** | `pr-liujunfeng.png` |
-| 青岑 | Developer / QA | [#4](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/4) | `feature/qing963666-hello` | `c6b16d3` | 无正式 Review ⚠️ | `pr-qingcen.png` |
-| 房国栋 | Developer | [#1](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/1) | `feature/fangguodong-hello` | `e8f1d8b` | 2123345397-star 评论 | `pr-fangguodong.png` |
+| 魏志国 | PO | [#5](https://github.com/2123345397-star/CampusOverflow/pull/5) | `feature/weizhiguo-hello` | `ee0b1a3` | Liujunfeng520 评论 | `pr-weizhiguo.png` |
+| 陈明哲 | SM | [#9](https://github.com/2123345397-star/CampusOverflow/pull/9) | `cmz666-BOT-patch-1` | `bc82971` | 无正式 Review ⚠️ | `pr-chenmingzhe.png` |
+| 刘俊琒 | SM | [#7](https://github.com/2123345397-star/CampusOverflow/pull/7) | `feature/liujunfeng-hello` | `35c711e` | cmz666-BOT **Approve** | `pr-liujunfeng.png` |
+| 青岑 | Developer / QA | [#4](https://github.com/2123345397-star/CampusOverflow/pull/4) | `feature/qing963666-hello` | `c6b16d3` | 无正式 Review ⚠️ | `pr-qingcen.png` |
+| 房国栋 | Developer | [#1](https://github.com/2123345397-star/CampusOverflow/pull/1) | `feature/fangguodong-hello` | `e8f1d8b` | 2123345397-star 评论 | `pr-fangguodong.png` |
 
 其他团队协作 PR：
 
 | PR | 内容 | 合并提交 | 评审 |
 | --- | --- | --- | --- |
-| [#6](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/6) | 团队章程 v1.0 | `e1caa47` | 青岑 **Approve** |
-| [#3](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/3) | 角色承诺书 | `1a1e1a9` | 青岑 评论 |
-| [#11](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/11) | 第一次站会纪要 | `e9a1224` | 2123345397-star 评论 |
-| [#2](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/2) | 青岑 hello 初版（改名后关闭） | — | 房国栋 Request changes |
+| [#6](https://github.com/2123345397-star/CampusOverflow/pull/6) | 团队章程 v1.0 | `e1caa47` | 青岑 **Approve** |
+| [#3](https://github.com/2123345397-star/CampusOverflow/pull/3) | 角色承诺书 | `1a1e1a9` | 青岑 评论 |
+| [#11](https://github.com/2123345397-star/CampusOverflow/pull/11) | 第一次站会纪要 | `e9a1224` | 2123345397-star 评论 |
+| [#2](https://github.com/2123345397-star/CampusOverflow/pull/2) | 青岑 hello 初版（改名后关闭） | — | 房国栋 Request changes |
 
 ---
 
