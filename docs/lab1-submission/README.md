@@ -24,12 +24,12 @@
 | `main` | 禁止绕过 | ✅ Enforce for administrators 已开启 |
 | `main` | 直推 | ❌ 禁止，必须走 PR |
 | `main` | 强推 / 删除分支 | ❌ 均禁止 |
-| `main` | 必需状态检查（CI） | 未启用；CI 结果作为参考，不阻断合并 |
+| `main` | 必需状态检查（CI） | ✅ 已启用：后端构建与验证、前端构建、容器镜像构建 |
 | `develop` | PR 审批人数 | ≥ 1 个 Approve，且作者不能批准自己的 PR |
 | `develop` | 直推 | ❌ 禁止，必须走 PR |
 | `develop` | 强推 / 删除分支 | ❌ 均禁止 |
-| `develop` | 管理员绕过 | 允许（Enforce for administrators 未开启） |
-| `develop` | 必需状态检查（CI） | 未启用；CI 结果作为参考，不阻断合并 |
+| `develop` | 管理员绕过 | ✅ 已关闭（Enforce for administrators 已开启） |
+| `develop` | 必需状态检查（CI） | ✅ 已启用：后端构建与验证、前端构建 |
 | 两分支 | 新提交使旧 Approve 失效 | ✅ Dismiss stale approvals 已开启 |
 | 两分支 | 合并前必须解决会话 | ✅ 已开启 |
 
@@ -144,8 +144,9 @@ git ls-files | grep -E '(^|/)\.env$|node_modules/|/target/|/dist/'
 
 1. 通过 GitHub API 核验 `main`、`develop` 的实际保护配置，更新第 1 节规则表；
 2. 明确“至少 1 名 SM/PO”为团队约定——GitHub 无法按角色强制审批（Code Owner 审批未开启）；
-3. 明确两个分支均未启用“必需状态检查（CI）”：团队决定不开启 CI 门禁，CI 结果仅作参考、不阻断合并；
-4. 原截图仅包含规则列表，不能单独证明规则内容，第 1 节已补充核验方式与核验日期。
+3. 按 V3 要求配置必需状态检查：`develop` 为“后端构建与验证、前端构建”，`main` 另加“容器镜像构建”；同时开启 `develop` 的 Enforce for administrators，撤回“不开启 CI 门禁”的旧决定；
+4. 原截图仅包含规则列表，不能单独证明规则内容，第 1 节已补充核验方式与核验日期；
+5. 待办：GitHub Actions 当前无运行记录（0 次），需 A4 恢复 CI 触发；恢复前 PR 会停留在“等待必需检查”。
 
 ---
 
