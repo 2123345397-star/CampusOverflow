@@ -43,6 +43,16 @@ cd ../frontend && npm install && npm run dev      # http://localhost:5173
 > 注意：demo 种子会创建课程、问题、回答等演示数据，依赖 Q&A 应用层。Sprint 2 的相关 TODO 实现前启动会抛 `UnsupportedOperationException`，此时请先用上面的学生注册路径登录。
 > 教师/管理员也可以由已登录的管理员调用 `POST /api/v1/admin/users` 创建（字段：`username`、`displayName`、`email`、`password`、`role`、`college`）。
 
+**教师/管理员账号（Sprint 0–2 开发期，demo 暂不可用）**：先按上面的学生流程注册账号（用户名用 `T2001` 或 `admin01`），再进入 MySQL 提升角色。改完需重新登录，因为会话里缓存了 Actor：
+
+```sql
+docker exec -it co-mysql mysql -ucampus -pcampus_dev_pwd campus_overflow
+UPDATE id_user SET role = 'TEACHER', verified = TRUE WHERE username = 'T2001';
+UPDATE id_user SET role = 'ADMIN',   verified = TRUE WHERE username = 'admin01';
+```
+
+教师建课后，学生调用 `POST /api/v1/courses/{id}/join` 加入；教师可通过 `PUT /api/v1/courses/{id}/members/{userId}` 任命助教（`role: TA`）。
+
 ## 2. 已经给你们的 vs 需要你们写的
 
 | 已提供（读懂它，不要重写） | 需要你们实现 |
