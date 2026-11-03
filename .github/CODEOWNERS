@@ -1,0 +1,23 @@
+# CODEOWNERS —— 按目录指定负责人，PR 自动请求对应评审人
+# 语法：目录路径 + 一个或多个 GitHub 用户名（@前缀），后出现的规则优先级更高
+
+# 全局兜底：任何未被下面规则匹配的改动，至少通知两位 SM
+* @cmz666-BOT @Liujunfeng520
+
+# 协作与流程配置（CODEOWNERS、Issue/PR 模板、工作流）：两位 SM
+/.github/ @cmz666-BOT @Liujunfeng520
+
+# 文档与团队规则：SM-B 陈明哲
+/docs/ @cmz666-BOT
+
+# 后端服务：房国栋、青岑
+/backend/ @2177023844 @qing963666
+
+# 前端：青岑
+/frontend/ @qing963666
+
+# 部署与 CI/CD：刘俊琒
+/deploy/ @Liujunfeng520
+
+# HTTP 脚本与压测：刘俊琒
+/http/ @Liujunfeng520
