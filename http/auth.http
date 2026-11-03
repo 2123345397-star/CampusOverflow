@@ -1,3 +1,8 @@
+# 前置条件：
+# 1. 后端以 dev profile 启动（Sprint 0 不要加 demo）
+# 2. 数据库中已有一门课程（教师账号创建），否则第 4 步 courseId 为空，第 6 步 join 会失败
+# 3. 首次运行前修改 username/email；重复运行会因用户名已存在返回 409
+
 ### 0. 获取 CSRF
 GET http://localhost:8080/api/v1/auth/csrf
 > {%
