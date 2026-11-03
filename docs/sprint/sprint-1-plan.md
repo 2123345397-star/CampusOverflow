@@ -26,7 +26,8 @@
 
 ## 三、范围说明
 
-- 本 Sprint **不包含**提交回答、点赞、收藏、标签筛选、采纳，这些排在 Sprint 2（对应 US-05 ~ US-09）。
+- 本 Sprint 属于 V3 的 **Sprint 1（Q&A 核心）**范围：团队当前承诺 P0 = US-01 ~ US-04（13 点）；Q&A 核心其余故事（US-05 ~ US-09，对应 PB-09 ~ PB-19）仍在 Sprint 1 范围内，按剩余容量滚动，**不排到 Sprint 2**。
+- **Sprint 2 的范围是 Reputation / 悬赏（PB-20 ~ PB-30）**，不是 Q&A 核心；此前“Q&A 核心放 Sprint 2”的表述作废。
 - 承诺范围的唯一来源是 `docs/backlog/product-backlog.md` 的「迭代点数合计」表：Sprint1 = PB-05 ~ PB-08 = 13 点；
   本文件只做镜像引用，不再自行估算点数。改点数须先改 backlog，再同步本表合计（`docs/sprint/sprint-1-plan.md` 与 backlog 的 Sprint1 合计必须相等）。
 
