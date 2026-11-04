@@ -1,5 +1,13 @@
 export type Role = 'STUDENT' | 'TA' | 'TEACHER' | 'ADMIN';
 
+/** 课程（发布语言 CourseView）。myRole 为 null 表示尚未加入该课程。 */
+export interface Course {
+  id: number; code: string; name: string; term: string;
+  teacherId: number; teacherName: string; myRole: string | null;
+}
+
+export type CourseRole = 'STUDENT' | 'TEACHING_ASSISTANT' | 'TEACHER';
+
 export interface Author { id: number; displayName: string; role: string; verified: boolean }
 export interface Page<T> { items: T[]; total: number; page: number; size: number }
 

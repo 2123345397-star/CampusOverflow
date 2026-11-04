@@ -1,5 +1,5 @@
 import type {
-  LeaderboardEntry, Me, Notification, Page, QuestionDetail, QuestionSummary, ReputationProfile, SearchResult,
+  Course, LeaderboardEntry, Me, Notification, Page, QuestionDetail, QuestionSummary, ReputationProfile, SearchResult,
 } from './types';
 
 /** 后端以 RFC 9457 Problem Details 返回错误，这里统一转成带业务码的异常。 */
@@ -47,12 +47,15 @@ export const api = {
   logout: () => request<void>('POST', '/v1/auth/logout'),
   me: () => get<Me>('/v1/auth/me'),
 
-  questions: (page = 1, courseId?: number) =>
-    get<Page<QuestionSummary>>(`/v1/questions?page=${page}${courseId ? `&courseId=${courseId}` : ''}`),
-  question: (id: number) => get<QuestionDetail>(`/v1/questions/${id}`),
+  questions: (page = 1, courseId?: number, size = 20) =>
+    get<Page<QuestionSummary>>(`/v1/questions?page=${page}&size=${size}${courseId ? `&courseId=${courseId}` : ''}`),  question: (id: number) => get<QuestionDetail>(`/v1/questions/${id}`),
   ask: (body: { courseId?: number; title: string; body: string; tags: string[] }) =>
     request<{ id: number }>('POST', '/v1/questions', body),
+  editQuestion: (id: number, body: { title: string; body: string; tags: string[] }) =>
+    request<void>('PUT', `/v1/questions/${id}`, body),
   deleteQuestion: (id: number) => request<void>('DELETE', `/v1/questions/${id}`),
+  editAnswer: (answerId: number, body: string) => request<void>('PUT', `/v1/answers/${answerId}`, { body }),
+  deleteAnswer: (answerId: number) => request<void>('DELETE', `/v1/answers/${answerId}`),
   answer: (questionId: number, body: string) =>
     request<{ id: number }>('POST', `/v1/questions/${questionId}/answers`, { body }),
   accept: (questionId: number, answerId: number) =>
@@ -62,6 +65,11 @@ export const api = {
     request<{ myVote: number; scoreDelta: number }>('PUT', '/v1/votes', { targetType, targetId, value }),
   comment: (targetType: 'QUESTION' | 'ANSWER', targetId: number, body: string, parentId?: number) =>
     request<{ id: number }>('POST', '/v1/comments', { targetType, targetId, body, parentId }),
+
+  // 课程：列表带 myRole（null 表示未加入），加入成功后返回 204；未登录也能浏览列表。
+  courses: () => get<Course[]>('/v1/courses'),
+  myCourses: () => get<Course[]>('/v1/courses/mine'),
+  joinCourse: (courseId: number) => request<void>('POST', `/v1/courses/${courseId}/join`, {}),
 
   search: (q: string, params: { tag?: string; sort?: string; unanswered?: boolean; page?: number } = {}) => {
     const search = new URLSearchParams({ q, page: String(params.page ?? 1) });
@@ -81,5 +89,6 @@ export const api = {
 
   notifications: () => get<Page<Notification>>('/v1/notifications'),
   unreadCount: () => get<{ count: number }>('/v1/notifications/unread-count'),
+  readOne: (id: number) => request<void>('POST', `/v1/notifications/${id}/read`, {}),
   readAll: () => request<{ updated: number }>('POST', '/v1/notifications/read-all', {}),
 };
