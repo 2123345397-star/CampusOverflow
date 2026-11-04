@@ -1,0 +1,33 @@
+CampusOverflow 开发环境采集输出
+================================
+姓名   : 房国栋
+GitHub : 2177023844
+OS     : Microsoft Windows 10.0.26200 (Windows 11)
+JDK    : java 21.0.10 / javac 21.0.10   (JBR-21.0.10+1-1163.110, E:\IntelliJ IDEA 2025.3.3\jbr)
+Maven  : 3.9.11
+Node   : v24.18.1 / npm 11.16.0
+Docker : not installed
+Git    : 2.55.0.windows.3
+采集日期: 2026-10-29
+
+汇总表行
+--------
+| 房国栋 | `2177023844` | Windows 11（`10.0.26200`） | 21.0.10（JBR-21.0.10+1-1163.110） | 3.9.11 | v24.18.1 / npm 11.16.0 | 未安装 | 2026-10-29 | ✅ |
+
+达标检查
+--------
+[PASS] JDK 21       21.0.10
+[PASS] Maven 3.9+   3.9.11
+[PASS] Node.js 20+  v24.18.1
+[PASS] Git 2.40+    2.55.0.windows.3
+[SKIP] Docker       未安装（容器化实验前补装）
+
+mvn clean test 结果（backend，2026-10-29）
+-----------------------------------------
+BUILD FAILURE
+失败模块: co-qa-domain
+Tests run: 18, Failures: 2, Errors: 13
+根因: java.lang.UnsupportedOperationException: TODO(S2)：MarkdownBody.ofQuestion 尚未实现
+已通过模块: co-shared-kernel 2 个、co-identity-domain 9 个（含 CourseTest 3 个）
+说明: 属于 Sprint 0 的预期状态（TDD 先落测试、领域实现留桩），非环境问题。
+     完整日志见 docs/lab1-submission/logs/mvn-test-fangguodong.log
