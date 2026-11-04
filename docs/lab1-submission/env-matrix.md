@@ -113,15 +113,17 @@ mvn -pl co-shared-kernel test                        # 单独跑，应全绿
 
 ## 4. 截图命名与存放
 
-统一放在 `docs/lab1-submission/screenshots/`，命名规则：
+**环境证据统一放在 [`env/`](env/) 子目录**（目录说明见 [`env/README.md`](env/README.md)）：
 
 | 文件 | 内容 | 要求 |
 | --- | --- | --- |
-| `env-<拼音>.png` | 版本采集脚本输出 | 终端提示符、`$` 命令与输出同屏 |
-| `mvn-test-<拼音>.png` | `mvn clean test` 结果 | 含 `BUILD FAILURE` / `BUILD SUCCESS` 行 |
-| `mvn-test-green-<拼音>.png` | 已实现模块 `mvn test` 全绿 | 含 `Tests run: N, Failures: 0` |
+| `env/<拼音>.png`（别名 `env-<拼音>.png`） | 版本采集脚本输出 | 终端提示符、命令与输出同屏 |
+| `env/<拼音>.txt` | 采集脚本打印的 Markdown 行 | 可直接恢复空白的汇总表 |
+| `screenshots/mvn-test-<拼音>.png` | `mvn clean test` 结果 | 含 `BUILD FAILURE` / `BUILD SUCCESS` 行 |
+| `screenshots/mvn-test-green-<拼音>.png` | 已实现模块 `mvn test` 全绿 | 含 `Tests run: N, Failures: 0` |
 
-示例：`env-fangguodong.png`、`mvn-test-fangguodong.png`。
+已归档：`env/env-fangguodong.png`、`env/env-fangguodong.txt`。
+其余四人补齐后同样放进 `env/`，并把第 3 节表格改成 ✅。
 
 ---
 
