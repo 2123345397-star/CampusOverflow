@@ -9,3 +9,4 @@ dist/
 .env
 # keep Lab1 E3 build logs
 !docs/lab1-submission/logs/*.log
+*.tsbuildinfo
