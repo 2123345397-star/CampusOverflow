@@ -53,6 +53,9 @@
 - `POST /api/v1/questions` → 201 → `GET /api/v1/questions/1` → 200 → 列表 `total=1` → `qa_question` 落库一行，证据见 [`docs/lab4-submission/`](../lab4-submission/README.md)。
 - **阻塞升级**：`AnswerAndVoteServiceTest` 2 条在 `develop` 上即为红（期望 1L/2L 与实际 2L/1L 对调），卡住 CI 与 PR #86 合并；已定位到 `AnswerCommandService` 构造事件的参数顺序，转 B 处理。
 
+- **阻塞解除**：B 的 `fix/lab4-answer-events`（PR #89）修掉事件构造参数顺序，`AnswerAndVoteServiceTest` 转绿；PR #86 于 11:00 合并进 `develop`（合并提交 `3f96258`），评审 @qing963666、@2123345397-star 均 `APPROVED`。
+- 合并后在 `develop` 重跑：`co-qa-domain` 42 条、`co-qa-application` 28 条，全部通过；PB-06 #32 自动关闭，#33 / #34 补关。
+
 ## 三、燃尽图与数据
 
 口径：纵轴为 Sprint 1 **迭代范围 40 SP**（PB-06～PB-19）中尚未完成的部分；「完成」指任务卡代码合入 `develop` 且对应验收场景通过。承诺 P0 的 13 SP 含 Sprint 0 已交付的 PB-05（3 SP），不计入本图。
@@ -60,26 +63,37 @@
 | 日期 | 工作日 | 理想剩余 | 实际剩余 | 当日完成 |
 | --- | --- | --- | --- | --- |
 | 11-03 | D0 | 40 | 40 | 计划会，未开工 |
-| 11-04 | D1 | 35 | 35 | PB-11 投票（3）、PB-15 评论（2） |
-| 11-05 | D2 | 30 | 30 | PB-09～PB-13 的问题侧代码完成，待随 PR #86 合并 |
-| 11-06 起 | D3～D8 | 25 → 0 | 待续绘 | 每次站会后由 SM 更新 |
+| 11-04 | D1 | 35 | 35 | PB-11 投票（3）、PB-15 评论（2）随 PR #78 合入 |
+| 11-05 | D2 | 30 | 25 | PB-09～PB-13 问题侧 10 点随 PR #86 合入（11:00 合并，站会时点为 35，收盘 25） |
+| 11-06 起 | D3～D8 | 20 → 0 | 待续绘 | 每次站会后由 SM 更新 |
 
 ![Sprint 1 燃尽图](sprint-1-burndown.png)
 
-## 四、风险与对策
+## 四、看板状态（更新于 11-05 收盘）
+
+![Sprint 1 看板](../sprint-1-backlog.png)
+
+- **Done 4 张**：T2-01（发布问题领域层与应用层）、T2-03（US-02 端到端验收）、T3-01（列表与分页接口）、T4-01（详情接口），均随 PR #86 合入 `develop`。
+- **To Do 8 张**：T1-01～T1-03（注册）、T2-02（提问页）、T3-02 / T3-03（列表页与验收）、T4-02 / T4-03（详情页与验收）。
+- In Progress / In Review 为 0：本方任务卡已全部流出，剩余卡在等待前端（D）与验收（E）。
+
+**分工偏差说明**：`sprint-1-plan.md` 中 T2-01「发布问题领域层与应用层」登记责任人为 D（房国栋），实际由 A（刘俊琒）交付——角色卡 A 的职责本身就是 `Question` 聚合、`QuestionCommandService`、`QuestionQueryService`、`QaQueryApiImpl`，与 T2-01 描述重叠。T2-03（US-02 验收与前后端联调）原就登记为 A，已一并完成。看板脚注同步标注，评审时以角色卡分工为准。
+
+## 五、风险与对策
 
 | 风险 | 影响 | 对策 | 状态 |
 | --- | --- | --- | --- |
-| CI 在 `AnswerAndVoteServiceTest` 红 | PR #86 无法合并，S1 门禁不通过 | 已定位为事件构造参数顺序错位，转 B 修；同时在 PR 中附「干净 `develop` 同样失败」的证据排除本方引入 | 处理中 |
-| 作者不能批准自己的 PR | PR 停在 `blocked` | 已指定 E（@cmz666-BOT）评审，站会上当面确认 | 处理中 |
+| CI 在 `AnswerAndVoteServiceTest` 红 | PR #86 无法合并，S1 门禁不通过 | 定位为事件构造参数顺序错位，转 B 修；B 的 PR #89 已修复，合并后 qa 两模块 42 + 28 条全绿 | 已解除 |
+| 作者不能批准自己的 PR | PR 停在 `blocked` | 指定 E（@cmz666-BOT）评审；最终 @qing963666、@2123345397-star 两名非作者 `APPROVED` 后合并 | 已解除 |
 | 本机无 Docker，MySQL/Redis 起不来 | 端到端无法验证 | 用 MySQL 8.0.44 临时实例（3307）+ Redis 5.0.14 移植版启动，`spring.config.additional-location` 覆盖数据源 | 已解除 |
 | 事件字段顺序缺少契约测试 | 跨上下文消费方静默错位 | 建议在 `co-qa-api` 事件 record 上加构造顺序注释，并由 B 补契约测试 | 待办 |
 
-## 五、评审前检查清单
+## 六、评审前检查清单
 
 - [x] Sprint 1 计划与容量计算在仓库中（`docs/sprint/sprint-1-plan.md`）
 - [x] 每日站会有记录、燃尽图有折线（本文件 + `sprint-1-burndown.png`）
 - [x] 任务卡与责任人对齐（T1-01～T4-03）
 - [x] P0 的验收场景有对应实现与证据（`docs/lab4-submission/`）
-- [ ] CI 全绿（依赖 B 修复 `AnswerAndVoteServiceTest`）
-- [ ] PR #86 获得 ≥1 名非作者 Approve
+- [x] CI 全绿（B 的 PR #89 修复后，`co-qa-domain` 42 条、`co-qa-application` 28 条通过）
+- [x] PR #86 获得 2 名非作者 Approve（@qing963666、@2123345397-star），已于 11-05 合并
+- [x] 关联 Issue 全部关闭（#32 自动、#33 / #34 补关）

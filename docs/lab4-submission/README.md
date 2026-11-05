@@ -58,10 +58,17 @@ mvn -f backend/pom.xml -pl co-qa/co-qa-application -am test \
 作为 Sprint 1 的 SM，评审前需要的文档已补齐：
 
 - Sprint 1 执行记录（计划会结论、两次站会、风险与对策）：[`docs/scrum/sprint-1.md`](../scrum/sprint-1.md)
-- 燃尽图（迭代范围 40 SP，数据截至 11-05 站会，后续站会续绘）：[`docs/scrum/sprint-1-burndown.png`](../scrum/sprint-1-burndown.png)
+- 燃尽图（迭代范围 40 SP，11-05 收盘剩余 25）：[`docs/scrum/sprint-1-burndown.png`](../scrum/sprint-1-burndown.png)
+- Sprint 1 看板（T2-01 / T2-03 / T3-01 / T4-01 已推进到 Done）：[`docs/sprint-1-backlog.png`](../sprint-1-backlog.png)
 - PR 已挂 `Closes #32, #33, #34`（PB-06 发布问题 / PB-07 列表 / PB-08 详情）。
 
-## 5. 还没做完 / 需要别人接手
+## 5. 合并与验证结果
 
-1. **PR 需要 E 或 B 点 Approve**：GitHub 上作者不能批准自己的 PR，我这侧只能把描述、证据和自检结果补齐。
-2. `AnswerAndVoteServiceTest` 的 2 条红（B 的 T1-03），CI 因此仍是红的；本 PR 的 19 条测试全绿，切到干净 `develop` 也一样红，可据此排除是我引入。
+- **PR #86 已于 2026-11-05 11:00 合并进 `develop`**（合并提交 `3f96258`，8 个提交、14 个文件、+1093/−22）；评审记录：@qing963666、@2123345397-star 均为 `APPROVED`。
+- 合并后切到 `develop` 重跑：`co-qa-domain` **42 条**、`co-qa-application` **28 条**，全部通过。此前 2 条红（`AnswerAndVoteServiceTest`）已由 B 的 `fix/lab4-answer-events`（PR #89）修掉。
+- Issue 关闭：PB-06 #32 随合并自动关闭；**#33 / #34 由我补关**（PR 里一条 `Closes #32, #33, #34` 只自动关了首个编号，已纠正写法，今后一条 `Closes` 只带一个编号）。
+
+## 6. 后续（Sprint 1 剩余）
+
+- 燃尽图按每次站会续绘，D3（11-06）起数据待补。
+- Sprint 1 范围 PB-06～PB-19 中，PB-09～PB-13 问题侧已随 #86 落地，回答/投票/评论由 B、C 推进，通知与前端由 C、D 推进。
