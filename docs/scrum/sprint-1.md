@@ -52,7 +52,6 @@
 - 刘俊琒完成 `QuestionCommandService`（T1-07）、`QuestionQueryService`（T1-10）、`QaQueryApiImpl.findQuestion`（T1-11），并补 12 条边界用例；qa-domain 33 条、问题侧应用层 19 条全绿。
 - `POST /api/v1/questions` → 201 → `GET /api/v1/questions/1` → 200 → 列表 `total=1` → `qa_question` 落库一行，证据见 [`docs/lab4-submission/`](../lab4-submission/README.md)。
 - **阻塞升级**：`AnswerAndVoteServiceTest` 2 条在 `develop` 上即为红（期望 1L/2L 与实际 2L/1L 对调），卡住 CI 与 PR #86 合并；已定位到 `AnswerCommandService` 构造事件的参数顺序，转 B 处理。
-
 - **阻塞解除**：B 的 `fix/lab4-answer-events`（PR #89）修掉事件构造参数顺序，`AnswerAndVoteServiceTest` 转绿；PR #86 于 11:00 合并进 `develop`（合并提交 `3f96258`），评审 @qing963666、@2123345397-star 均 `APPROVED`。
 - 合并后在 `develop` 重跑：`co-qa-domain` 42 条、`co-qa-application` 28 条，全部通过；PB-06 #32 自动关闭，#33 / #34 补关。
 
