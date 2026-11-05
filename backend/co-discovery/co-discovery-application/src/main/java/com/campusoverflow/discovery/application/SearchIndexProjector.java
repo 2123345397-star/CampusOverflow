@@ -36,69 +36,69 @@ public class SearchIndexProjector {
 
     private boolean firstTime(IntegrationEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.firstTime——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.firstTime 尚未实现");
+        return true;
     }
 
     @EventListener
     @Transactional
     public void on(QuestionPostedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(QuestionEditedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(AnswerSubmittedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(ContentDeletedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(AnswerAcceptedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(VoteCastEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(BountyOpenedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(BountyAwardedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(BountyClosedEvent e) {
         // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：SearchIndexProjector.on 尚未实现");
+        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
     }
 }
