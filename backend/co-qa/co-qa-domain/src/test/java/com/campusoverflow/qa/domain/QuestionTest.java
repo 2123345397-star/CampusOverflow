@@ -60,6 +60,30 @@ class QuestionTest {
             assertThatThrownBy(() -> new TagName("<script>")).isInstanceOf(BusinessRuleException.class);
             assertThat(new TagName("C++").value()).isEqualTo("c++");
         }
+        @Test
+        void titleOf9CharactersIsRejected() {
+            assertThatThrownBy(() -> new Title("123456789")) // 9个字符
+                    .isInstanceOf(BusinessRuleException.class)
+                    .hasMessageContaining("标题");
+        }
+
+        @Test
+        void titleOf10CharactersIsAllowed() {
+            Title title = new Title("1234567890"); // 10个字符
+            assertThat(title.value()).hasSize(10);
+        }
+
+        @Test
+        void titleOf150CharactersIsAllowed() {
+            Title title = new Title("a".repeat(150)); // 150个字符
+            assertThat(title.value()).hasSize(150);
+        }
+
+        @Test
+        void titleOf151CharactersIsRejected() {
+            assertThatThrownBy(() -> new Title("a".repeat(151))) // 151个字符
+                    .isInstanceOf(BusinessRuleException.class);
+        }
     }
 
     @Nested
@@ -137,6 +161,57 @@ class QuestionTest {
             q.softDelete(ASKER, false, NOW);
             assertThatThrownBy(() -> Answer.submit(q, OTHER.userId(), MarkdownBody.ofAnswer("这是一个迟到了很久的回答内容"), NOW))
                     .isInstanceOf(BusinessRuleException.class);
+        }
+        @Test
+        void deletedQuestionCannotBeEdited() {
+            Question q = persistedQuestion();
+            q.softDelete(ASKER, false, NOW);
+
+            assertThatThrownBy(() -> q.edit(ASKER, false, new Title("修改后的新标题"), q.body(), q.tags(), NOW))
+                    .isInstanceOf(BusinessRuleException.class); // 或者校验具体的 QA-1020 错误码
+        }
+
+        @Test
+        void acceptedAnswerCannotBeDeletedByAuthor() {
+            Question q = persistedQuestion();
+            Answer a = persistedAnswer(q, OTHER.userId(), 50);
+            q.accept(a, ASKER, false); // 采纳这个回答
+
+            // 作者尝试删除已被采纳的回答
+            assertThatThrownBy(() -> a.softDelete(OTHER, false, true, NOW))
+                    .isInstanceOf(BusinessRuleException.class); // 或校验 QA-1012
+        }
+
+        @Test
+        void managerCanDeleteAcceptedAnswer() {
+            Question q = persistedQuestion();
+            Answer a = persistedAnswer(q, OTHER.userId(), 50);
+            q.accept(a, ASKER, false);
+
+            // 管理员（或课程教师）可以删除
+            a.softDelete(TEACHER, true, true, NOW);
+            assertThat(a.isDeleted()).isTrue();
+        }
+    }
+    @Nested
+    class Endorsing {
+        @Test
+        void teacherCanEndorseAnAnswerOnce() {
+            Answer a = persistedAnswer(persistedQuestion(), OTHER.userId(), 50);
+
+            a.endorse(TEACHER, true); // 第一次认证成功 // 第一次认证成功
+            assertThat(a.endorsedBy()).isEqualTo(TEACHER.userId());
+
+            assertThatThrownBy(() -> a.endorse(TEACHER, true))
+                    .isInstanceOf(ConflictException.class); // 第二次认证报错冲突
+        }
+
+        @Test
+        void studentCannotEndorseAnswer() {
+            Answer a = persistedAnswer(persistedQuestion(), OTHER.userId(), 50);
+
+            assertThatThrownBy(() -> a.endorse(OTHER, false))
+                    .isInstanceOf(ForbiddenException.class);
         }
     }
 }
