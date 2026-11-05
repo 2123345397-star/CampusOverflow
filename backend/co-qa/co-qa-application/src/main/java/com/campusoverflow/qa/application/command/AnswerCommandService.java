@@ -48,15 +48,13 @@ public class AnswerCommandService {
     public long submit(Actor actor, long questionId, String body) {
         Question question = loadQuestion(questionId);
 
-        // 修正 1：参数类型改为 MarkdownBody 和 Instant
         Answer answer = Answer.submit(question, actor.userId(), MarkdownBody.ofAnswer(body), clock.instant());
         answers.save(answer);
         questions.adjustAnswerCount(questionId, 1);
 
-        // 修正 2：如果 AnswerSubmittedEvent 报错“应为 8 个实参”，请按 Alt+Enter 看提示，可能需要加上 question.title().value() 或者其他字段
         events.publish(new AnswerSubmittedEvent(
-                com.campusoverflow.shared.event.EventIds.next(), clock.instant(),
-                questionId, question.authorId(), answer.id(), actor.userId(), question.title().value()
+                EventIds.next(), clock.instant(),
+                answer.id(), questionId, answer.authorId(), question.authorId(), question.title().value()
         ));
 
         listCache.invalidateAll();
@@ -104,8 +102,8 @@ public class AnswerCommandService {
         questions.save(question);
 
         events.publish(new AnswerAcceptedEvent(
-                com.campusoverflow.shared.event.EventIds.next(), clock.instant(),
-                questionId, question.authorId(), answerId, answer.authorId(), actor.userId(), question.title().value()
+                EventIds.next(), clock.instant(),
+                answerId, questionId, answer.authorId(), question.authorId(), actor.userId(), question.title().value()
         ));
 
         audit.record("ANSWER_ACCEPTED", actor.userId(), "ANSWER", String.valueOf(answerId), null);
