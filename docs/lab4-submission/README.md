@@ -53,8 +53,15 @@ mvn -f backend/pom.xml -pl co-qa/co-qa-application -am test \
 - `GET /api/v1/questions?courseId=1` → `total=1`，Redis 出现 `qa:list:1:1:1:20`（列表缓存）与 `qa:views:pending`（浏览数缓冲）；
 - `SELECT ... FROM qa_question` → 恰好一行，`answer_count=0`、`deleted_at=NULL`。
 
-## 4. 还没做完 / 需要别人接手
+## 4. 流程与 SM 产出
+
+作为 Sprint 1 的 SM，评审前需要的文档已补齐：
+
+- Sprint 1 执行记录（计划会结论、两次站会、风险与对策）：[`docs/scrum/sprint-1.md`](../scrum/sprint-1.md)
+- 燃尽图（迭代范围 40 SP，数据截至 11-05 站会，后续站会续绘）：[`docs/scrum/sprint-1-burndown.png`](../scrum/sprint-1-burndown.png)
+- PR 已挂 `Closes #32, #33, #34`（PB-06 发布问题 / PB-07 列表 / PB-08 详情）。
+
+## 5. 还没做完 / 需要别人接手
 
 1. **PR 需要 E 或 B 点 Approve**：GitHub 上作者不能批准自己的 PR，我这侧只能把描述、证据和自检结果补齐。
 2. `AnswerAndVoteServiceTest` 的 2 条红（B 的 T1-03），CI 因此仍是红的；本 PR 的 19 条测试全绿，切到干净 `develop` 也一样红，可据此排除是我引入。
-3. `docs/scrum/sprint-1.md` 与燃尽图更新（SM 职责，评审前完成）。
