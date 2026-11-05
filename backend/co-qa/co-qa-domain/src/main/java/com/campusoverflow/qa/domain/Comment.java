@@ -3,6 +3,7 @@ package com.campusoverflow.qa.domain;
 import com.campusoverflow.shared.domain.BusinessRuleException;
 import com.campusoverflow.shared.domain.Guard;
 import java.time.Instant;
+import java.util.Objects;
 
 /** 评论：挂在问题或回答下，支持一层“二级回复”。 */
 public class Comment {
@@ -30,8 +31,26 @@ public class Comment {
 
     public static Comment post(TargetType targetType, long targetId, long questionId, long authorId, Comment parent,
                                String body, Instant now) {
-        // TODO(S2)：实现 Comment.post——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S2)：Comment.post 尚未实现");
+        Objects.requireNonNull(targetType, "targetType");
+        Objects.requireNonNull(now, "now");
+        String checkedBody = Guard.requireText(body, 2, 600, "QA-1003", "评论");
+
+        Long parentId = null;
+        if (parent != null) {
+            if (parent.parentId() != null) {
+                throw new BusinessRuleException("QA-1016", "只能回复顶层评论");
+            }
+            if (parent.targetType() != targetType || parent.targetId() != targetId
+                    || parent.questionId() != questionId) {
+                throw new BusinessRuleException("QA-1017", "父评论不属于同一目标");
+            }
+            if (parent.id() == null) {
+                throw new BusinessRuleException("QA-1017", "父评论尚未持久化");
+            }
+            parentId = parent.id();
+        }
+
+        return new Comment(null, targetType, targetId, questionId, authorId, parentId, checkedBody, now);
     }
 
     public static Comment reconstitute(Long id, TargetType targetType, long targetId, long questionId, long authorId,

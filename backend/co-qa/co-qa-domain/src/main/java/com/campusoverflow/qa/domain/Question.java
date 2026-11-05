@@ -8,8 +8,14 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * 问题聚合根。状态变更只能通过本类的领域方法，字段对外只读；
- * 回答数、得分、浏览数三个计数器由仓储的原子 UPDATE 维护，聚合内只保留快照值用于判断业务规则。
+ * 问题聚合根——问答核心不变量的守护者。
+ * <ul>
+ *   <li>最多只有一个被采纳的答案，且采纳后不可更改；</li>
+ *   <li>只有提问者或课程管理者（教师/助教/管理员）可以采纳；</li>
+ *   <li>已删除的问题不能再被回答、编辑或采纳；</li>
+ *   <li>提问者只能删除尚无回答的问题，课程管理者可删除任意问题。</li>
+ * </ul>
+ * score / answerCount / viewCount 为反规范化计数器，由仓储以原子 SQL 维护，不在此处修改。
  */
 public class Question {
 
@@ -29,8 +35,8 @@ public class Question {
     private final long version;
 
     private Question(Long id, long authorId, Long courseId, Title title, MarkdownBody body, Tags tags,
-                     Long acceptedAnswerId, int score, int answerCount, int viewCount,
-                     Instant createdAt, Instant updatedAt, Instant deletedAt, long version) {
+                     Long acceptedAnswerId, int score, int answerCount, int viewCount, Instant createdAt,
+                     Instant updatedAt, Instant deletedAt, long version) {
         this.id = id;
         this.authorId = authorId;
         this.courseId = courseId;
@@ -47,12 +53,15 @@ public class Question {
         this.version = version;
     }
 
-    /** 发布新问题：未落库（id 为空），计数归零，未采纳、未删除。 */
     public static Question post(long authorId, Long courseId, Title title, MarkdownBody body, Tags tags, Instant now) {
-        return new Question(null, authorId, courseId, title, body, tags, null, 0, 0, 0, now, now, null, 0L);
+        Objects.requireNonNull(title, "title");
+        Objects.requireNonNull(body, "body");
+        Objects.requireNonNull(tags, "tags");
+        Objects.requireNonNull(now, "now");
+        return new Question(null, authorId, courseId, title, body, tags, null, 0, 0, 0,
+                now, now, null, 0);
     }
 
-    /** 从数据库重构（不做业务校验，参数顺序与 JPA 实体一一对应）。 */
     public static Question reconstitute(Long id, long authorId, Long courseId, Title title, MarkdownBody body,
                                         Tags tags, Long acceptedAnswerId, int score, int answerCount, int viewCount,
                                         Instant createdAt, Instant updatedAt, Instant deletedAt, long version) {
@@ -60,136 +69,89 @@ public class Question {
                 viewCount, createdAt, updatedAt, deletedAt, version);
     }
 
-    /** 编辑标题 / 正文 / 标签。只有作者或课程管理者可以编辑，已删除的问题不可编辑。 */
-    public void edit(Actor operator, boolean actorManagesCourse, Title newTitle, MarkdownBody newBody, Tags newTags,
+    public void edit(Actor actor, boolean actorManagesCourse, Title newTitle, MarkdownBody newBody, Tags newTags,
                      Instant now) {
         ensureNotDeleted();
-        if (!operator.is(authorId) && !actorManagesCourse) {
-            throw new ForbiddenException("QA-1010", "只有作者或课程管理者可以编辑该问题");
+        if (actor.userId() != authorId && !actorManagesCourse) {
+            throw new ForbiddenException("QA-3002", "只有作者或课程管理者可以编辑问题");
         }
-        this.title = Objects.requireNonNull(newTitle);
-        this.body = Objects.requireNonNull(newBody);
-        this.tags = Objects.requireNonNull(newTags);
-        this.updatedAt = now;
+        this.title = Objects.requireNonNull(newTitle, "newTitle");
+        this.body = Objects.requireNonNull(newBody, "newBody");
+        this.tags = Objects.requireNonNull(newTags, "newTags");
+        this.updatedAt = Objects.requireNonNull(now, "now");
     }
 
-    /** 采纳最佳答案：只能采纳一次，且回答必须属于本问题、未被删除。 */
-    public void accept(Answer answer, Actor operator, boolean actorManagesCourse) {
+    /** 采纳最佳答案。 */
+    public void accept(Answer answer, Actor actor, boolean actorManagesCourse) {
+        Objects.requireNonNull(answer, "answer");
         ensureNotDeleted();
+        if (actor.userId() != authorId && !actorManagesCourse) {
+            throw new ForbiddenException("QA-3001", "只有提问者或课程管理者可以采纳回答");
+        }
         if (acceptedAnswerId != null) {
-            throw new ConflictException("QA-1011", "该问题已采纳过回答，不能重复采纳");
+            throw new ConflictException("QA-2002", "问题已经采纳过回答");
         }
-        if (!operator.is(authorId) && !actorManagesCourse) {
-            throw new ForbiddenException("QA-1012", "只有提问者或课程管理者可以采纳回答");
-        }
-        if (answer == null) {
-            throw new BusinessRuleException("QA-1013", "回答不存在");
-        }
-        if (answer.questionId() != id) {
-            throw new BusinessRuleException("QA-1013", "该回答不属于本问题");
+        if (id == null || answer.questionId() != id) {
+            throw new BusinessRuleException("QA-1010", "回答不属于该问题");
         }
         if (answer.isDeleted()) {
-            throw new BusinessRuleException("QA-1014", "已删除的回答不能被采纳");
+            throw new BusinessRuleException("QA-1011", "已删除的回答不能被采纳");
+        }
+        if (answer.id() == null) {
+            throw new BusinessRuleException("QA-1010", "回答尚未持久化");
         }
         this.acceptedAnswerId = answer.id();
     }
 
-    /**
-     * 软删除：课程管理者可删任意问题；作者只能删还没有回答的问题（避免“问完就删、留下无主回答”）。
-     */
-    public void softDelete(Actor operator, boolean actorManagesCourse, Instant now) {
+    public void softDelete(Actor actor, boolean actorManagesCourse, Instant now) {
         ensureNotDeleted();
-        if (!actorManagesCourse) {
-            if (!operator.is(authorId)) {
-                throw new ForbiddenException("QA-1015", "只有作者或课程管理者可以删除该问题");
-            }
-            if (answerCount > 0 || acceptedAnswerId != null) {
-                throw new BusinessRuleException("QA-1015", "该问题已有回答，作者不能删除，请联系课程管理者");
-            }
+        if (!actorManagesCourse && actor.userId() != authorId) {
+            throw new ForbiddenException("QA-3003", "只有作者或课程管理者可以删除问题");
         }
-        this.deletedAt = now;
-        this.updatedAt = now;
+        if (!actorManagesCourse && answerCount > 0) {
+            throw new BusinessRuleException("QA-1013", "已有回答的问题不能由提问者删除");
+        }
+        this.deletedAt = Objects.requireNonNull(now, "now");
+        this.updatedAt = this.deletedAt;
     }
 
-    /** 回答前的守卫：已删除的问题不接受新回答。 */
     public void ensureOpenForAnswers() {
         ensureNotDeleted();
     }
 
-    public void ensureNotDeleted() {
+    private void ensureNotDeleted() {
         if (deletedAt != null) {
-            throw new BusinessRuleException("QA-1020", "该问题已被删除");
+            throw new BusinessRuleException("QA-1020", "问题已删除");
         }
-    }
-
-    public boolean isAccepted(long answerId) {
-        return acceptedAnswerId != null && acceptedAnswerId == answerId;
     }
 
     public boolean isDeleted() {
         return deletedAt != null;
     }
 
+    public boolean isAccepted(long answerId) {
+        return acceptedAnswerId != null && acceptedAnswerId == answerId;
+    }
+
     public void assignId(long id) {
         if (this.id != null) {
-            throw new IllegalStateException("ID 已分配，不能重复赋值");
+            throw new IllegalStateException("ID 已分配");
         }
         this.id = id;
     }
 
-    public Long id() {
-        return id;
-    }
-
-    public long authorId() {
-        return authorId;
-    }
-
-    public Long courseId() {
-        return courseId;
-    }
-
-    public Title title() {
-        return title;
-    }
-
-    public MarkdownBody body() {
-        return body;
-    }
-
-    public Tags tags() {
-        return tags;
-    }
-
-    public Long acceptedAnswerId() {
-        return acceptedAnswerId;
-    }
-
-    public int score() {
-        return score;
-    }
-
-    public int answerCount() {
-        return answerCount;
-    }
-
-    public int viewCount() {
-        return viewCount;
-    }
-
-    public Instant createdAt() {
-        return createdAt;
-    }
-
-    public Instant updatedAt() {
-        return updatedAt;
-    }
-
-    public Instant deletedAt() {
-        return deletedAt;
-    }
-
-    public long version() {
-        return version;
-    }
+    public Long id() { return id; }
+    public long authorId() { return authorId; }
+    public Long courseId() { return courseId; }
+    public Title title() { return title; }
+    public MarkdownBody body() { return body; }
+    public Tags tags() { return tags; }
+    public Long acceptedAnswerId() { return acceptedAnswerId; }
+    public int score() { return score; }
+    public int answerCount() { return answerCount; }
+    public int viewCount() { return viewCount; }
+    public Instant createdAt() { return createdAt; }
+    public Instant updatedAt() { return updatedAt; }
+    public Instant deletedAt() { return deletedAt; }
+    public long version() { return version; }
 }

@@ -24,12 +24,12 @@
 | `main` | 禁止绕过 | ✅ Enforce for administrators 已开启 |
 | `main` | 直推 | ❌ 禁止，必须走 PR |
 | `main` | 强推 / 删除分支 | ❌ 均禁止 |
-| `main` | 必需状态检查（CI） | 未启用；CI 结果作为参考，不阻断合并 |
+| `main` | 必需状态检查（CI） | ✅ 已启用：后端构建与验证、前端构建、容器镜像构建 |
 | `develop` | PR 审批人数 | ≥ 1 个 Approve，且作者不能批准自己的 PR |
 | `develop` | 直推 | ❌ 禁止，必须走 PR |
 | `develop` | 强推 / 删除分支 | ❌ 均禁止 |
-| `develop` | 管理员绕过 | 允许（Enforce for administrators 未开启） |
-| `develop` | 必需状态检查（CI） | 未启用；CI 结果作为参考，不阻断合并 |
+| `develop` | 管理员绕过 | ✅ 已关闭（Enforce for administrators 已开启） |
+| `develop` | 必需状态检查（CI） | ✅ 已启用：后端构建与验证、前端构建 |
 | 两分支 | 新提交使旧 Approve 失效 | ✅ Dismiss stale approvals 已开启 |
 | 两分支 | 合并前必须解决会话 | ✅ 已开启 |
 
@@ -51,7 +51,7 @@
 ## 3. 团队章程 v1.0
 
 - 文件：[`docs/team/charter-v1.0.md`](../team/charter-v1.0.md)
-- 合并记录：PR [#6](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/6)，合并提交 `e1caa47`
+- 合并记录：PR [#6](https://github.com/2123345397-star/CampusOverflow/pull/6)，合并提交 `e1caa47`
 - 签署：全体 5 人（魏志国、陈明哲、刘俊琒、青岑、房国栋），评审中含 1 个 Approve
 - 覆盖章节：团队价值观、角色与职责、沟通约定、开发规约、DoD 初版、签字
 
@@ -63,24 +63,24 @@
 
 ## 5. 成员 PR 合并截图
 
-每人一个 hello PR，均已合并。截图文件命名 `pr-<拼音>.png`，放在本目录。
+每人一个 hello PR，均在**旧个人仓库**（`2123345397-star/CampusOverflow`）合并。本章两个表格中的 PR 编号与合并提交均属于该仓库，链接已指向旧仓库；截图文件命名 `pr-<拼音>.png`，放在本目录。
 
 | 成员 | 角色 | PR | 分支 | 合并提交 | 评审记录 | 截图 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 魏志国 | PO | [#5](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/5) | `feature/weizhiguo-hello` | `ee0b1a3` | Liujunfeng520 评论 | `pr-weizhiguo.png` |
-| 陈明哲 | SM | [#9](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/9) | `cmz666-BOT-patch-1` | `bc82971` | 无正式 Review ⚠️ | `pr-chenmingzhe.png` |
-| 刘俊琒 | SM | [#7](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/7) | `feature/liujunfeng-hello` | `35c711e` | cmz666-BOT **Approve** | `pr-liujunfeng.png` |
-| 青岑 | Developer / QA | [#4](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/4) | `feature/qing963666-hello` | `c6b16d3` | 无正式 Review ⚠️ | `pr-qingcen.png` |
-| 房国栋 | Developer | [#1](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/1) | `feature/fangguodong-hello` | `e8f1d8b` | 2123345397-star 评论 | `pr-fangguodong.png` |
+| 魏志国 | PO | [#5](https://github.com/2123345397-star/CampusOverflow/pull/5) | `feature/weizhiguo-hello` | `ee0b1a3` | Liujunfeng520 评论 | `pr-weizhiguo.png` |
+| 陈明哲 | SM | [#9](https://github.com/2123345397-star/CampusOverflow/pull/9) | `cmz666-BOT-patch-1` | `bc82971` | 无正式 Review ⚠️ | `pr-chenmingzhe.png` |
+| 刘俊琒 | SM | [#7](https://github.com/2123345397-star/CampusOverflow/pull/7) | `feature/liujunfeng-hello` | `35c711e` | cmz666-BOT **Approve** | `pr-liujunfeng.png` |
+| 青岑 | Developer / QA | [#4](https://github.com/2123345397-star/CampusOverflow/pull/4) | `feature/qing963666-hello` | `c6b16d3` | 无正式 Review ⚠️ | `pr-qingcen.png` |
+| 房国栋 | Developer | [#1](https://github.com/2123345397-star/CampusOverflow/pull/1) | `feature/fangguodong-hello` | `e8f1d8b` | 2123345397-star 评论 | `pr-fangguodong.png` |
 
 其他团队协作 PR：
 
 | PR | 内容 | 合并提交 | 评审 |
 | --- | --- | --- | --- |
-| [#6](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/6) | 团队章程 v1.0 | `e1caa47` | 青岑 **Approve** |
-| [#3](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/3) | 角色承诺书 | `1a1e1a9` | 青岑 评论 |
-| [#11](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/11) | 第一次站会纪要 | `e9a1224` | 2123345397-star 评论 |
-| [#2](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/2) | 青岑 hello 初版（改名后关闭） | — | 房国栋 Request changes |
+| [#6](https://github.com/2123345397-star/CampusOverflow/pull/6) | 团队章程 v1.0 | `e1caa47` | 青岑 **Approve** |
+| [#3](https://github.com/2123345397-star/CampusOverflow/pull/3) | 角色承诺书 | `1a1e1a9` | 青岑 评论 |
+| [#11](https://github.com/2123345397-star/CampusOverflow/pull/11) | 第一次站会纪要 | `e9a1224` | 2123345397-star 评论 |
+| [#2](https://github.com/2123345397-star/CampusOverflow/pull/2) | 青岑 hello 初版（改名后关闭） | — | 房国栋 Request changes |
 
 ---
 
@@ -144,8 +144,9 @@ git ls-files | grep -E '(^|/)\.env$|node_modules/|/target/|/dist/'
 
 1. 通过 GitHub API 核验 `main`、`develop` 的实际保护配置，更新第 1 节规则表；
 2. 明确“至少 1 名 SM/PO”为团队约定——GitHub 无法按角色强制审批（Code Owner 审批未开启）；
-3. 明确两个分支均未启用“必需状态检查（CI）”：团队决定不开启 CI 门禁，CI 结果仅作参考、不阻断合并；
-4. 原截图仅包含规则列表，不能单独证明规则内容，第 1 节已补充核验方式与核验日期。
+3. 按 V3 要求配置必需状态检查：`develop` 为“后端构建与验证、前端构建”，`main` 另加“容器镜像构建”；同时开启 `develop` 的 Enforce for administrators，撤回“不开启 CI 门禁”的旧决定；
+4. 原截图仅包含规则列表，不能单独证明规则内容，第 1 节已补充核验方式与核验日期；
+5. 待办：GitHub Actions 当前无运行记录（0 次），需 A4 恢复 CI 触发；恢复前 PR 会停留在“等待必需检查”。
 
 ---
 

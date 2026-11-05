@@ -22,9 +22,9 @@
 | 徽章 | Badge | 用户达成条件后获得的荣誉标识 | 声誉上下文(co-reputation) |
 | 授予徽章 | GrantBadge | 系统自动给用户发放徽章 | 声誉上下文(co-reputation) |
 | 收回徽章 | RevokeBadge | 条件不满足时回收徽章 | 声誉上下文(co-reputation) |
-| 通知 | Notification | 系统推送给用户的消息 | 通知上下文 |
-| 发送通知 | SendNotification | 系统生成并推送消息 | 通知上下文 |
-| 通知已读 | MarkNotificationRead | 用户查看消息标记为已读 | 通知上下文 |
+| 通知 | Notification | 系统推送给用户的消息 | 发现上下文(co-discovery) |
+| 发送通知 | SendNotification | 系统生成并推送消息 | 发现上下文(co-discovery) |
+| 通知已读 | MarkNotificationRead | 用户查看消息标记为已读 | 发现上下文(co-discovery) |
 | 角色 | Role | 用户权限分组，普通用户、管理员等 | 身份上下文(co-identity) |
 | 账号 | Account | 用户登录凭证，绑定手机号 | 身份上下文(co-identity) |
 | 注册 | Register | 新用户创建账号 | 身份上下文(co-identity) |
@@ -34,3 +34,5 @@
 | 限界上下文 | BoundedContext | 独立业务子域边界 | 领域通用 |
 | 领域事件 | DomainEvent | 领域内发生、可被其他模块感知的事情 | 领域通用 |
 | 命令 | Command | 用户发起，要求系统执行动作的请求 | 领域通用 |
+
+> 通知不是独立限界上下文，属于 Discovery 的通用能力；V3 统一为 4 个限界上下文：Identity、Q&A、Reputation、Discovery。
