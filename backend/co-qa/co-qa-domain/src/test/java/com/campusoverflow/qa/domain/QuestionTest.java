@@ -86,6 +86,101 @@ class QuestionTest {
         }
     }
 
+    /**
+     * 边界值用例（Lab 4 课后第 3 天）：标题 9/10/150/151、正文 19/20/30000/30001、
+     * 标签去重后 5/6 个、重复采纳、已删问题编辑。共 12 条，全部贴着不变式的两侧各取一个点。
+     */
+    @Nested
+    class Boundaries {
+
+        @Test
+        void titleOfNineCodePointsIsRejected() {
+            assertThatThrownBy(() -> new Title("一".repeat(9)))
+                    .isInstanceOf(BusinessRuleException.class)
+                    .hasMessageContaining("10–150")
+                    .hasMessageContaining("当前 9");
+        }
+
+        @Test
+        void titleOfTenCodePointsIsAccepted() {
+            assertThat(new Title("一".repeat(10)).value()).isEqualTo("一".repeat(10));
+        }
+
+        @Test
+        void titleOf150CodePointsIsAccepted() {
+            assertThat(new Title("标".repeat(150)).value()).hasSize(150);
+        }
+
+        @Test
+        void titleOf151CodePointsIsRejected() {
+            assertThatThrownBy(() -> new Title("标".repeat(151)))
+                    .isInstanceOf(BusinessRuleException.class)
+                    .hasMessageContaining("当前 151");
+        }
+
+        @Test
+        void questionBodyOf19CodePointsIsRejected() {
+            assertThatThrownBy(() -> MarkdownBody.ofQuestion("正".repeat(19)))
+                    .isInstanceOf(BusinessRuleException.class)
+                    .hasMessageContaining("20–30000");
+        }
+
+        @Test
+        void questionBodyOf20CodePointsIsAccepted() {
+            assertThat(MarkdownBody.ofQuestion("正".repeat(20)).value()).hasSize(20);
+        }
+
+        @Test
+        void questionBodyOf30000CodePointsIsAccepted() {
+            assertThat(MarkdownBody.ofQuestion("正".repeat(30_000)).value()).hasSize(30_000);
+        }
+
+        @Test
+        void questionBodyOf30001CodePointsIsRejected() {
+            assertThatThrownBy(() -> MarkdownBody.ofQuestion("正".repeat(30_001)))
+                    .isInstanceOf(BusinessRuleException.class)
+                    .hasMessageContaining("当前 30001");
+        }
+
+        @Test
+        void exactlyFiveDistinctTagsAreAccepted() {
+            Tags tags = Tags.of(List.of("java", "mysql", "redis", "spring", "数据结构"));
+
+            assertThat(tags.names()).containsExactly("java", "mysql", "redis", "spring", "数据结构");
+        }
+
+        @Test
+        void sixInputTagsCollapsingToFourDistinctAreAccepted() {
+            // 1–5 的上限作用在“归一化去重之后”的集合上：Java / java / JAVA 只算一个
+            Tags tags = Tags.of(List.of("Java", "java", "JAVA", "spring", "mysql", "redis"));
+
+            assertThat(tags.names()).containsExactly("java", "spring", "mysql", "redis");
+        }
+
+        @Test
+        void acceptingTheSameAnswerTwiceIsConflict() {
+            Question q = persistedQuestion();
+            Answer a = persistedAnswer(q, OTHER.userId(), 50);
+            q.accept(a, ASKER, false);
+
+            assertThatThrownBy(() -> q.accept(a, ASKER, false))
+                    .isInstanceOf(ConflictException.class)
+                    .hasMessageContaining("已经采纳");
+            assertThat(q.acceptedAnswerId()).isEqualTo(50L);
+        }
+
+        @Test
+        void deletedQuestionCannotBeEdited() {
+            Question q = persistedQuestion();
+            q.softDelete(ASKER, false, NOW);
+
+            assertThatThrownBy(() -> q.edit(ASKER, false, new Title("删除之后再改标题应该被拒绝"),
+                    MarkdownBody.ofQuestion("这段正文用来验证已软删除的问题不允许继续编辑。"), q.tags(), NOW))
+                    .isInstanceOf(BusinessRuleException.class)
+                    .hasMessageContaining("已删除");
+        }
+    }
+
     @Nested
     class Accepting {
         @Test
