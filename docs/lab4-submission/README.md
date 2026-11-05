@@ -21,7 +21,7 @@
 
 | 测试类 | 条数 | 结果 | 覆盖点 |
 | --- | --- | --- | --- |
-| `co-qa-domain` 全模块 | 33 | ✅ 全绿 | 含本次新增的 12 条边界用例 |
+| `co-qa-domain` 全模块 | 42 | ✅ 全绿 | 本次交付时 33 条（含新增 12 条边界用例），合并后随队友补充增至 42 |
 | `QuestionTest`（含 `Boundaries`） | 24 | ✅ | 标题 9/10/150/151、正文 19/20/30000/30001、标签去重后 5/6、重复采纳、已删问题编辑 |
 | `QuestionCommandServiceTest` | 9 | ✅ | 事件恰好一次、标签差集、缓存失效、404/403/422 分支 |
 | `QuestionQueryServiceTest` | 6 | ✅ | 缓存旁路、作者回填、投票键、答案排序、limit 夹取 |
@@ -35,8 +35,8 @@ mvn -f backend/pom.xml -pl co-qa/co-qa-application -am test \
     -Dtest='QaQueryApiImplTest,QuestionCommandServiceTest,QuestionQueryServiceTest'
 ```
 
-> `co-qa-application` 全量 28 条中有 2 条红（`AnswerAndVoteServiceTest` 的 `submitAnswerPublishesEventAndBumpsCounter`、`onlyAskerOrCourseManagerCanAccept`）。
-> 这两条属 B（魏志国）的 T1-03，在**干净的 `develop` 工作树**上同样失败（断言期望 1L/2L 与实际 2L/1L 对调），不是本 PR 引入；已在 PR 里留给 B 处理。
+> 交付时 `co-qa-application` 全量 28 条中有 2 条红（`AnswerAndVoteServiceTest` 的 `submitAnswerPublishesEventAndBumpsCounter`、`onlyAskerOrCourseManagerCanAccept`）。
+> 这两条属 B（魏志国）的 T1-03，在**干净的 `develop` 工作树**上同样失败（断言期望 1L/2L 与实际 2L/1L 对调），不是本 PR 引入；已在 PR 里留给 B 处理，**后由 B 的 PR #89 修复，合并后 28 条全绿**。
 
 ## 3. 端到端验证（POST → GET，数据库确认落行）
 
