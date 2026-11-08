@@ -26,7 +26,24 @@ public class ReconciliationService {
 
     @Transactional(readOnly = true)
     public List<Mismatch> reconcile() {
-        // TODO(S3)：实现 ReconciliationService.reconcile——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：ReconciliationService.reconcile 尚未实现");
-    }
-}
+        List<Mismatch> mismatches = new java.util.ArrayList<>();
+
+        // 1. 查出所有账户
+        List<ReputationAccount> allAccounts = accounts.findAll();
+
+        // 2. 一次性查出所有用户的流水汇总 (不需要传参数)
+        Map<Long, Long> ledgerSums = ledger.sumByUser();
+
+        for (ReputationAccount account : allAccounts) {
+            // 3. 从 Map 里拿出该用户的流水总和，如果没有流水默认是 0
+            long ledgerSum = ledgerSums.getOrDefault(account.userId(), 0L);
+
+            // 4. 对比账户余额与流水总和
+            if (account.reputation() != ledgerSum) {
+                // 如果对不上，记录一条异常
+                mismatches.add(new Mismatch(account.userId(), account.reputation(), ledgerSum));
+            }
+        }
+
+        return mismatches;
+    }}
