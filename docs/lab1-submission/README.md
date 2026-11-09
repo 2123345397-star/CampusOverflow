@@ -82,6 +82,12 @@
 | [#11](https://github.com/2123345397-star/CampusOverflow/pull/11) | 第一次站会纪要 | `e9a1224` | 2123345397-star 评论 |
 | [#2](https://github.com/2123345397-star/CampusOverflow/pull/2) | 青岑 hello 初版（改名后关闭） | — | 房国栋 Request changes |
 
+## 6. 成员环境截图（T0-03）
+
+| 成员 | 截图 | 环境 |
+| --- | --- | --- |
+| 青岑 | [`screenshots/env-qingcen.png`](screenshots/env-qingcen.png) | JDK 21.0.10 / Maven 3.9.2 / Node v26.13.0 / Docker 29.9.2，`docker ps` 正常 |
+
 ---
 
 ## 提交物状态
@@ -94,6 +100,7 @@
 | 4 | 角色承诺书 | `docs/team/role-commitment.md` | ✅ 已补全 | 陈明哲 |
 | 5 | 成员 PR 合并截图 | `pr-<拼音>.png` ×5 | ✅ | 各成员 |
 | + | 初始 Backlog | `backlog.md` | ✅ | 魏志国 |
+| + | 成员环境截图（青岑） | `screenshots/env-qingcen.png` | ✅ | 青岑 |
 
 ---
 
@@ -122,6 +129,7 @@ git ls-files | grep -E '(^|/)\.env$|node_modules/|/target/|/dist/'
 - [x] 看板截图 `lab1-board.png` 已就位
 - [x] 分支保护截图 `screenshots/branch-protection.png` 已就位（规则列表页；规则内容见第 1 节 API 核验表）
 - [x] 每位成员的 PR 合并截图：5 张齐全
+- [x] 青岑环境截图 `screenshots/env-qingcen.png` 已就位（JDK 21.0.10 / Maven 3.9.2 / Node v26.13.0 / Docker 29.9.2）
 
 ---
 
