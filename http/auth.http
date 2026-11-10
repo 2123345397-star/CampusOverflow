@@ -4,14 +4,14 @@
 # 3. 首次运行前修改 username/email；重复运行会因用户名已存在返回 409
 
 ### 0. 获取 CSRF
-GET http://localhost:8080/api/v1/auth/csrf
+GET {{host}}/api/v1/auth/csrf
 > {%
   client.global.set("csrfHeader", response.body.headerName);
   client.global.set("csrfToken", response.body.token);
 %}
 
 ### 1. 注册
-POST http://localhost:8080/api/v1/auth/register
+POST {{host}}/api/v1/auth/register
 Content-Type: application/json
 {{csrfHeader}}: {{csrfToken}}
 
@@ -25,7 +25,7 @@ Content-Type: application/json
 }
 
 ### 2. 登录
-POST http://localhost:8080/api/v1/auth/login
+POST {{host}}/api/v1/auth/login
 Content-Type: application/json
 {{csrfHeader}}: {{csrfToken}}
 
@@ -35,10 +35,10 @@ Content-Type: application/json
 }
 
 ### 3. 当前用户
-GET http://localhost:8080/api/v1/auth/me
+GET {{host}}/api/v1/auth/me
 
 ### 4. 课程列表
-GET http://localhost:8080/api/v1/courses
+GET {{host}}/api/v1/courses
 > {%
   if (response.body.length > 0) {
     client.global.set("courseId", response.body[0].id);
@@ -46,12 +46,12 @@ GET http://localhost:8080/api/v1/courses
 %}
 
 ### 5. 登录后重新获取 CSRF
-GET http://localhost:8080/api/v1/auth/csrf
+GET {{host}}/api/v1/auth/csrf
 > {%
   client.global.set("csrfHeader", response.body.headerName);
   client.global.set("csrfToken", response.body.token);
 %}
 
 ### 6. 加入课程
-POST http://localhost:8080/api/v1/courses/{{courseId}}/join
+POST {{host}}/api/v1/courses/{{courseId}}/join
 {{csrfHeader}}: {{csrfToken}}
