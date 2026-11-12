@@ -1,3 +1,7 @@
+/*
+ * 行走骨架（Walking Skeleton）：Sprint 1 临时空实现，只改方法体、不改签名；Sprint 2 随正式实现移除。
+ * tech-debt Issue #44：https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/issues/44
+ */
 package com.campusoverflow.reputation.application;
 
 import com.campusoverflow.identity.api.event.UserRegisteredEvent;
