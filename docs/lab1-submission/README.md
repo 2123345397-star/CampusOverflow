@@ -82,19 +82,12 @@
 | [#11](https://github.com/2123345397-star/CampusOverflow/pull/11) | 第一次站会纪要 | `e9a1224` | 2123345397-star 评论 |
 | [#2](https://github.com/2123345397-star/CampusOverflow/pull/2) | 青岑 hello 初版（改名后关闭） | — | 房国栋 Request changes |
 
-## 6. 成员环境截图（T0-03）
-
-| 成员 | 截图 | 环境 |
-| --- | --- | --- |
-| 青岑 | [`screenshots/env-qingcen.png`](screenshots/env-qingcen.png) | JDK 21.0.10 / Maven 3.9.2 / Node v26.13.0 / Docker 29.9.2，`docker ps` 正常 |
-
----
 
 ## 6. 开发环境版本汇总（E3）
 
 - 汇总表：[`env-matrix.md`](env-matrix.md)（五人 JDK/Maven/Node/Docker 版本 + `mvn clean test` 结果登记）
 - 原始证据目录：[`env/`](env/)（目录说明见 [`env/README.md`](env/README.md)）
-  - 已归档：`env/env-fangguodong.png`、`env/env-fangguodong.txt`
+  - 已归档：`env/env-fangguodong.png`、`env/env-fangguodong.txt`、`env/env-qingcen.png`、`env/env-qingcen.txt`
   - 其余四人：`env/env-<拼音>.png` + `env/env-<拼音>.txt` 待各自采集
 - 采集脚本：[`scripts/dev-env/collect-env.ps1`](../../scripts/dev-env/collect-env.ps1) / [`collect-env.sh`](../../scripts/dev-env/collect-env.sh)
 - 达标线：Git 2.40+、JDK 21、Node.js 20+、Docker 可运行
@@ -124,7 +117,7 @@
 | 4 | 角色承诺书 | `docs/team/role-commitment.md` | ✅ 已补全 | 陈明哲 |
 | 5 | 成员 PR 合并截图 | `pr-<拼音>.png` ×5 | ✅ | 各成员 |
 | + | 初始 Backlog | `backlog.md` | ✅ | 魏志国 |
-| + | 成员环境截图（青岑） | `screenshots/env-qingcen.png` | ✅ | 青岑 |
+| + | 成员环境截图（青岑） | `env/env-qingcen.png` | ✅ | 青岑 |
 
 ---
 
@@ -153,7 +146,7 @@ git ls-files | grep -E '(^|/)\.env$|node_modules/|/target/|/dist/'
 - [x] 看板截图 `lab1-board.png` 已就位
 - [x] 分支保护截图 `screenshots/branch-protection.png` 已就位（规则列表页；规则内容见第 1 节 API 核验表）
 - [x] 每位成员的 PR 合并截图：5 张齐全
-- [x] 青岑环境截图 `screenshots/env-qingcen.png` 已就位（JDK 21.0.10 / Maven 3.9.2 / Node v26.13.0 / Docker 29.9.2）
+- [x] 青岑环境截图 `env/env-qingcen.png` 已就位（JDK 21.0.10 / Maven 3.9.2 / Node v26.13.0 / Docker 29.9.2）
 
 ---
 
