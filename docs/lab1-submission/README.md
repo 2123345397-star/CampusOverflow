@@ -90,6 +90,30 @@
 
 ---
 
+## 6. 开发环境版本汇总（E3）
+
+- 汇总表：[`env-matrix.md`](env-matrix.md)（五人 JDK/Maven/Node/Docker 版本 + `mvn clean test` 结果登记）
+- 原始证据目录：[`env/`](env/)（目录说明见 [`env/README.md`](env/README.md)）
+  - 已归档：`env/env-fangguodong.png`、`env/env-fangguodong.txt`
+  - 其余四人：`env/env-<拼音>.png` + `env/env-<拼音>.txt` 待各自采集
+- 采集脚本：[`scripts/dev-env/collect-env.ps1`](../../scripts/dev-env/collect-env.ps1) / [`collect-env.sh`](../../scripts/dev-env/collect-env.sh)
+- 达标线：Git 2.40+、JDK 21、Node.js 20+、Docker 可运行
+- 已知情况：`backend` 整体 `mvn clean test` 现阶段为红（`co-qa-domain` 的 `TODO(S2)` 桩未实现），
+  按「整体红 + 附原因」与「已实现模块绿」两段取证，避免被误判为环境问题；日志见 [`logs/mvn-test-fangguodong.log`](logs/mvn-test-fangguodong.log)
+
+## 7. 身份绑定核查（E4）
+
+- 核查报告：[`identity-audit.md`](identity-audit.md)
+- 结论：提交邮箱 `W13636786666@163.com` 已验证但绑在个人小号 `Baigui-Yexing` 上，
+  课程账号 `2177023844` 贡献为 0；已改用课程账号 noreply 邮箱
+- 本仓库新提交（2026-10-29 之后）作者均为
+  `房国栋 <333220585+2177023844@users.noreply.github.com>`
+- 历史提交（旧仓库 `main`）的处置方案见 `identity-audit.md` §9：推荐把邮箱从小号换绑到课程账号，
+  GitHub 会按邮箱自动重新归属，无需改写提交
+- 审计脚本：[`scripts/dev-env/audit-authors.ps1`](../../scripts/dev-env/audit-authors.ps1) / [`audit-authors.sh`](../../scripts/dev-env/audit-authors.sh)
+
+---
+
 ## 提交物状态
 
 | # | 提交物 | 路径 | 状态 | 负责人 |

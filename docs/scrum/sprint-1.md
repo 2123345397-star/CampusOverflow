@@ -4,6 +4,7 @@
 > 时间盒：**2026-11-03（周二）～ 2026-11-13（周五）**，共 9 个工作日
 > 计划与容量基线：[`docs/sprint/sprint-1-plan.md`](../sprint/sprint-1-plan.md)；范围来源：[`docs/backlog/product-backlog.md`](../backlog/product-backlog.md)
 > 燃尽图：[`sprint-1-burndown.png`](sprint-1-burndown.png)
+> 评审演示脚本（8 条验收场景的点选步骤）：[`sprint-1-demo.md`](sprint-1-demo.md)
 
 ---
 

@@ -1,5 +1,6 @@
 package com.campusoverflow.discovery.domain.notification;
 
+import com.campusoverflow.shared.domain.BusinessRuleException;
 import com.campusoverflow.shared.domain.ForbiddenException;
 import java.time.Instant;
 import java.util.Objects;
@@ -28,10 +29,19 @@ public class Notification {
         this.createdAt = createdAt;
     }
 
+    /** 标题最大长度，超出部分截断，避免通知列表被长标题擑破。 */
+    public static final int MAX_TITLE_LENGTH = 200;
+
     public static Notification create(long recipientId, NotificationType type, String title, String link,
                                       String sourceEventId, Instant now) {
-        // TODO(S3)：实现 Notification.create——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：Notification.create 尚未实现");
+        String normalized = title == null ? "" : title.strip();
+        if (normalized.isEmpty()) {
+            throw new BusinessRuleException("DIS-1002", "通知标题不能为空");
+        }
+        if (normalized.length() > MAX_TITLE_LENGTH) {
+            normalized = normalized.substring(0, MAX_TITLE_LENGTH);
+        }
+        return new Notification(null, recipientId, type, normalized, link, sourceEventId, false, now);
     }
 
     public static Notification reconstitute(Long id, long recipientId, NotificationType type, String title,
@@ -39,9 +49,12 @@ public class Notification {
         return new Notification(id, recipientId, type, title, link, sourceEventId, read, createdAt);
     }
 
+    /** 只有接收者本人可以标记已读；重复标记幂等（已读再标记不报错）。 */
     public void markRead(long actorId) {
-        // TODO(S3)：实现 Notification.markRead——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：Notification.markRead 尚未实现");
+        if (actorId != recipientId) {
+            throw new ForbiddenException("DIS-3001", "只能标记自己的通知为已读");
+        }
+        this.read = true;
     }
 
     public void assignId(long id) {
