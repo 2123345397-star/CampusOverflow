@@ -54,3 +54,24 @@ select id, question_id, author_id, score from campus_overflow.qa_answer;
 6. 通过后 `acceptedAnswerId = answer.id()`
 
 对应测试：`QuestionTest.Accepting` 5 条、`AnswerAndVoteServiceTest` 4/4 全绿。
+
+## 六、QuestionRef 字段确认（与 A 刘俊琒）
+
+悬赏需要判断“问题是否还开放”，`BountyService.open` 目前没有新增 `questionOpen` 字段，而是用现有发布语言计算：
+
+```java
+boolean questionOpen = !question.deleted() && question.acceptedAnswerId() == null;
+```
+
+因此 `QuestionRef(id, authorId, courseId, title, acceptedAnswerId, deleted)` 字段够用，不需要改 `co-qa-api` 的契约。
+
+## 七、DoD 自查（团队 DoD 共 6 条）
+
+| # | DoD 条目 | 证据 | 状态 |
+| --- | --- | --- | --- |
+| 1 | 编译 + 单元测试全绿 | #89 合并；`AnswerAndVoteServiceTest` 4/4、co-qa-application 9/9 | ✅ |
+| 2 | 至少 1 名成员 Approve | #89 经评审合并 | ✅ |
+| 3 | 验收标准逐条通过 | 本文第二节接口结果 + 第三节 SQL；无 P0/P1 | ✅ |
+| 4 | 文档同步 | 本文 + PR #97 的 JDBC 配置修复 | ✅ |
+| 5 | PR 合并、分支删除、看板移 Done | PR #97 已合并；分支/看板卡由 SM 收尾 | ⚠️ 待 SM |
+| 6 | 无明文密钥、无调试残留 | `AnswerCommandService` 无调试注释；开发默认密码来自模板 | ✅ |
