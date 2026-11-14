@@ -103,3 +103,20 @@ article h1 { font-size: 24px; margin-bottom: 4px; }
 .inline-form label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
 .inline-form input { width: 110px; }
 .mention { background: #eaf2ff; color: var(--brand); border-radius: 3px; padding: 0 3px; }
+
+/* ---- S2 声誉与徽章（悬赏倒计时 / 徽章墙 / 流水） ---- */
+.bounty-box { margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
+.bounty-status { font-size: 13px; margin: 0 0 8px; }
+.bounty-status.is-closed { color: var(--muted); }
+.bounty-status.is-urgent { color: var(--danger); font-weight: 600; }
+.rep-summary { display: flex; gap: 28px; align-items: baseline; flex-wrap: wrap; background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+.rep-value { font-size: 24px; font-weight: 700; }
+.badge-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.badge-card { background: #fff; border: 1px solid var(--line); border-radius: 8px; padding: 14px; display: flex; flex-direction: column; gap: 4px; opacity: .55; }
+.badge-card.earned { opacity: 1; border-color: #b7e4c7; }
+.badge-card p { margin: 0; font-size: 13px; }
+.badge-icon { font-size: 22px; }
+.badge-date { font-size: 12px; }
+.delta-up { color: var(--accent); font-weight: 600; }
+.delta-down { color: var(--danger); font-weight: 600; }
+.board tr.is-me { background: #fffbe6; }
