@@ -1,8 +1,3 @@
-/*
- * Sprint 2 已实现 on(AnswerAcceptedEvent) / on(VoteCastEvent)。
- * on(UserRegisteredEvent)、on(AnswerSubmittedEvent)、on(AnswerEndorsedEvent) 仍为行走骨架，
- * 待 A/后续任务补齐；tech-debt Issue #44：https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/issues/44
- */
 package com.campusoverflow.reputation.application;
 
 import com.campusoverflow.identity.api.event.UserRegisteredEvent;
@@ -54,8 +49,10 @@ public class ReputationEventHandlers {
     @EventListener
     @Transactional
     public void on(UserRegisteredEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        if (accounts.findByUserId(e.userId()).isPresent()) {
+            return;
+        }
+        accounts.save(ReputationAccount.open(e.userId(), ReputationRulebook.initialPoints(e.role())));
     }
 
     /** 场景 R-2 的异步后半段：采纳 → 回答者 +15 → 徽章 → 悬赏结算。 */
@@ -90,14 +87,12 @@ public class ReputationEventHandlers {
     @EventListener
     @Transactional
     public void on(AnswerSubmittedEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        badges.grant(e.answerAuthorId(), BadgeType.FIRST_ANSWER);
     }
 
     @EventListener
     @Transactional
     public void on(AnswerEndorsedEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        badges.grant(e.answerAuthorId(), BadgeType.TEACHER_ENDORSED);
     }
 }

@@ -46,3 +46,16 @@
 | 房国栋 | Developer | @2177023844 | 已阅读并同意 | 2026-11-03 |
 
 全员在本 PR 中评论「同意 + 姓名」即视为签字；本文件合并后约定正式生效。
+
+## 六、CI 红灯与事件重放
+
+- **红灯认领**：CI 变红后 30 分钟内在群里认领，先 revert 恢复绿色，再排查原因；不允许 @Disabled 或删测试换绿色。
+- **重放单个事件**（把 `<id>` 换成目标事件 ID）：
+
+  ```sql
+  UPDATE outbox_event SET published_at = NULL, attempts = 0 WHERE id = <id>;
+  ```
+
+- **重放全部未投递事件**：`UPDATE outbox_event SET published_at = NULL, attempts = 0;`
+- 消费端按 `(event_id, user_id, reason)` 唯一键去重，重放不会重复记账或重复发徽章（见 `ReputationEventHandlersTest` 的幂等用例）。
+
