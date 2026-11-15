@@ -1,74 +1,114 @@
 package com.campusoverflow.reputation.application;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.campusoverflow.identity.api.event.UserRegisteredEvent;
 import com.campusoverflow.qa.api.event.AnswerAcceptedEvent;
-import com.campusoverflow.reputation.domain.*;
-import com.campusoverflow.shared.event.IntegrationEventPublisher;
+import com.campusoverflow.qa.api.event.AnswerEndorsedEvent;
+import com.campusoverflow.qa.api.event.AnswerSubmittedEvent;
+import com.campusoverflow.qa.api.event.VoteCastEvent;
+import com.campusoverflow.reputation.api.event.ReputationChangedEvent;
+import com.campusoverflow.reputation.domain.BadgeAward;
+import com.campusoverflow.reputation.domain.BadgeType;
+import com.campusoverflow.reputation.domain.ReputationAccount;
+import com.campusoverflow.reputation.domain.ReputationReason;
+import com.campusoverflow.shared.security.Role;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.Clock;
-import java.time.Instant;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.*;
-
-@ExtendWith(MockitoExtension.class)
+/**
+ * S2 验收重点：同一事件重复投递（至少一次语义 / outbox 重放）时，
+ * 账户余额、账本流水、徽章都只能生效一次。
+ *
+ * <p>每个用例都调用 handler 两次，然后断言“只发生一次”。</p>
+ */
 class ReputationEventHandlersTest {
 
-    // 1. 把 Handler 需要的 6 个依赖全部 Mock 出来
-    @Mock
-    private ReputationAccountRepository accounts;
-
-    @Mock
-    private LedgerRepository ledger;
-
-    @Mock
-    private ReputationLedgerService ledgerService;
-
-    @Mock
-    private BadgeService badges;
-
-    @Mock
-    private BountyService bounties;
-
-    @Mock
-    private Clock clock;
-
-    @Mock
-    private IntegrationEventPublisher events;
-
-    // 2. 将这些假依赖注入到我们要测试的 Handler 中
-    @InjectMocks
-    private ReputationEventHandlers handler;
+    private final ReputationTestFixtures fx = new ReputationTestFixtures();
 
     @Test
-    void repeatedAnswerAcceptedEventShouldOnlyApplyOnce() {
-        // 1. 构造一个事件 (注意：下面的参数需要根据你项目中 AnswerAcceptedEvent 的真实定义来填)
-        // 假设它需要 8 个参数：事件ID, 发生时间, 问题ID, 提问者ID, 回答ID, 回答者ID, 采纳者ID, 问题标题
-        AnswerAcceptedEvent event = new AnswerAcceptedEvent(
-                "evt-123", Instant.now(), 1L, 2L, 3L, 4L, 5L, "测试题目"
-        );
+    @DisplayName("UserRegistered 重复投递：只开一个账户")
+    void userRegisteredCalledTwiceOnlyOnce() {
+        UserRegisteredEvent event = new UserRegisteredEvent("evt-user-1", fx.clock.instant(), 7, "小明", Role.STUDENT);
 
-        // 2. 模拟时钟
-        when(clock.instant()).thenReturn(Instant.now());
+        fx.handlers.on(event);
+        fx.handlers.on(event);
 
-        // 3. 第一次调用（模拟正常处理）：假设账本里没有这个事件
-        // 注意：这里的 exists 参数要和 Handler 里实际调用的参数类型匹配
-        when(ledger.exists(eq("evt-123"), anyLong(), any())).thenReturn(false);
+        assertThat(fx.accounts.findAll()).hasSize(1);
+        ReputationAccount account = fx.accounts.findByUserId(7).orElseThrow();
+        assertThat(account.reputation()).isZero();
+        assertThat(account.availablePoints()).isZero();
+    }
 
-        handler.on(event);
+    @Test
+    @DisplayName("教师注册：开户即带 1000 悬赏积分，重放不会翻倍")
+    void teacherRegistrationGrantsInitialPointsOnce() {
+        UserRegisteredEvent event = new UserRegisteredEvent("evt-user-2", fx.clock.instant(), 9, "王老师", Role.TEACHER);
 
-        // 4. 第二次调用（模拟事件重发）：此时账本里已经有这个事件了！
-        when(ledger.exists(eq("evt-123"), anyLong(), any())).thenReturn(true);
+        fx.handlers.on(event);
+        fx.handlers.on(event);
 
-        handler.on(event);
+        ReputationAccount account = fx.accounts.findByUserId(9).orElseThrow();
+        assertThat(account.availablePoints()).isEqualTo(1000);
+        assertThat(fx.accounts.findAll()).hasSize(1);
+    }
 
-        // 5. 核心断言：不管调几次，记账方法 append 绝对只能被调用一次！
-        // 如果队友的代码没做幂等拦截，这里会验证出 2 次，测试就会失败。
-        verify(ledger, times(1)).append(any());
+    @Test
+    @DisplayName("AnswerSubmitted 重复投递：只发一枚「初来乍到」")
+    void answerSubmittedCalledTwiceOnlyOnce() {
+        AnswerSubmittedEvent event = new AnswerSubmittedEvent("evt-ans-1", fx.clock.instant(),
+                50, 10, 2, 1, "红黑树插入后为什么必须旋转？");
+
+        fx.handlers.on(event);
+        fx.handlers.on(event);
+
+        assertThat(fx.badges.findByUser(2)).extracting(BadgeAward::type)
+                .containsExactly(BadgeType.FIRST_ANSWER);
+    }
+
+    @Test
+    @DisplayName("AnswerEndorsed 重复投递：只发一枚「名师认可」")
+    void answerEndorsedCalledTwiceOnlyOnce() {
+        AnswerEndorsedEvent event = new AnswerEndorsedEvent("evt-end-1", fx.clock.instant(),
+                50, 10, 2, 9, "红黑树插入后为什么必须旋转？");
+
+        fx.handlers.on(event);
+        fx.handlers.on(event);
+
+        assertThat(fx.badges.findByUser(2)).extracting(BadgeAward::type)
+                .containsExactly(BadgeType.TEACHER_ENDORSED);
+    }
+
+    @Test
+    @DisplayName("AnswerAccepted 重复投递：账本一条、账户 +15 一次、徽章一枚")
+    void answerAcceptedCalledTwiceOnlyOnce() {
+        fx.seedAccount(2, 0, 0, 0);
+        AnswerAcceptedEvent event = new AnswerAcceptedEvent("evt-acc-1", fx.clock.instant(),
+                50, 10, 2, 1, 1, "红黑树插入后为什么必须旋转？");
+
+        fx.handlers.on(event);
+        fx.handlers.on(event);
+
+        assertThat(fx.ledger.countByUserAndReason(2, ReputationReason.ANSWER_ACCEPTED)).isEqualTo(1);
+        assertThat(fx.ledger.size()).isEqualTo(1);
+        assertThat(fx.accounts.findByUserId(2).orElseThrow().reputation()).isEqualTo(15);
+        assertThat(fx.badges.findByUser(2)).extracting(BadgeAward::type)
+                .containsExactly(BadgeType.FIRST_ACCEPTED);
+        assertThat(fx.events.ofType(ReputationChangedEvent.class)).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("VoteCast 重复投递：只记一次 +10")
+    void voteCastCalledTwiceOnlyOnce() {
+        fx.seedAccount(2, 0, 0, 0);
+        VoteCastEvent event = new VoteCastEvent("evt-vote-1", fx.clock.instant(),
+                "ANSWER", 50, 2, 1, 10, 0, 1);
+
+        fx.handlers.on(event);
+        fx.handlers.on(event);
+
+        assertThat(fx.ledger.countByUserAndReason(2, ReputationReason.ANSWER_VOTE)).isEqualTo(1);
+        assertThat(fx.ledger.size()).isEqualTo(1);
+        assertThat(fx.accounts.findByUserId(2).orElseThrow().reputation()).isEqualTo(10);
     }
 }

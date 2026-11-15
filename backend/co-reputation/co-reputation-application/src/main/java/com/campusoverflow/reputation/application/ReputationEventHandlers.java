@@ -1,7 +1,3 @@
-/*
- * 行走骨架（Walking Skeleton）：Sprint 1 临时空实现，只改方法体、不改签名；Sprint 2 随正式实现移除。
- * tech-debt Issue #44：https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/issues/44
- */
 package com.campusoverflow.reputation.application;
 
 import com.campusoverflow.identity.api.event.UserRegisteredEvent;
@@ -53,36 +49,50 @@ public class ReputationEventHandlers {
     @EventListener
     @Transactional
     public void on(UserRegisteredEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        if (accounts.findByUserId(e.userId()).isPresent()) {
+            return;
+        }
+        accounts.save(ReputationAccount.open(e.userId(), ReputationRulebook.initialPoints(e.role())));
     }
 
     /** 场景 R-2 的异步后半段：采纳 → 回答者 +15 → 徽章 → 悬赏结算。 */
     @EventListener
     @Transactional
     public void on(AnswerAcceptedEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        int delta = ReputationRulebook.acceptedDelta(e.answerAuthorId(), e.questionAuthorId());
+        ledgerService.record(e.answerAuthorId(), e.eventId(), ReputationReason.ANSWER_ACCEPTED, delta,
+                "ANSWER", e.answerId());
+        long acceptedCount = ledger.countByUserAndReason(e.answerAuthorId(), ReputationReason.ANSWER_ACCEPTED);
+        BadgePolicy.forAcceptedCount(acceptedCount)
+                .forEach(type -> badges.grant(e.answerAuthorId(), type));
+        bounties.settleOnAccept(e.questionId(), e.answerId(), e.answerAuthorId(), e.eventId());
     }
 
     @EventListener
     @Transactional
     public void on(VoteCastEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        int delta = ReputationRulebook.voteDelta(e.oldValue(), e.newValue());
+        if (delta == 0) {
+            return;
+        }
+        ReputationReason reason = "QUESTION".equalsIgnoreCase(e.targetType())
+                ? ReputationReason.QUESTION_VOTE : ReputationReason.ANSWER_VOTE;
+        LocalDate today = LocalDate.now(clock.withZone(ZoneOffset.UTC));
+        int gainedToday = ledger.sumPositiveVoteDeltaSince(e.targetAuthorId(),
+                today.atStartOfDay(ZoneOffset.UTC).toInstant());
+        int capped = ReputationRulebook.applyDailyCap(delta, gainedToday);
+        ledgerService.record(e.targetAuthorId(), e.eventId(), reason, capped, e.targetType(), e.targetId());
     }
 
     @EventListener
     @Transactional
     public void on(AnswerSubmittedEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        badges.grant(e.answerAuthorId(), BadgeType.FIRST_ANSWER);
     }
 
     @EventListener
     @Transactional
     public void on(AnswerEndorsedEvent e) {
-        // TODO(S3)：实现 ReputationEventHandlers.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Reputation 暂未实现，忽略事件 " + e.eventId());
+        badges.grant(e.answerAuthorId(), BadgeType.TEACHER_ENDORSED);
     }
 }
