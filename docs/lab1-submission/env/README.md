@@ -53,7 +53,7 @@ mvn clean test
 | 魏志国 | `2123345397-star` | ⬜ 待补 | ⬜ | ⬜ | |
 | 陈明哲 | `cmz666-BOT` | ⬜ 待补 | ⬜ | ⬜ | |
 | 刘俊琒 | `Liujunfeng520` | ⬜ 待补 | ⬜ | ⬜ | |
-| 青岑 | `qing963666` | ✅ [`env-qingcen.png`](env-qingcen.png) | ✅ [`env-qingcen.txt`](env-qingcen.txt) | ⬜ 待补 | 2026-11-09 |
+| 青岑 | `qing963666` | ✅ [`env-qingcen.png`](env-qingcen.png) | ✅ [`env-qingcen.txt`](env-qingcen.txt) | ✅ [`mvn-test-qingcen.png`](../screenshots/mvn-test-qingcen.png) | 2026-11-15 |
 
 图例：✅ 已交　⬜ 待补
 

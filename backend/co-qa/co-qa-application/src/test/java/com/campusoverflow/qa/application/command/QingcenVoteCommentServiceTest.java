@@ -18,6 +18,7 @@ import com.campusoverflow.qa.domain.TargetType;
 import com.campusoverflow.qa.domain.Tags;
 import com.campusoverflow.qa.domain.Title;
 import com.campusoverflow.shared.domain.BusinessRuleException;
+import com.campusoverflow.shared.domain.ForbiddenException;
 import com.campusoverflow.shared.security.Actor;
 import com.campusoverflow.shared.security.Role;
 import java.time.Clock;
@@ -27,9 +28,19 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.dao.DataIntegrityViolationException;
 
 /** Lab4 T1-09：VoteService / CommentService 的独立服务层测试。 */
 class QingcenVoteCommentServiceTest {
@@ -126,6 +137,134 @@ class QingcenVoteCommentServiceTest {
                 .isInstanceOf(BusinessRuleException.class);
     }
 
+    @Test
+    void deletingTopLevelCommentCascadesReplies() {
+        long topId = commentService.post(ming,
+                new PostCommentCommand(TargetType.QUESTION, question.id(), null, "请问有图吗？"));
+        long replyId = commentService.post(hong,
+                new PostCommentCommand(TargetType.QUESTION, question.id(), topId, "有的，稍后补。"));
+
+        commentService.delete(ming, topId);
+
+        assertThat(comments.findById(topId)).isEmpty();
+        assertThat(comments.findById(replyId)).isEmpty();
+    }
+
+    @Test
+    void deletingReplyLeavesParentIntact() {
+        long topId = commentService.post(ming,
+                new PostCommentCommand(TargetType.QUESTION, question.id(), null, "请问有图吗？"));
+        long replyId = commentService.post(hong,
+                new PostCommentCommand(TargetType.QUESTION, question.id(), topId, "有的，稍后补。"));
+
+        commentService.delete(hong, replyId);
+
+        assertThat(comments.findById(topId)).isPresent();
+        assertThat(comments.findById(replyId)).isEmpty();
+    }
+
+    @Test
+    void onlyAuthorOrAdminCanDeleteComment() {
+        long topId = commentService.post(ming,
+                new PostCommentCommand(TargetType.QUESTION, question.id(), null, "请问有图吗？"));
+
+        assertThatThrownBy(() -> commentService.delete(hong, topId))
+                .isInstanceOf(ForbiddenException.class);
+
+        Actor admin = new Actor(99, "管理员", Role.ADMIN);
+        commentService.delete(admin, topId);
+        assertThat(comments.findById(topId)).isEmpty();
+    }
+
+    @Test
+    void concurrentVotesKeepSingleRecord() throws Exception {
+        ConcurrentVotes concurrentVotes = new ConcurrentVotes();
+        VoteService service = new VoteService(concurrentVotes, questions, answers, events, clock);
+        CyclicBarrier bothRead = new CyclicBarrier(2);
+        concurrentVotes.readBarrier = bothRead;
+
+        ExecutorService pool = Executors.newFixedThreadPool(2);
+        try {
+            Future<VoteService.VoteResult> first = pool.submit(() ->
+                    service.cast(ming, TargetType.ANSWER, answer.id(), 1));
+            Future<VoteService.VoteResult> second = pool.submit(() ->
+                    service.cast(ming, TargetType.ANSWER, answer.id(), 1));
+
+            int success = 0;
+            int conflict = 0;
+            for (Future<VoteService.VoteResult> future : List.of(first, second)) {
+                try {
+                    VoteService.VoteResult result = future.get(3, TimeUnit.SECONDS);
+                    assertThat(result.scoreDelta()).isEqualTo(1);
+                    success++;
+                } catch (ExecutionException e) {
+                    assertThat(e.getCause()).isInstanceOf(DataIntegrityViolationException.class);
+                    conflict++;
+                }
+            }
+
+            assertThat(success).isEqualTo(1);
+            assertThat(conflict).isEqualTo(1);
+            assertThat(concurrentVotes.size()).isEqualTo(1);
+            assertThat(answers.scoreDeltas).containsEntry(answer.id(), 1);
+            assertThat(events.ofType(VoteCastEvent.class)).hasSize(1);
+        } finally {
+            pool.shutdownNow();
+        }
+    }
+
+    /**
+     * 模拟数据库唯一键 uk_vote：两个线程都先读到“没有票”，再同时插入；
+     * 第二条插入必须被唯一约束拒绝，最终只保留一条记录。
+     */
+    private static final class ConcurrentVotes implements com.campusoverflow.qa.domain.VoteRepository {
+        private final Map<String, com.campusoverflow.qa.domain.Vote> store = new ConcurrentHashMap<>();
+        private final AtomicLong sequence = new AtomicLong();
+        private volatile CyclicBarrier readBarrier;
+
+        @Override
+        public Optional<com.campusoverflow.qa.domain.Vote> find(long voterId, TargetType targetType, long targetId) {
+            Optional<com.campusoverflow.qa.domain.Vote> found = Optional.ofNullable(store.get(key(voterId, targetType,
+                    targetId)));
+            CyclicBarrier barrier = readBarrier;
+            if (barrier != null) {
+                try {
+                    barrier.await(3, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new IllegalStateException(e);
+                } catch (BrokenBarrierException | TimeoutException e) {
+                    throw new IllegalStateException(e);
+                }
+            }
+            return found;
+        }
+
+        @Override
+        public synchronized com.campusoverflow.qa.domain.Vote save(com.campusoverflow.qa.domain.Vote vote) {
+            String key = key(vote.voterId(), vote.targetType(), vote.targetId());
+            if (store.containsKey(key)) {
+                throw new DataIntegrityViolationException("uk_vote duplicate");
+            }
+            vote.assignId(sequence.incrementAndGet());
+            store.put(key, vote);
+            return vote;
+        }
+
+        @Override
+        public synchronized void delete(com.campusoverflow.qa.domain.Vote vote) {
+            store.remove(key(vote.voterId(), vote.targetType(), vote.targetId()));
+        }
+
+        int size() {
+            return store.size();
+        }
+
+        private static String key(long voterId, TargetType type, long targetId) {
+            return voterId + ":" + type + ":" + targetId;
+        }
+    }
+
     private static final class InMemoryComments implements CommentRepository {
         private final Map<Long, Comment> store = new LinkedHashMap<>();
         private final AtomicLong sequence = new AtomicLong();
@@ -136,12 +275,24 @@ class QingcenVoteCommentServiceTest {
         }
 
         @Override
+        public List<Comment> findReplies(long parentId) {
+            return store.values().stream()
+                    .filter(comment -> comment.parentId() != null && comment.parentId() == parentId)
+                    .toList();
+        }
+
+        @Override
         public Comment save(Comment comment) {
             if (comment.id() == null) {
                 comment.assignId(sequence.incrementAndGet());
             }
             store.put(comment.id(), comment);
             return comment;
+        }
+
+        @Override
+        public void delete(Comment comment) {
+            store.remove(comment.id());
         }
     }
 }

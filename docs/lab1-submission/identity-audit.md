@@ -86,7 +86,7 @@ bash scripts/dev-env/audit-authors.sh 2177023844
 | 魏志国 | `2123345397-star` | ⬜ 待填 | ⬜ | ⬜ | |
 | 陈明哲 | `cmz666-BOT` | ⬜ 待填 | ⬜ | ⬜ | 网页端提交的 committer 为 `noreply@github.com`，属正常 |
 | 刘俊琒 | `Liujunfeng520` | ⬜ 待填 | ⬜ | ⬜ | |
-| 青岑 | `qing963666` | ⬜ 待填 | ⬜ | ⬜ | |
+| 青岑 | `qing963666` | `1350735644@qq.com` | `qing963666` | ✅ 已绑定（Primary + Verified） | 提交作者 `qing963666 <1350735644@qq.com>` |
 
 图例：✅ 已绑定　⚠️ 需整改/已整改　⬜ 待核查
 
