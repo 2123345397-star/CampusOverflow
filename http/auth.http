@@ -7,7 +7,16 @@
 GET {{host}}/api/v1/auth/csrf
 > {%
   client.global.set("csrfHeader", response.body.headerName);
-  client.global.set("csrfToken", response.body.token);
+  // SPA 场景服务端按原始 Cookie 值校验；响应体里的 token 是 XOR 掩码值。
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
 %}
 
 ### 1. 注册
@@ -49,7 +58,15 @@ GET {{host}}/api/v1/courses
 GET {{host}}/api/v1/auth/csrf
 > {%
   client.global.set("csrfHeader", response.body.headerName);
-  client.global.set("csrfToken", response.body.token);
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
 %}
 
 ### 6. 加入课程

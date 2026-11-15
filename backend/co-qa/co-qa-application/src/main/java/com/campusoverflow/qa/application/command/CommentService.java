@@ -9,6 +9,7 @@ import com.campusoverflow.qa.domain.Question;
 import com.campusoverflow.qa.domain.QuestionRepository;
 import com.campusoverflow.qa.domain.TargetType;
 import com.campusoverflow.shared.domain.BusinessRuleException;
+import com.campusoverflow.shared.domain.ForbiddenException;
 import com.campusoverflow.shared.domain.NotFoundException;
 import com.campusoverflow.shared.event.EventIds;
 import com.campusoverflow.shared.event.IntegrationEventPublisher;
@@ -53,6 +54,25 @@ public class CommentService {
         events.publish(new CommentPostedEvent(EventIds.next(), now, saved.id(), questionId, actor.userId(),
                 saved.body()));
         return saved.id();
+    }
+
+    /**
+     * 删除评论。只有作者或管理员可以删；删除顶层评论时级联删除它的全部回复，
+     * 避免留下挂在不存在的父评论下的孤儿回复。
+     */
+    @Transactional
+    public void delete(Actor actor, long commentId) {
+        Comment comment = comments.findById(commentId)
+                .orElseThrow(() -> new NotFoundException("QA-4003", "评论不存在"));
+
+        if (!actor.isAdmin() && !actor.is(comment.authorId())) {
+            throw new ForbiddenException("QA-1018", "只能删除自己的评论");
+        }
+
+        if (comment.parentId() == null) {
+            comments.findReplies(comment.id()).forEach(comments::delete);
+        }
+        comments.delete(comment);
     }
 
     private long resolveQuestionId(TargetType type, long targetId) {

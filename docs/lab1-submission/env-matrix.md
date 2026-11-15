@@ -107,7 +107,7 @@ mvn -pl co-shared-kernel test                        # 单独跑，应全绿
 | 魏志国 | ⬜ | ⬜ | ⬜ | ⬜ |
 | 陈明哲 | ⬜ | ⬜ | ⬜ | ⬜ |
 | 刘俊琒 | ⬜ | ⬜ | ⬜ | ⬜ |
-| 青岑 | ⬜ | ⬜ | ⬜ | ⬜ |
+| 青岑 | ✅ QA 两模块绿（42+32） | 无 | ✅ `co-qa-domain` 42、`co-qa-application` 32 | [`screenshots/mvn-test-qingcen.png`](screenshots/mvn-test-qingcen.png) |
 
 ---
 
