@@ -39,7 +39,7 @@ mvn clean test          # 结果决定第 3 节怎么填，红也要截，见 3.
 
 | 成员 | GitHub | OS | JDK | Maven | Node.js | Docker | 采集日期 | 截图 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 房国栋 | `2177023844` | Windows 11（`10.0.26200`） | 21.0.10（JBR-21.0.10+1-1163.110） | 3.9.11 | v24.18.1 / npm 11.16.0 | ⬜ 未安装 | 2026-10-29 | ⬜ |
+| 房国栋 | `2177023844` | Windows 11（`10.0.26200`） | 21.0.10（JBR-21.0.10+1-1163.110） | 3.9.11 | v24.18.1 / npm 11.16.0 | ⏳ 已安装，版本待采集 | 2026-11-15 | ⬜ |
 | 魏志国 | `2123345397-star` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 | 陈明哲 | `cmz666-BOT` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
 | 刘俊琒 | `Liujunfeng520` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
@@ -141,7 +141,7 @@ mvn -pl co-shared-kernel test                        # 单独跑，应全绿
 | --- | --- | --- | --- |
 | 房国栋 | `git` 未加入系统 PATH（使用 `D:\Program Files\Git\cmd\git.exe`） | 已加入 PATH；本文档命令仍保留绝对路径兜底 | ⚠️ 已记录 |
 | 房国栋 | 命令行 `java` 默认指向 JDK **1.8.0_481**（系统 PATH 里 Oracle `javapath` 排在前面），但 IDEA/JBR 的 21 可用；Maven 实际已用 21（编译日志 `release 21` 且无 `invalid target release`） | 截图前执行 `$env:JAVA_HOME="E:\IntelliJ IDEA 2025.3.3\jbr"; $env:Path="$env:JAVA_HOME\bin;"+$env:Path`；长期方案见文末"PATH 修正" | ✅ 已解决（临时） |
-| 房国栋 | Docker Desktop 未安装 | E3 记录为"未安装"；容器化在 Lab 8 前安装，届时补第二次截图 | ⬜ 待补 |
+| 房国栋 | Docker Desktop：10-29 记录为"未安装"，之后已安装；**版本号与 `docker info` 截图尚未采集** | 执行 `docker --version` 与 `docker info` 后回填本节与第 2 节表格，并补 `env/env-fangguodong.png` 第二次截图 | ⏳ 待采集 |
 
 ### PATH 修正（长期，一次到位）
 
