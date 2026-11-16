@@ -32,6 +32,8 @@ spring:
     timeout: 30m
     redis:
       namespace: co:session
+      # indexed：允许按 principal-name 索引撤销某用户的全部会话（禁用账号）
+      repository-type: indexed
   jackson:
     serialization:
       write-dates-as-timestamps: false
