@@ -20,7 +20,7 @@ export interface Me {
 /** 管理员用户视图（后端 UserView）：学号/工号已脱敏。 */
 export interface AdminUser {
   id: number; maskedUsername: string; displayName: string; role: Role; verified: boolean;
-  college?: string; className?: string; createdAt: string;
+  college?: string | null; className?: string | null; createdAt: string;
 }
 
 export interface QuestionSummary {
