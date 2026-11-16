@@ -79,4 +79,4 @@ mvn clean test
 | 成员 | 差异 | 处置 |
 | --- | --- | --- |
 | 房国栋 | 命令行 `java` 默认指向 JDK 1.8（系统 PATH 里 Oracle `javapath` 排在前面），但 Maven 实际使用 JDK 21（编译日志 `release 21`） | 截图前执行 `$env:JAVA_HOME="E:\IntelliJ IDEA 2025.3.3\jbr"; $env:Path="$env:JAVA_HOME\bin;"+$env:Path`；长期方案见 `env-matrix.md` §6 |
-| 房国栋 | Docker Desktop 未安装 | 记录为 `not installed`，容器化实验（Lab 8）前补装并补第二次截图 |
+| 房国栋 | Docker Desktop：10-29 记为 `not installed`，之后已安装，**版本号与 `docker info` 截图待采集** | 执行 `docker --version` + `docker info` 后回填 `env-matrix.md` 第 2 节与本表，并补 `env-fangguodong.png` 第二次截图 |
