@@ -22,13 +22,16 @@
 - ADR 原文：[`docs/adr/`](../adr/README.md)
 - 覆盖率与测试报告：CI Actions 构件 + [`03-quality.md`](03-quality.md)
 - 发布记录：[`docs/release/v0.3.0.md`](../release/v0.3.0.md)、[`docs/reports/release-v0.2.0-v0.3.0.md`](../reports/release-v0.2.0-v0.3.0.md)
+- v1.0.0 发布草案：[`docs/release/v1.0.0.md`](../release/v1.0.0.md)（待 develop→main）
+- Sprint 4 计划/执行：[`docs/scrum/sprint-4.md`](../scrum/sprint-4.md)（草案）
+- 禁用账号验证：[`docs/reports/s4-disable-account.md`](../reports/s4-disable-account.md)（接口 + 测试 + 截图）
 
 ## 交付检查（对应指导书 9.4）
 
 - [ ] main 上的 `v1.0.0` 与完整提交历史
 - [ ] GitHub Release（Release Notes + 部署说明）
 - [x] `docs/ddd/`、`docs/adr/`（S3 已就位）
-- [x] `docs/scrum/sprint-0～3`（sprint-4 待 S4 结束补）
+- [x] `docs/scrum/sprint-0～4`（sprint-4 为草案，待 S4 收口）
 - [ ] 覆盖率报告归档
 - [ ] `docs/final` 答辩材料 + ≤5 分钟演示视频
 - [ ] 每人一份个人总结
