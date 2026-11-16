@@ -37,13 +37,13 @@ mvn clean test          # 结果决定第 3 节怎么填，红也要截，见 3.
 
 ## 2. 环境版本汇总表
 
-| 成员 | GitHub | OS | JDK | Maven | Node.js | Docker | 采集日期 | 截图 |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 房国栋 | `2177023844` | Windows 11（`10.0.26200`） | 21.0.10（JBR-21.0.10+1-1163.110） | 3.9.11 | v24.18.1 / npm 11.16.0 | ⏳ 已安装，版本待采集 | 2026-11-15 | ⬜ |
-| 魏志国 | `2123345397-star` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
-| 陈明哲 | `cmz666-BOT` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
-| 刘俊琒 | `Liujunfeng520` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ |
-| 青岑 | `qing963666` | Microsoft Windows 10.0.26200 | 21.0.10 | 3.9.2 | v26.13.0 / npm 11.20.0 | 29.9.2 | 2026-11-09 | [`env-qingcen.png`](env/env-qingcen.png) |
+| 成员 | GitHub | OS | JDK | Maven | Node.js | Docker | 采集日期 | env 截图 | mvn 测试证据 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 房国栋 | `2177023844` | Windows 11（`10.0.26200`） | 21.0.10（JBR-21.0.10+1-1163.110） | 3.9.11 | v24.18.1 / npm 11.16.0 | ⏳ 已安装，版本待采集 | 2026-11-15 | ✅ [`env-fangguodong.png`](env/env-fangguodong.png) | ✅ [`logs/mvn-test-fangguodong.log`](logs/mvn-test-fangguodong.log)（截图待补） |
+| 魏志国 | `2123345397-star` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ 待补 | ⬜ 待补 |
+| 陈明哲 | `cmz666-BOT` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ 待补 | ⬜ 待补 |
+| 刘俊琒 | `Liujunfeng520` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ 待补 | ⬜ 待补 |
+| 青岑 | `qing963666` | Microsoft Windows 10.0.26200 | 21.0.10 | 3.9.2 | v26.13.0 / npm 11.20.0 | 29.9.2 | 2026-11-09 | ✅ [`env-qingcen.png`](env/env-qingcen.png) | ✅ [`screenshots/mvn-test-qingcen.png`](screenshots/mvn-test-qingcen.png) |
 
 图例：✅ 达标　⚠️ 版本不符但已记录　⬜ 待采集
 

@@ -49,10 +49,10 @@ mvn clean test
 
 | 成员 | GitHub | env 截图 | env 文本 | mvn 测试截图 | 采集日期 |
 | --- | --- | --- | --- | --- | --- |
-| 房国栋 | `2177023844` | ✅ [`env-fangguodong.png`](env-fangguodong.png) | ✅ [`env-fangguodong.txt`](env-fangguodong.txt) | ✅ [`mvn-test-fangguodong.log`](../logs/mvn-test-fangguodong.log)（完整构建日志，78 KB；截图待补） | 2026-10-29 |
-| 魏志国 | `2123345397-star` | ⬜ 待补 | ⬜ | ⬜ | |
-| 陈明哲 | `cmz666-BOT` | ⬜ 待补 | ⬜ | ⬜ | |
-| 刘俊琒 | `Liujunfeng520` | ⬜ 待补 | ⬜ | ⬜ | |
+| 房国栋 | `2177023844` | ✅ [`env-fangguodong.png`](env-fangguodong.png) | ✅ [`env-fangguodong.txt`](env-fangguodong.txt) | ✅ [`mvn-test-fangguodong.log`](../logs/mvn-test-fangguodong.log)（完整构建日志，78 KB；截图待补） | 2026-11-15 |
+| 魏志国 | `2123345397-star` | ⬜ 待补 | ⬜ 待补 | ⬜ 待补 | |
+| 陈明哲 | `cmz666-BOT` | ⬜ 待补 | ⬜ 待补 | ⬜ 待补 | |
+| 刘俊琒 | `Liujunfeng520` | ⬜ 待补 | ⬜ 待补 | ⬜ 待补 | |
 | 青岑 | `qing963666` | ✅ [`env-qingcen.png`](env-qingcen.png) | ✅ [`env-qingcen.txt`](env-qingcen.txt) | ✅ [`mvn-test-qingcen.png`](../screenshots/mvn-test-qingcen.png) | 2026-11-15 |
 
 图例：✅ 已交　⬜ 待补
