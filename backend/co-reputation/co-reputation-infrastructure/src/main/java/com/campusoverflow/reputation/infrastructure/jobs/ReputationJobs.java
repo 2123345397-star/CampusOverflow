@@ -34,7 +34,9 @@ public class ReputationJobs {
         }
     }
 
-    @Scheduled(cron = "${co.reputation.reconcile-cron:0 30 3 * * *}", zone = "Asia/Shanghai")
+    /** 每 60s 刷新一次对账指标，便于 Grafana 面板与“人为造 1 → 归零”的演示。 */
+    @Scheduled(fixedDelayString = "${co.reputation.reconcile-interval-ms:60000}",
+            initialDelayString = "${co.reputation.reconcile-initial-delay-ms:15000}")
     public void reconcile() {
         List<ReconciliationService.Mismatch> result = reconciliation.reconcile();
         mismatches.set(result.size());
