@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api';
 import { useAuth } from '../auth';
+import { BountyDialog } from '../components/BountyDialog';
 import { errorKind, errorMessage } from '../errors';
 import type { Answer, QuestionDetail } from '../types';
 
@@ -140,7 +141,7 @@ export function QuestionDetailPage() {
                     });
                   }}>删除问题</button>
                 )}
-                {canManage && <BountyForm questionId={q.id} onDone={load} onError={setError} />}
+                {canManage && <BountyDialog questionId={q.id} canOpen={canManage} onChanged={load} />}
               </div>
 
               <CommentList comments={q.comments} targetType="QUESTION" targetId={q.id} onDone={load} canComment={!!me} />
@@ -220,46 +221,6 @@ function QuestionEditor({ question, onCancel, onSaved, onError }: {
         <button className="primary" onClick={save} disabled={saving}>{saving ? '保存中…' : '保存'}</button>
         <button onClick={onCancel} disabled={saving}>取消</button>
       </div>
-    </div>
-  );
-}
-
-/** 悬赏：用内联表单替代 prompt()，带范围校验与倒计时说明。 */
-function BountyForm({ questionId, onDone, onError }: {
-  questionId: number;
-  onDone: () => void;
-  onError: (message: string) => void;
-}) {
-  const [open, setOpen] = useState(false);
-  const [points, setPoints] = useState('50');
-  const [days, setDays] = useState('7');
-  const [busy, setBusy] = useState(false);
-
-  if (!open) return <button onClick={() => setOpen(true)}>发起悬赏</button>;
-
-  const submit = async () => {
-    setBusy(true);
-    try {
-      await api.bounty(questionId, Number(points), Number(days));
-      setOpen(false);
-      onDone();
-    } catch (e) {
-      onError(errorMessage(e));
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  return (
-    <div className="inline-form">
-      <label>积分（10–500）
-        <input type="number" min={10} max={500} value={points} onChange={(e) => setPoints(e.target.value)} />
-      </label>
-      <label>有效天数（1–14）
-        <input type="number" min={1} max={14} value={days} onChange={(e) => setDays(e.target.value)} />
-      </label>
-      <button className="primary" onClick={submit} disabled={busy}>{busy ? '提交中…' : '确定'}</button>
-      <button onClick={() => setOpen(false)} disabled={busy}>取消</button>
     </div>
   );
 }

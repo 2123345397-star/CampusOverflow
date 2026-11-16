@@ -1,6 +1,6 @@
 /*
- * 行走骨架（Walking Skeleton）：Sprint 1 临时空实现，只改方法体、不改签名；Sprint 3 随正式实现移除。
- * tech-debt Issue #44：https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/issues/44
+ * Sprint 3 正式实现：把 Q&A / Reputation 事件折叠为搜索投影。
+ * 每个事件先经 ProcessedEventStore 去重，保证至少一次投递下投影只更新一次。
  */
 package com.campusoverflow.discovery.application;
 
@@ -39,70 +39,94 @@ public class SearchIndexProjector {
     }
 
     private boolean firstTime(IntegrationEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.firstTime——参考领域单元测试与 arc42 文档中的业务规则
-        return true;
+        return processed.markProcessed(e.eventId(), CONSUMER);
     }
 
     @EventListener
     @Transactional
     public void on(QuestionPostedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        index.insert(new SearchDocument(e.questionId(), e.courseId(), e.authorId(), e.title(), e.plainText(),
+                e.tags(), e.occurredAt()));
     }
 
     @EventListener
     @Transactional
     public void on(QuestionEditedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        index.updateText(e.questionId(), e.title(), e.plainText(), e.tags(), e.occurredAt());
     }
 
     @EventListener
     @Transactional
     public void on(AnswerSubmittedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        index.adjustAnswerCount(e.questionId(), 1, e.occurredAt());
     }
 
     @EventListener
     @Transactional
     public void on(ContentDeletedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        if ("QUESTION".equalsIgnoreCase(e.targetType())) {
+            index.markDeleted(e.questionId());
+        } else if ("ANSWER".equalsIgnoreCase(e.targetType())) {
+            index.adjustAnswerCount(e.questionId(), -1, e.occurredAt());
+        }
     }
 
     @EventListener
     @Transactional
     public void on(AnswerAcceptedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        index.markAccepted(e.questionId(), e.occurredAt());
     }
 
     @EventListener
     @Transactional
     public void on(VoteCastEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        if ("QUESTION".equalsIgnoreCase(e.targetType())) {
+            index.adjustScore(e.questionId(), e.newValue() - e.oldValue());
+        }
     }
 
     @EventListener
     @Transactional
     public void on(BountyOpenedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        index.setBountyOpen(e.questionId(), true);
     }
 
     @EventListener
     @Transactional
     public void on(BountyAwardedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        index.setBountyOpen(e.questionId(), false);
     }
 
     @EventListener
     @Transactional
     public void on(BountyClosedEvent e) {
-        // TODO(S3)：实现 SearchIndexProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        System.out.println("[walking-skeleton] Discovery 暂未实现，忽略事件 " + e.eventId());
+        if (!firstTime(e)) {
+            return;
+        }
+        index.setBountyOpen(e.questionId(), false);
     }
 }

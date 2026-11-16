@@ -7,6 +7,7 @@ import { QuestionDetailPage } from './pages/QuestionDetailPage';
 import { AskPage } from './pages/AskPage';
 import { LoginPage } from './pages/LoginPage';
 import { LeaderboardPage } from './pages/LeaderboardPage';
+import { ReputationPage } from './pages/ReputationPage';
 import { NotificationsPage } from './pages/NotificationsPage';
 import { CourseListPage } from './pages/courses/CourseListPage';
 import { MyCoursesPage } from './pages/courses/MyCoursesPage';
@@ -69,6 +70,7 @@ export function App() {
             <Route path="/courses/mine" element={<RequireAuth><MyCoursesPage /></RequireAuth>} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/leaderboard" element={<LeaderboardPage />} />
+            <Route path="/users/:id/reputation" element={<ReputationPage />} />
             <Route path="/notifications" element={<RequireAuth><NotificationsPage /></RequireAuth>} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>

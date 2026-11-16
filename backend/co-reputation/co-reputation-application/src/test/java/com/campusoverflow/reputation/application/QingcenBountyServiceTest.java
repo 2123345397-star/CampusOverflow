@@ -2,7 +2,9 @@ package com.campusoverflow.reputation.application;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -175,6 +177,32 @@ class QingcenBountyServiceTest {
         assertThat(view.get().id()).isEqualTo(bounty.id());
         assertThat(view.get().sponsorName()).isEqualTo("王老师");
         assertThat(view.get().status()).isEqualTo("OPEN");
+    }
+
+    @Test
+    void settledBountyIsNotReturnedByExpireDue() {
+        Bounty bounty = seedBounty(50, 1);
+        service.settleOnAccept(QUESTION_ID, 50L, 3L, "event-1");
+
+        int expired = serviceAt(NOW.plus(Duration.ofDays(3))).expireDue();
+
+        assertThat(expired).isZero();
+        assertThat(bounty.status()).isEqualTo(BountyStatus.AWARDED);
+        verify(sponsor).spendFrozen(50);
+        verify(sponsor, never()).refundFrozen(anyInt());
+    }
+
+    @Test
+    void expiredBountyCannotBeSettledAgain() {
+        Bounty bounty = seedBounty(50, 1);
+        serviceAt(NOW.plus(Duration.ofDays(3))).expireDue();
+
+        service.settleOnAccept(QUESTION_ID, 50L, 3L, "event-1");
+
+        assertThat(bounty.status()).isEqualTo(BountyStatus.EXPIRED);
+        verify(sponsor).refundFrozen(50);
+        verify(sponsor, never()).spendFrozen(anyInt());
+        verifyNoInteractions(ledgerService);
     }
 
     private Bounty seedBounty(int points, int days) {

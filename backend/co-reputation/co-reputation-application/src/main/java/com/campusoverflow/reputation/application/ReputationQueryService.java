@@ -54,7 +54,9 @@ public class ReputationQueryService {
             throw new ForbiddenException("REP-3002", "只能查看自己的声誉流水");
         }
         return ledger.findByUser(userId, page)
-                .map(e -> new LedgerEntryView(e.id(), e.reason().name(), e.reason().label(), e.delta(),
-                        e.refType(), e.refId(), e.createdAt()));
+                // 未落库的流水（内存适配器、刚 append 还没 flush）没有 id：读路径给 0 而不是拆箱 NPE，
+                // 持久化后 id 恒有值，0 只在测试替身里出现。
+                .map(e -> new LedgerEntryView(e.id() == null ? 0L : e.id(), e.reason().name(), e.reason().label(),
+                        e.delta(), e.refType(), e.refId(), e.createdAt()));
     }
 }

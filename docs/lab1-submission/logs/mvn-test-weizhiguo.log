@@ -1,0 +1,844 @@
+[WARNING] 
+[WARNING] Some problems were encountered while building the effective settings
+[WARNING] Unrecognised tag: 'pluginRepositories' (position: START_TAG seen ...- \u63d2\u4ef6\u4ed3\u5e93\uff1a\u4e13\u95e8\u89e3\u51b3javafx-maven-plugin\u627e\u4e0d\u5230\u7684\u95ee\u9898 -->\r\n    <pluginRepositories>... @15:25)  @ C:\Users\86139\.m2\settings.xml, line 15, column 25
+[WARNING] 
+[INFO] Scanning for projects...
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Build Order:
+[INFO] 
+[INFO] CampusOverflow :: Parent                                           [pom]
+[INFO] CampusOverflow :: Shared Kernel                                    [jar]
+[INFO] CampusOverflow :: Identity 身份与认证                                   [pom]
+[INFO] Identity 身份与认证 :: api（发布语言）                                        [jar]
+[INFO] Identity 身份与认证 :: domain（纯 Java）                                   [jar]
+[INFO] Identity 身份与认证 :: application（用例编排）                                [jar]
+[INFO] Identity 身份与认证 :: infrastructure（持久化与适配器）                          [jar]
+[INFO] Identity 身份与认证 :: interfaces（REST 接口层）                             [jar]
+[INFO] CampusOverflow :: Q&A 问答核心                                         [pom]
+[INFO] Q&A 问答核心 :: api（发布语言）                                              [jar]
+[INFO] Q&A 问答核心 :: domain（纯 Java）                                         [jar]
+[INFO] Q&A 问答核心 :: application（用例编排）                                      [jar]
+[INFO] Q&A 问答核心 :: infrastructure（持久化与适配器）                                [jar]
+[INFO] Q&A 问答核心 :: interfaces（REST 接口层）                                   [jar]
+[INFO] CampusOverflow :: Reputation 声誉与激励                                 [pom]
+[INFO] Reputation 声誉与激励 :: api（发布语言）                                      [jar]
+[INFO] Reputation 声誉与激励 :: domain（纯 Java）                                 [jar]
+[INFO] Reputation 声誉与激励 :: application（用例编排）                              [jar]
+[INFO] Reputation 声誉与激励 :: infrastructure（持久化与适配器）                        [jar]
+[INFO] Reputation 声誉与激励 :: interfaces（REST 接口层）                           [jar]
+[INFO] CampusOverflow :: Discovery 内容发现                                   [pom]
+[INFO] Discovery 内容发现 :: api（发布语言）                                        [jar]
+[INFO] Discovery 内容发现 :: domain（纯 Java）                                   [jar]
+[INFO] Discovery 内容发现 :: application（用例编排）                                [jar]
+[INFO] Discovery 内容发现 :: infrastructure（持久化与适配器）                          [jar]
+[INFO] Discovery 内容发现 :: interfaces（REST 接口层）                             [jar]
+[INFO] CampusOverflow :: Bootstrap（启动装配）                                  [jar]
+[INFO] 
+[INFO] -----------------< com.campusoverflow:campus-overflow >-----------------
+[INFO] Building CampusOverflow :: Parent 0.1.0-SNAPSHOT                  [1/27]
+[INFO]   from pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ campus-overflow ---
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ campus-overflow ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] ----------------< com.campusoverflow:co-shared-kernel >-----------------
+[INFO] Building CampusOverflow :: Shared Kernel 0.1.0-SNAPSHOT           [2/27]
+[INFO]   from co-shared-kernel\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-shared-kernel ---
+[INFO] Deleting D:\co-team04\backend\co-shared-kernel\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-shared-kernel ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-shared-kernel ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-shared-kernel\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-shared-kernel\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-shared-kernel ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 18 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-shared-kernel ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-shared-kernel\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-shared-kernel ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-shared-kernel ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.campusoverflow.shared.util.MaskingTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.122 s -- in com.campusoverflow.shared.util.MaskingTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] -------------------< com.campusoverflow:co-identity >-------------------
+[INFO] Building CampusOverflow :: Identity 身份与认证 0.1.0-SNAPSHOT          [3/27]
+[INFO]   from co-identity\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-identity ---
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-identity ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] -----------------< com.campusoverflow:co-identity-api >-----------------
+[INFO] Building Identity 身份与认证 :: api（发布语言） 0.1.0-SNAPSHOT               [4/27]
+[INFO]   from co-identity\co-identity-api\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-identity-api ---
+[INFO] Deleting D:\co-team04\backend\co-identity\co-identity-api\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-identity-api ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-identity-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-api\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-api\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-identity-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 4 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-identity-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-api\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-identity-api ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-identity-api ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ---------------< com.campusoverflow:co-identity-domain >----------------
+[INFO] Building Identity 身份与认证 :: domain（纯 Java） 0.1.0-SNAPSHOT          [5/27]
+[INFO]   from co-identity\co-identity-domain\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-identity-domain ---
+[INFO] Deleting D:\co-team04\backend\co-identity\co-identity-domain\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-identity-domain ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-identity-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-domain\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-domain\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-identity-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 9 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-identity-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-domain\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-identity-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 2 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-identity-domain ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.campusoverflow.identity.domain.CourseTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.152 s -- in com.campusoverflow.identity.domain.CourseTest
+[INFO] Running com.campusoverflow.identity.domain.UserTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.023 s -- in com.campusoverflow.identity.domain.UserTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] -------------< com.campusoverflow:co-identity-application >-------------
+[INFO] Building Identity 身份与认证 :: application（用例编排） 0.1.0-SNAPSHOT       [6/27]
+[INFO]   from co-identity\co-identity-application\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-identity-application ---
+[INFO] Deleting D:\co-team04\backend\co-identity\co-identity-application\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-identity-application ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-identity-application ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-application\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-application\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-identity-application ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 14 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-identity-application ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-application\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-identity-application ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-identity-application ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] -----------< com.campusoverflow:co-identity-infrastructure >------------
+[INFO] Building Identity 身份与认证 :: infrastructure（持久化与适配器） 0.1.0-SNAPSHOT [7/27]
+[INFO]   from co-identity\co-identity-infrastructure\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-identity-infrastructure ---
+[INFO] Deleting D:\co-team04\backend\co-identity\co-identity-infrastructure\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-identity-infrastructure ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-identity-infrastructure ---
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-identity-infrastructure ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 14 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-identity-infrastructure ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-infrastructure\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-identity-infrastructure ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-identity-infrastructure ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] -------------< com.campusoverflow:co-identity-interfaces >--------------
+[INFO] Building Identity 身份与认证 :: interfaces（REST 接口层） 0.1.0-SNAPSHOT    [8/27]
+[INFO]   from co-identity\co-identity-interfaces\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-identity-interfaces ---
+[INFO] Deleting D:\co-team04\backend\co-identity\co-identity-interfaces\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-identity-interfaces ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-identity-interfaces ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-interfaces\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-interfaces\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-identity-interfaces ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-identity-interfaces ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-identity\co-identity-interfaces\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-identity-interfaces ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-identity-interfaces ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ----------------------< com.campusoverflow:co-qa >----------------------
+[INFO] Building CampusOverflow :: Q&A 问答核心 0.1.0-SNAPSHOT                [9/27]
+[INFO]   from co-qa\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-qa ---
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-qa ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --------------------< com.campusoverflow:co-qa-api >--------------------
+[INFO] Building Q&A 问答核心 :: api（发布语言） 0.1.0-SNAPSHOT                    [10/27]
+[INFO]   from co-qa\co-qa-api\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-qa-api ---
+[INFO] Deleting D:\co-team04\backend\co-qa\co-qa-api\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-qa-api ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-qa-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-api\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-api\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-qa-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 10 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-qa-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-api\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-qa-api ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-qa-api ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ------------------< com.campusoverflow:co-qa-domain >-------------------
+[INFO] Building Q&A 问答核心 :: domain（纯 Java） 0.1.0-SNAPSHOT               [11/27]
+[INFO]   from co-qa\co-qa-domain\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-qa-domain ---
+[INFO] Deleting D:\co-team04\backend\co-qa\co-qa-domain\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-qa-domain ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-qa-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-domain\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-domain\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-qa-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 14 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-qa-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-domain\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-qa-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 4 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-qa-domain ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.campusoverflow.qa.domain.AnswerTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.144 s -- in com.campusoverflow.qa.domain.AnswerTest
+[INFO] Running com.campusoverflow.qa.domain.QingcenLab4Test
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.campusoverflow.qa.domain.QingcenLab4Test
+[INFO] Running com.campusoverflow.qa.domain.QuestionTest
+[INFO] Running com.campusoverflow.qa.domain.QuestionTest$Endorsing
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.campusoverflow.qa.domain.QuestionTest$Endorsing
+[INFO] Running com.campusoverflow.qa.domain.QuestionTest$EditingAndDeleting
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.017 s -- in com.campusoverflow.qa.domain.QuestionTest$EditingAndDeleting
+[INFO] Running com.campusoverflow.qa.domain.QuestionTest$Accepting
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.campusoverflow.qa.domain.QuestionTest$Accepting
+[INFO] Running com.campusoverflow.qa.domain.QuestionTest$Boundaries
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.034 s -- in com.campusoverflow.qa.domain.QuestionTest$Boundaries
+[INFO] Running com.campusoverflow.qa.domain.QuestionTest$Posting
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.011 s -- in com.campusoverflow.qa.domain.QuestionTest$Posting
+[INFO] Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.082 s -- in com.campusoverflow.qa.domain.QuestionTest
+[INFO] Running com.campusoverflow.qa.domain.VoteAndCommentTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.campusoverflow.qa.domain.VoteAndCommentTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 42, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ----------------< com.campusoverflow:co-qa-application >----------------
+[INFO] Building Q&A 问答核心 :: application（用例编排） 0.1.0-SNAPSHOT            [12/27]
+[INFO]   from co-qa\co-qa-application\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-qa-application ---
+[INFO] Deleting D:\co-team04\backend\co-qa\co-qa-application\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-qa-application ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-qa-application ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-application\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-application\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-qa-application ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 24 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-qa-application ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-application\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-qa-application ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 6 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-qa-application ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.campusoverflow.qa.application.command.AnswerAndVoteServiceTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.298 s -- in com.campusoverflow.qa.application.command.AnswerAndVoteServiceTest
+[INFO] Running com.campusoverflow.qa.application.command.QingcenVoteCommentServiceTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in com.campusoverflow.qa.application.command.QingcenVoteCommentServiceTest
+[INFO] Running com.campusoverflow.qa.application.command.QuestionCommandServiceTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.043 s -- in com.campusoverflow.qa.application.command.QuestionCommandServiceTest
+[INFO] Running com.campusoverflow.qa.application.QaQueryApiImplTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.007 s -- in com.campusoverflow.qa.application.QaQueryApiImplTest
+[INFO] Running com.campusoverflow.qa.application.query.QuestionQueryServiceTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.045 s -- in com.campusoverflow.qa.application.query.QuestionQueryServiceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 32, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --------------< com.campusoverflow:co-qa-infrastructure >---------------
+[INFO] Building Q&A 问答核心 :: infrastructure（持久化与适配器） 0.1.0-SNAPSHOT      [13/27]
+[INFO]   from co-qa\co-qa-infrastructure\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-qa-infrastructure ---
+[INFO] Deleting D:\co-team04\backend\co-qa\co-qa-infrastructure\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-qa-infrastructure ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-qa-infrastructure ---
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-qa-infrastructure ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 17 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-qa-infrastructure ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-infrastructure\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-qa-infrastructure ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-qa-infrastructure ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ----------------< com.campusoverflow:co-qa-interfaces >-----------------
+[INFO] Building Q&A 问答核心 :: interfaces（REST 接口层） 0.1.0-SNAPSHOT         [14/27]
+[INFO]   from co-qa\co-qa-interfaces\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-qa-interfaces ---
+[INFO] Deleting D:\co-team04\backend\co-qa\co-qa-interfaces\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-qa-interfaces ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-qa-interfaces ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-interfaces\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-interfaces\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-qa-interfaces ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 5 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-qa-interfaces ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-qa\co-qa-interfaces\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-qa-interfaces ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-qa-interfaces ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ------------------< com.campusoverflow:co-reputation >------------------
+[INFO] Building CampusOverflow :: Reputation 声誉与激励 0.1.0-SNAPSHOT       [15/27]
+[INFO]   from co-reputation\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-reputation ---
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-reputation ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] ----------------< com.campusoverflow:co-reputation-api >----------------
+[INFO] Building Reputation 声誉与激励 :: api（发布语言） 0.1.0-SNAPSHOT            [16/27]
+[INFO]   from co-reputation\co-reputation-api\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-reputation-api ---
+[INFO] Deleting D:\co-team04\backend\co-reputation\co-reputation-api\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-reputation-api ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-reputation-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-api\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-api\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-reputation-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 7 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-reputation-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-api\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-reputation-api ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-reputation-api ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] --------------< com.campusoverflow:co-reputation-domain >---------------
+[INFO] Building Reputation 声誉与激励 :: domain（纯 Java） 0.1.0-SNAPSHOT       [17/27]
+[INFO]   from co-reputation\co-reputation-domain\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-reputation-domain ---
+[INFO] Deleting D:\co-team04\backend\co-reputation\co-reputation-domain\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-reputation-domain ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-reputation-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-domain\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-domain\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-reputation-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 14 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-reputation-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-domain\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-reputation-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-reputation-domain ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.campusoverflow.reputation.domain.BountyAndAccountTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.164 s -- in com.campusoverflow.reputation.domain.BountyAndAccountTest
+[INFO] Running com.campusoverflow.reputation.domain.ReputationDomainMetaTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.campusoverflow.reputation.domain.ReputationDomainMetaTest
+[INFO] Running com.campusoverflow.reputation.domain.ReputationRulebookTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.105 s -- in com.campusoverflow.reputation.domain.ReputationRulebookTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ------------< com.campusoverflow:co-reputation-application >------------
+[INFO] Building Reputation 声誉与激励 :: application（用例编排） 0.1.0-SNAPSHOT    [18/27]
+[INFO]   from co-reputation\co-reputation-application\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-reputation-application ---
+[INFO] Deleting D:\co-team04\backend\co-reputation\co-reputation-application\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-reputation-application ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-reputation-application ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-application\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-application\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-reputation-application ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 14 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-reputation-application ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-application\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-reputation-application ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 7 source files with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-reputation-application ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.campusoverflow.reputation.application.QingcenBountyServiceTest
+Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build what is described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (C:\Users\86139\.m2\repository\net\bytebuddy\byte-buddy-agent\1.15.11\byte-buddy-agent-1.15.11.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction (file:/C:/Users/86139/.m2/repository/net/bytebuddy/byte-buddy/1.15.11/byte-buddy-1.15.11.jar)
+WARNING: Please consider reporting this to the maintainers of class net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.736 s -- in com.campusoverflow.reputation.application.QingcenBountyServiceTest
+[INFO] Running com.campusoverflow.reputation.application.ReconciliationServiceTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.200 s -- in com.campusoverflow.reputation.application.ReconciliationServiceTest
+[INFO] Running com.campusoverflow.reputation.application.ReputationApiImplTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.143 s -- in com.campusoverflow.reputation.application.ReputationApiImplTest
+[INFO] Running com.campusoverflow.reputation.application.ReputationEventHandlersTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.175 s -- in com.campusoverflow.reputation.application.ReputationEventHandlersTest
+[INFO] Running com.campusoverflow.reputation.application.ReputationQueryAuthorizationTest
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.campusoverflow.reputation.application.ReputationQueryAuthorizationTest
+[INFO] Running com.campusoverflow.reputation.application.ReputationSettlementTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in com.campusoverflow.reputation.application.ReputationSettlementTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 36, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] ----------< com.campusoverflow:co-reputation-infrastructure >-----------
+[INFO] Building Reputation 声誉与激励 :: infrastructure（持久化与适配器） 0.1.0-SNAPSHOT [19/27]
+[INFO]   from co-reputation\co-reputation-infrastructure\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-reputation-infrastructure ---
+[INFO] Deleting D:\co-team04\backend\co-reputation\co-reputation-infrastructure\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-reputation-infrastructure ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-reputation-infrastructure ---
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-reputation-infrastructure ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 11 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-reputation-infrastructure ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-infrastructure\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-reputation-infrastructure ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-reputation-infrastructure ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ------------< com.campusoverflow:co-reputation-interfaces >-------------
+[INFO] Building Reputation 声誉与激励 :: interfaces（REST 接口层） 0.1.0-SNAPSHOT [20/27]
+[INFO]   from co-reputation\co-reputation-interfaces\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-reputation-interfaces ---
+[INFO] Deleting D:\co-team04\backend\co-reputation\co-reputation-interfaces\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-reputation-interfaces ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-reputation-interfaces ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-interfaces\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-interfaces\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-reputation-interfaces ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 4 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-reputation-interfaces ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-reputation\co-reputation-interfaces\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-reputation-interfaces ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-reputation-interfaces ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ------------------< com.campusoverflow:co-discovery >-------------------
+[INFO] Building CampusOverflow :: Discovery 内容发现 0.1.0-SNAPSHOT         [21/27]
+[INFO]   from co-discovery\pom.xml
+[INFO] --------------------------------[ pom ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-discovery ---
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-discovery ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] ----------------< com.campusoverflow:co-discovery-api >-----------------
+[INFO] Building Discovery 内容发现 :: api（发布语言） 0.1.0-SNAPSHOT              [22/27]
+[INFO]   from co-discovery\co-discovery-api\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-discovery-api ---
+[INFO] Deleting D:\co-team04\backend\co-discovery\co-discovery-api\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-discovery-api ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-discovery-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-discovery\co-discovery-api\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-discovery\co-discovery-api\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-discovery-api ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-discovery-api ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-discovery\co-discovery-api\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-discovery-api ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-discovery-api ---
+[INFO] No tests to run.
+[INFO] 
+[INFO] ---------------< com.campusoverflow:co-discovery-domain >---------------
+[INFO] Building Discovery 内容发现 :: domain（纯 Java） 0.1.0-SNAPSHOT         [23/27]
+[INFO]   from co-discovery\co-discovery-domain\pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.4.1:clean (default-clean) @ co-discovery-domain ---
+[INFO] Deleting D:\co-team04\backend\co-discovery\co-discovery-domain\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ co-discovery-domain ---
+[INFO] Skipping JaCoCo execution because property jacoco.skip is set.
+[INFO] argLine set to empty
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ co-discovery-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-discovery\co-discovery-domain\src\main\resources
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-discovery\co-discovery-domain\src\main\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:compile (default-compile) @ co-discovery-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 11 source files with javac [debug parameters release 21] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ co-discovery-domain ---
+[INFO] skip non existing resourceDirectory D:\co-team04\backend\co-discovery\co-discovery-domain\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.13.0:testCompile (default-testCompile) @ co-discovery-domain ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 1 source file with javac [debug parameters release 21] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.5.3:test (default-test) @ co-discovery-domain ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.campusoverflow.discovery.domain.DiscoveryDomainTest
+[ERROR] Tests run: 5, Failures: 1, Errors: 2, Skipped: 0, Time elapsed: 0.166 s <<< FAILURE! -- in com.campusoverflow.discovery.domain.DiscoveryDomainTest
+[ERROR] com.campusoverflow.discovery.domain.DiscoveryDomainTest.singleCharacterTermsAreRejectedBecauseOfNgramTokenSize -- Time elapsed: 0.117 s <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting actual throwable to be an instance of:
+  com.campusoverflow.shared.domain.BusinessRuleException
+but was:
+  java.lang.UnsupportedOperationException: TODO(S3)：SearchQuery.terms 尚未实现
+	at com.campusoverflow.discovery.domain.search.SearchQuery.terms(SearchQuery.java:46)
+	at com.campusoverflow.discovery.domain.search.SearchQuery.<init>(SearchQuery.java:26)
+	at com.campusoverflow.discovery.domain.DiscoveryDomainTest.lambda$singleCharacterTermsAreRejectedBecauseOfNgramTokenSize$0(DiscoveryDomainTest.java:35)
+	...(74 remaining lines not displayed - this can be changed with Assertions.setMaxStackTraceElementsDisplayed)
+	at com.campusoverflow.discovery.domain.DiscoveryDomainTest.singleCharacterTermsAreRejectedBecauseOfNgramTokenSize(DiscoveryDomainTest.java:36)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+[ERROR] com.campusoverflow.discovery.domain.DiscoveryDomainTest.searchQueryStripsOperatorsAndPicksDefaultSort -- Time elapsed: 0.001 s <<< ERROR!
+java.lang.UnsupportedOperationException: TODO(S3)：SearchQuery.terms 尚未实现
+	at com.campusoverflow.discovery.domain.search.SearchQuery.terms(SearchQuery.java:46)
+	at com.campusoverflow.discovery.domain.search.SearchQuery.<init>(SearchQuery.java:26)
+	at com.campusoverflow.discovery.domain.DiscoveryDomainTest.searchQueryStripsOperatorsAndPicksDefaultSort(DiscoveryDomainTest.java:23)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+[ERROR] com.campusoverflow.discovery.domain.DiscoveryDomainTest.jaccardRanking -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.UnsupportedOperationException: TODO(S3)：RelatedQuestionPolicy.jaccard 尚未实现
+	at com.campusoverflow.discovery.domain.search.RelatedQuestionPolicy.jaccard(RelatedQuestionPolicy.java:17)
+	at com.campusoverflow.discovery.domain.DiscoveryDomainTest.jaccardRanking(DiscoveryDomainTest.java:41)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures: 
+[ERROR]   DiscoveryDomainTest.singleCharacterTermsAreRejectedBecauseOfNgramTokenSize:36 
+Expecting actual throwable to be an instance of:
+  com.campusoverflow.shared.domain.BusinessRuleException
+but was:
+  java.lang.UnsupportedOperationException: TODO(S3)：SearchQuery.terms 尚未实现
+	at com.campusoverflow.discovery.domain.search.SearchQuery.terms(SearchQuery.java:46)
+	at com.campusoverflow.discovery.domain.search.SearchQuery.<init>(SearchQuery.java:26)
+	at com.campusoverflow.discovery.domain.DiscoveryDomainTest.lambda$singleCharacterTermsAreRejectedBecauseOfNgramTokenSize$0(DiscoveryDomainTest.java:35)
+	...(74 remaining lines not displayed - this can be changed with Assertions.setMaxStackTraceElementsDisplayed)
+[ERROR] Errors: 
+[ERROR]   DiscoveryDomainTest.jaccardRanking:41 » UnsupportedOperation TODO(S3)：RelatedQuestionPolicy.jaccard 尚未实现
+[ERROR]   DiscoveryDomainTest.searchQueryStripsOperatorsAndPicksDefaultSort:23 » UnsupportedOperation TODO(S3)：SearchQuery.terms 尚未实现
+[INFO] 
+[ERROR] Tests run: 5, Failures: 1, Errors: 2, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary for CampusOverflow :: Parent 0.1.0-SNAPSHOT:
+[INFO] 
+[INFO] CampusOverflow :: Parent ........................... SUCCESS [  0.614 s]
+[INFO] CampusOverflow :: Shared Kernel .................... SUCCESS [  4.583 s]
+[INFO] CampusOverflow :: Identity 身份与认证 ................... SUCCESS [  0.000 s]
+[INFO] Identity 身份与认证 :: api（发布语言） ........................ SUCCESS [  0.427 s]
+[INFO] Identity 身份与认证 :: domain（纯 Java） ................... SUCCESS [  2.315 s]
+[INFO] Identity 身份与认证 :: application（用例编排） ................ SUCCESS [  1.708 s]
+[INFO] Identity 身份与认证 :: infrastructure（持久化与适配器） .......... SUCCESS [  3.270 s]
+[INFO] Identity 身份与认证 :: interfaces（REST 接口层） ............. SUCCESS [  2.686 s]
+[INFO] CampusOverflow :: Q&A 问答核心 ......................... SUCCESS [  0.005 s]
+[INFO] Q&A 问答核心 :: api（发布语言） .............................. SUCCESS [  0.490 s]
+[INFO] Q&A 问答核心 :: domain（纯 Java） ......................... SUCCESS [  2.572 s]
+[INFO] Q&A 问答核心 :: application（用例编排） ...................... SUCCESS [  5.080 s]
+[INFO] Q&A 问答核心 :: infrastructure（持久化与适配器） ................ SUCCESS [  2.665 s]
+[INFO] Q&A 问答核心 :: interfaces（REST 接口层） ................... SUCCESS [  1.932 s]
+[INFO] CampusOverflow :: Reputation 声誉与激励 ................. SUCCESS [  0.000 s]
+[INFO] Reputation 声誉与激励 :: api（发布语言） ...................... SUCCESS [  0.382 s]
+[INFO] Reputation 声誉与激励 :: domain（纯 Java） ................. SUCCESS [  2.528 s]
+[INFO] Reputation 声誉与激励 :: application（用例编排） .............. SUCCESS [  7.460 s]
+[INFO] Reputation 声誉与激励 :: infrastructure（持久化与适配器） ........ SUCCESS [  2.166 s]
+[INFO] Reputation 声誉与激励 :: interfaces（REST 接口层） ........... SUCCESS [  1.753 s]
+[INFO] CampusOverflow :: Discovery 内容发现 ................... SUCCESS [  0.016 s]
+[INFO] Discovery 内容发现 :: api（发布语言） ........................ SUCCESS [  0.252 s]
+[INFO] Discovery 内容发现 :: domain（纯 Java） ................... FAILURE [  2.088 s]
+[INFO] Discovery 内容发现 :: application（用例编排） ................ SKIPPED
+[INFO] Discovery 内容发现 :: infrastructure（持久化与适配器） .......... SKIPPED
+[INFO] Discovery 内容发现 :: interfaces（REST 接口层） ............. SKIPPED
+[INFO] CampusOverflow :: Bootstrap（启动装配） .................. SKIPPED
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  45.882 s
+[INFO] Finished at: 2026-11-16T17:01:06+08:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.5.3:test (default-test) on project co-discovery-domain: There are test failures.
+[ERROR] 
+[ERROR] See D:\co-team04\backend\co-discovery\co-discovery-domain\target\surefire-reports for the individual test results.
+[ERROR] See dump files (if any exist) [date].dump, [date]-jvmRun[N].dump and [date].dumpstream.
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+[ERROR] 
+[ERROR] After correcting the problems, you can resume the build with the command
+[ERROR]   mvn <args> -rf :co-discovery-domain
+EXIT=1
