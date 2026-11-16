@@ -1,0 +1,25 @@
+﻿=== CampusOverflow Sprint 2 bounty smoke ===
+Time: 2026-11-16 16:20:05
+
+POST /api/v1/auth/login                   -> 200
+{"id":6,"username":"2023001","displayName":"å°æ","email":"ming@campus.edu.cn","role":"STUDENT","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":"è®¡ç§2301","courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"STUDENT"}]}
+
+POST /api/v1/questions                    -> 201
+{"id":5}
+
+POST /api/v1/auth/login                   -> 200
+{"id":4,"username":"T2001","displayName":"çèå¸","email":"wang@campus.edu.cn","role":"TEACHER","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":null,"courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"TEACHER"}]}
+
+Teacher before: available=1000, frozen=0
+
+POST /api/v1/questions/5/bounty           -> 201
+{"id":2}
+
+Bounty: status=OPEN, points=50, expiresAt=2026-11-23T08:20:06.376343Z
+
+=== Summary ===
+questionId=5, bountyId=2
+teacher before: available=1000, frozen=0
+teacher after : available=950, frozen=50
+bounty        : status=OPEN, points=50
+=== All checks passed ===
