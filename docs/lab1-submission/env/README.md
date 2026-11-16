@@ -51,7 +51,7 @@ mvn clean test
 | --- | --- | --- | --- | --- | --- |
 | 房国栋 | `2177023844` | ✅ [`env-fangguodong.png`](env-fangguodong.png) | ✅ [`env-fangguodong.txt`](env-fangguodong.txt) | ✅ [`mvn-test-fangguodong.log`](../logs/mvn-test-fangguodong.log)（完整构建日志，78 KB；截图待补） | 2026-10-29 |
 | 魏志国 | `2123345397-star` | ⬜ 待补 | ⬜ | ⬜ | |
-| 陈明哲 | `cmz666-BOT` | ⬜ 待补 | ⬜ | ⬜ | |
+| 陈明哲 | `cmz666-BOT` | ✅ [`env-chenmingzhe.png`](env-chenmingzhe.png) | ✅ [`env-chenmingzhe.txt`](env-chenmingzhe.txt) | ✅ 同图（含 `mvn -B test` 摘要） | 2026-11-16 |
 | 刘俊琒 | `Liujunfeng520` | ⬜ 待补 | ⬜ | ⬜ | |
 | 青岑 | `qing963666` | ✅ [`env-qingcen.png`](env-qingcen.png) | ✅ [`env-qingcen.txt`](env-qingcen.txt) | ✅ [`mvn-test-qingcen.png`](../screenshots/mvn-test-qingcen.png) | 2026-11-15 |
 
