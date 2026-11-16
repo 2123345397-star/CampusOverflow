@@ -42,6 +42,21 @@ export interface SearchResult extends QuestionSummary { bountyOpen: boolean }
 export interface LeaderboardEntry { rank: number; userId: number; displayName: string; verified: boolean; score: number }
 export interface Notification { id: number; type: string; title: string; link: string; read: boolean; createdAt: string }
 export interface ReputationProfile {
-  userId: number; displayName: string; reputation: number; availablePoints?: number; frozenPoints?: number;
+  userId: number; displayName: string; reputation: number;
+  /** 积分字段仅本人可见，他人查看时为 null（后端 ReputationProfileView 约定） */
+  availablePoints?: number | null; frozenPoints?: number | null;
   badges: { code: string; name: string; description: string; awardedAt: string }[];
+}
+
+/** 声誉流水的一条（LedgerEntryView） */
+export interface LedgerEntry {
+  id: number; reason: string; reasonLabel: string; delta: number;
+  refType: string; refId: number; createdAt: string;
+}
+
+/** 悬赏（BountyView）；status: OPEN / AWARDED / CLOSED / EXPIRED */
+export interface Bounty {
+  id: number; questionId: number; sponsorId: number; sponsorName: string;
+  points: number; status: string; createdAt: string; expiresAt: string;
+  winnerId?: number | null; answerId?: number | null;
 }
