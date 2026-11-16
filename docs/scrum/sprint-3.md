@@ -24,6 +24,9 @@
 | 通知后端（房国栋 T3-03/06/07：MentionParser / NotificationProjector / NotificationService） | ✅ 已在 develop，0 TODO | 文件树核查 2026-11-16 |
 | 搜索边界证据（单字 422 / 空词处理） | ✅ 截图 | [`sprint-3-search-422.png`](sprint-3-search-422.png)、[`sprint-3-search-empty.png`](sprint-3-search-empty.png) |
 | 搜索冒烟记录 | ✅ | [`sprint-3-search.md`](sprint-3-search.md) |
+| 搜索投影 `SearchIndexProjector`（T3-04，B 代 A 实现） | 🟨 PR #120 | 10 个 TODO 实现 + `SearchIndexProjectorTest` 3 条幂等用例 |
+| 通知侧测试 | ✅ 本次补充 | `NotificationProjectorTest` 5 条 + `NotificationServiceTest` 3 条 |
+| CI 纳入 discovery | ✅ 本次补充 | `SPRINT_MODULES` 增加 `co-discovery-domain/application` |
 
 ## 三、任务分解（待计划会确认到 ≤1 天粒度）
 
