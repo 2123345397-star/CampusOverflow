@@ -71,6 +71,9 @@ management:
   metrics:
     tags:
       application: campus-overflow
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
 
 logging:
   level:

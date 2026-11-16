@@ -49,16 +49,30 @@
 
 ## 五、验收清单
 
-- [ ] `mvn verify` 全绿（5 个后端阶段 + 前端阶段），CI 完整门禁恢复
-- [ ] co-discovery 模块 **0 TODO**（`DiscoveryQueryService`、`SearchIndexProjector`）
-- [ ] `domain.coverage.minimum=0.70` 通过；ADR-009 状态改“已完成”
+- [x] `mvn verify` 全绿（5 个后端阶段 + 前端阶段），CI 完整门禁恢复（E 复核 2026-11-16）
+- [x] co-discovery 模块 **0 TODO**（`DiscoveryQueryService`、`SearchIndexProjector`）
+- [x] `domain.coverage.minimum=0.70` 通过；ADR-009 状态改“已完成”
 - [ ] 中文搜索命中（ADR-005 ngram 口径）、相关问题返回有序列表
 - [ ] 通知：同一事件不重复发；只能标记自己的；未读数正确
 - [ ] 前端搜索页 + 相关侧栏 + 通知已读 + @高亮 可演示
 - [ ] T3-11 demo 走查记录（0 阻断缺陷）；T3-12 功能冻结
 - [ ] 燃尽图归档 `docs/scrum/sprint-3-burndown.png`
 
-## 六、关联
+
+## 六、CI 与验证（E 复核，2026-11-16）
+
+| 检查项 | 结果 | 证据 |
+| --- | --- | --- |
+| 全仓 `mvn verify`（27 模块） | **BUILD SUCCESS** | 2026-11-16 本地 JDK 21 实跑；含 ArchitectureTest |
+| CI 阶段 | 编译 / 单元测试 / ArchUnit / 覆盖率门禁 / 集成测试（容错）+ 前端 typecheck & build | [`.github/workflows/ci.yml`](../../.github/workflows/ci.yml) |
+| SPRINT_MODULES 扩容 | 加入 `co-discovery-domain` / `co-discovery-application` | 同上 |
+| co-discovery 测试 | domain 6 条 + application 6 条，全绿 | `DiscoveryDomainTest`、`DiscoveryQueryServiceTest`、`SearchIndexProjectorTest` |
+| co-discovery 覆盖率 | 行覆盖 **78.26%**（72/92）≥ 0.70 | JaCoCo `jacoco.csv`；`check-domain-coverage` 通过 |
+| ADR-009 | 状态改为“已完成” | [`docs/adr/009-渐进式质量门禁.md`](../adr/009-渐进式质量门禁.md) |
+
+> 复核人：陈明哲（E）　日期：2026-11-16。S3 的搜索/通知/前端验收项仍以 C、D 的实测记录为准。
+
+## 七、关联
 
 - tech-debt：#44（行走骨架移除）
 - 缺陷台账：[`docs/qa/defects.md`](../qa/defects.md)
