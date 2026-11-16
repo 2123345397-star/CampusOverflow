@@ -43,6 +43,10 @@ Related count: 1
 
 执行日志：[`sprint-3-search-hit.log`](sprint-3-search-hit.log)。
 
+![中文搜索命中两条](sprint-3-search-hit.png)
+
+![相关问题返回 similarity=1.0](sprint-3-search-related.png)
+
 结论：
 
 - 中文 ngram 搜索命中 2 条，`total=2`；
