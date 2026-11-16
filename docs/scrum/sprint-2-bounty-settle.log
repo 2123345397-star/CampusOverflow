@@ -1,0 +1,50 @@
+﻿=== CampusOverflow Sprint 2 bounty settlement smoke ===
+Time: 2026-11-16 16:35:15
+
+POST /api/v1/auth/login                         -> 200
+{"id":6,"username":"2023001","displayName":"å°æ","email":"ming@campus.edu.cn","role":"STUDENT","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":"è®¡ç§2301","courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"STUDENT"}]}
+
+POST /api/v1/questions                          -> 201
+{"id":6}
+
+POST /api/v1/auth/login                         -> 200
+{"id":7,"username":"2023002","displayName":"å°çº¢","email":"hong@campus.edu.cn","role":"STUDENT","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":"è®¡ç§2301","courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"STUDENT"}]}
+
+POST /api/v1/questions/6/answers                -> 201
+{"id":3}
+
+POST /api/v1/auth/login                         -> 200
+{"id":4,"username":"T2001","displayName":"çèå¸","email":"wang@campus.edu.cn","role":"TEACHER","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":null,"courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"TEACHER"}]}
+
+POST /api/v1/auth/login                         -> 200
+{"id":7,"username":"2023002","displayName":"å°çº¢","email":"hong@campus.edu.cn","role":"STUDENT","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":"è®¡ç§2301","courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"STUDENT"}]}
+
+Answerer reputation before: 35
+
+POST /api/v1/auth/login                         -> 200
+{"id":4,"username":"T2001","displayName":"çèå¸","email":"wang@campus.edu.cn","role":"TEACHER","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":null,"courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"TEACHER"}]}
+
+POST /api/v1/questions/6/bounty                 -> 201
+{"id":3}
+
+POST /api/v1/auth/login                         -> 200
+{"id":6,"username":"2023001","displayName":"å°æ","email":"ming@campus.edu.cn","role":"STUDENT","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":"è®¡ç§2301","courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"STUDENT"}]}
+
+PUT  /api/v1/questions/6/accepted-answer        -> 204
+
+Bounty after accept: status=AWARDED, winnerId=7, answerId=3
+
+POST /api/v1/auth/login                         -> 200
+{"id":7,"username":"2023002","displayName":"å°çº¢","email":"hong@campus.edu.cn","role":"STUDENT","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":"è®¡ç§2301","courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"STUDENT"}]}
+
+POST /api/v1/auth/login                         -> 200
+{"id":4,"username":"T2001","displayName":"çèå¸","email":"wang@campus.edu.cn","role":"TEACHER","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":null,"courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"TEACHER"}]}
+
+=== Summary ===
+questionId=6, answerId=3, bountyId=3
+answerer before: reputation=35
+answerer after : reputation=100
+teacher before: available=1000, frozen=0
+teacher after : available=950, frozen=0
+bounty        : status=AWARDED, points=50
+=== All checks passed ===

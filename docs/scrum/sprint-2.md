@@ -83,6 +83,28 @@ Teacher after : available=950, frozen=50
 
 完整日志：[`sprint-2-bounty.log`](sprint-2-bounty.log)。
 
+### 2026-11-16（悬赏结算与到期退款）
+
+结算链路（教师发起悬赏 → 学生回答 → 提问者采纳）：
+
+```text
+answerer reputation before: 35
+answerer reputation after : 100   (+65 = 采纳 +15 + 悬赏 +50)
+teacher before: available=1000, frozen=0
+teacher after : available=950,  frozen=0
+bounty        : status=AWARDED, points=50
+=== All checks passed ===
+```
+
+到期退款（把 expires_at 改成过去，定时任务每 2 秒扫描）：
+
+```text
+到期前：available=950,  frozen=50, bounty=OPEN
+到期后：available=1000, frozen=0,  bounty=EXPIRED
+```
+
+日志：[`sprint-2-bounty-settle.log`](sprint-2-bounty-settle.log)、[`sprint-2-bounty-expiry.log`](sprint-2-bounty-expiry.log)。
+
 ## 三、燃尽图与数据
 
 口径：纵轴为 Sprint 2 迭代范围内尚未完成的 Story Point；完成指代码合入 `develop` 且对应验收通过。S2 范围 PB-20～PB-30 合计 42 SP，数据截至 2026-11-14，后续站会续绘。
@@ -102,14 +124,15 @@ Teacher after : available=950, frozen=50
 - Done：
   - T2-03 Bounty 聚合（PR #92）
   - T2-07 BountyService（PR #92）
+  - Bounty 边界与到期/结算顺序测试（PR #110）
+  - 悬赏 950/50 与结算/退款演示（PR #111）
   - E3 环境证据（PR #98，属 Lab 1 交付）
+  - 悬赏对话框与个人声誉主页（PR #100）
 - In Progress：
-  - Reputation 账本与 Bounty 端到端联调
-  - 悬赏对话框前端联调
+  - Sprint 2 评审彩排与燃尽图归档
 - In Review：无
 - To Do：
   - PB-23 徽章、PB-26 排行榜、PB-28 对账查看
-  - PB-29 悬赏对话框与个人声誉主页
   - PB-30 Reputation 应用层测试补全
 
 ## 五、风险与对策
@@ -132,7 +155,8 @@ Teacher after : available=950, frozen=50
 - [x] 到期与结算顺序单元测试（先结算不再到期、先到期不再结算）
 - [x] `http/bounty.http` 已加入（demo 账号，脚本可一键跑）
 - [x] 教师 50 分 / 7 天悬赏：可用 950、冻结 50（`sprint-2-bounty.log`）
-- [ ] 到期退款端到端验证
+- [x] 结算端到端：回答者声誉 35 → 100（采纳 +15 + 悬赏 +50），发起人冻结归零（`sprint-2-bounty-settle.log`）
+- [x] 到期退款端到端：950/50 → 1000/0，悬赏 EXPIRED（`sprint-2-bounty-expiry.log`）
 - [ ] Sprint 2 燃尽图归档
 
 ## 七、关联链接
