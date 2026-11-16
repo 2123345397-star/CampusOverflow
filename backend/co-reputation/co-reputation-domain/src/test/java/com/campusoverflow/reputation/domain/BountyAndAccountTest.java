@@ -48,6 +48,34 @@ class BountyAndAccountTest {
     }
 
     @Test
+    void bountyPointsBoundariesAreEnforced() {
+        assertThatThrownBy(() -> Bounty.open(10, true, teacher, true, 9, 7, NOW))
+                .isInstanceOfSatisfying(BusinessRuleException.class,
+                        ex -> assertThat(ex.code()).isEqualTo("REP-1003"));
+        assertThatThrownBy(() -> Bounty.open(10, true, teacher, true, 501, 7, NOW))
+                .isInstanceOfSatisfying(BusinessRuleException.class,
+                        ex -> assertThat(ex.code()).isEqualTo("REP-1003"));
+
+        assertThat(Bounty.open(10, true, teacher, true, 10, 1, NOW).points()).isEqualTo(10);
+        assertThat(Bounty.open(10, true, teacher, true, 500, 14, NOW).points()).isEqualTo(500);
+    }
+
+    @Test
+    void bountyDaysBoundariesAreEnforced() {
+        assertThatThrownBy(() -> Bounty.open(10, true, teacher, true, 50, 0, NOW))
+                .isInstanceOfSatisfying(BusinessRuleException.class,
+                        ex -> assertThat(ex.code()).isEqualTo("REP-1004"));
+        assertThatThrownBy(() -> Bounty.open(10, true, teacher, true, 50, 15, NOW))
+                .isInstanceOfSatisfying(BusinessRuleException.class,
+                        ex -> assertThat(ex.code()).isEqualTo("REP-1004"));
+
+        assertThat(Bounty.open(10, true, teacher, true, 50, 1, NOW).expiresAt())
+                .isEqualTo(NOW.plus(Duration.ofDays(1)));
+        assertThat(Bounty.open(10, true, teacher, true, 50, 14, NOW).expiresAt())
+                .isEqualTo(NOW.plus(Duration.ofDays(14)));
+    }
+
+    @Test
     void freezeSpendAndRefundKeepPointsConsistent() {
         ReputationAccount acc = ReputationAccount.open(9, 1000);
         acc.freezePoints(300);
