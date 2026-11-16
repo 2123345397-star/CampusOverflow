@@ -1,0 +1,12 @@
+=== Sprint 2 bounty expiry evidence ===
+Time: 2026-11-16 16:30:41
+
+--- before expiry ---
+T2001	950	50	2	OPEN	50	2026-11-23 08:20:06.376343
+
+--- force expires_at into the past ---
+1
+
+--- after scheduler run ---
+T2001	1000	0	1	EXPIRED	50	2026-11-16 08:19:30.000000
+T2001	1000	0	2	EXPIRED	50	2026-11-16 08:30:42.583982
