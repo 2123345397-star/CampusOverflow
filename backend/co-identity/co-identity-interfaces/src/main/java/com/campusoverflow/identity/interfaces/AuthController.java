@@ -44,6 +44,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
+    /** Spring Session 的 principal-name 索引键（与 FindByIndexNameSessionRepository 常量一致）。 */
+    private static final String PRINCIPAL_NAME_INDEX =
+            "org.springframework.session.FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME";
+
     private final UserRegistrationService registration;
     private final UserQueryService userQuery;
     private final AuthenticationManager authenticationManager;
@@ -99,6 +103,8 @@ public class AuthController {
         if (request.getSession(false) != null) {
             request.changeSessionId();
         }
+        // 写入 principal-name 索引，禁用账号时可按用户名撤销全部会话
+        request.getSession(true).setAttribute(PRINCIPAL_NAME_INDEX, req.username());
         SecurityContext context = SecurityContextHolder.createEmptyContext();
         context.setAuthentication(auth);
         SecurityContextHolder.setContext(context);
