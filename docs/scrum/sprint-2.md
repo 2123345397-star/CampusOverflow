@@ -65,7 +65,23 @@
 | Bounty 边界测试 | points 9/10/500/501、days 0/1/14/15 已覆盖 |
 | 到期与结算顺序 | 新增 `settledBountyIsNotReturnedByExpireDue`、`expiredBountyCannotBeSettledAgain` |
 | 悬赏脚本 | 新增 `http/bounty.http`（学生发问题 → 教师 50 分 / 7 天 → 查 950/50） |
+| 悬赏执行证据 | `scripts/bounty-smoke.ps1` 实测：教师 1000/0 → 950/50，悬赏 OPEN / 50 分，日志见 `docs/scrum/sprint-2-bounty.log` |
 | 测试结果 | `co-reputation-domain` 20 条、`co-reputation-application` 23 条，全部通过 |
+
+### 2026-11-16（悬赏 950/50 演示）
+
+demo profile 启动后，把 T2001 账户重置为 1000/0，再执行 `scripts/bounty-smoke.ps1`：
+
+```text
+POST /api/v1/questions                    -> 201  {"id":5}
+POST /api/v1/questions/5/bounty           -> 201  {"id":2}
+Teacher before: available=1000, frozen=0
+Bounty: status=OPEN, points=50
+Teacher after : available=950, frozen=50
+=== All checks passed ===
+```
+
+完整日志：[`sprint-2-bounty.log`](sprint-2-bounty.log)。
 
 ## 三、燃尽图与数据
 
@@ -115,7 +131,7 @@
 - [x] 悬赏边界：points 9/10/500/501、days 0/1/14/15、重复 open、自答退款
 - [x] 到期与结算顺序单元测试（先结算不再到期、先到期不再结算）
 - [x] `http/bounty.http` 已加入（demo 账号，脚本可一键跑）
-- [ ] 教师 50 分 / 7 天悬赏：可用 950、冻结 50（脚本执行截图待补）
+- [x] 教师 50 分 / 7 天悬赏：可用 950、冻结 50（`sprint-2-bounty.log`）
 - [ ] 到期退款端到端验证
 - [ ] Sprint 2 燃尽图归档
 
