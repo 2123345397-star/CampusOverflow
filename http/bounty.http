@@ -1,0 +1,159 @@
+# 前置条件：
+# 1. 后端以 demo profile 启动（教师 T2001 / 学生 2023001，密码 Campus2026）
+# 2. 数据库里脚本会自动用 2023001 新建一个问题，再由 T2001 发起 50 分 / 7 天悬赏
+# 3. 若 demo 种子已经给 T2001 建过悬赏，先把账户重置成 1000/0，才能看到 950/50：
+#    docker exec -it co-mysql mysql -ucampus -pcampus_dev_pwd campus_overflow -e "
+#      UPDATE rep_account SET available_points=1000, frozen_points=0
+#      WHERE user_id=(SELECT id FROM id_user WHERE username='T2001');
+#      UPDATE rep_bounty SET status='EXPIRED', closed_at=NOW()
+#      WHERE sponsor_id=(SELECT id FROM id_user WHERE username='T2001') AND status='OPEN';"
+#
+# 预期：账户 1000/0 → 950/50；如果初始是 950/50，则本次后是 900/100（断言的是增减量）
+
+### 0. 获取 CSRF
+GET {{host}}/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
+%}
+
+### 1. 学生登录（用于发问题）
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "username": "{{studentUsername}}",
+  "password": "{{studentPassword}}"
+}
+
+> {%
+  client.global.set("studentId", response.body.id);
+  client.test("学生登录成功", () => client.assert(response.status === 200));
+%}
+
+### 2. 登录后重新获取 CSRF
+GET {{host}}/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
+%}
+
+### 3. 取一门课程（demo 里学生已加入 CS2001）
+GET {{host}}/api/v1/courses
+
+> {%
+  client.test("至少有一门课程", () => client.assert(response.body.length > 0));
+  client.global.set("courseId", response.body[0].id);
+%}
+
+### 4. 学生发布一个问题（必须挂课程，教师才有管理权）
+POST {{host}}/api/v1/questions
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "courseId": {{courseId}},
+  "title": "悬赏脚本测试：红黑树插入后为什么必须旋转？",
+  "body": "这是 bounty.http 自动创建的问题，用于验证教师发起悬赏、冻结积分和到期退款链路。",
+  "tags": ["冒烟测试", "数据结构"]
+}
+
+> {%
+  client.global.set("bountyQuestionId", response.body.id);
+  client.test("问题创建成功", () => client.assert(response.status === 201));
+%}
+
+### 5. 教师登录
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "username": "{{teacherUsername}}",
+  "password": "{{teacherPassword}}"
+}
+
+> {%
+  client.global.set("teacherId", response.body.id);
+  client.test("教师登录成功", () => client.assert(response.status === 200));
+%}
+
+### 6. 登录后重新获取 CSRF
+GET {{host}}/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
+%}
+
+### 7. 记录发起前教师积分
+GET {{host}}/api/v1/users/{{teacherId}}/reputation
+
+> {%
+  client.global.set("availableBefore", response.body.availablePoints);
+  client.global.set("frozenBefore", response.body.frozenPoints);
+  client.log("发起前：available=" + response.body.availablePoints + ", frozen=" + response.body.frozenPoints);
+%}
+
+### 8. 教师发起 50 分 / 7 天悬赏
+POST {{host}}/api/v1/questions/{{bountyQuestionId}}/bounty
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "points": 50,
+  "days": 7
+}
+
+> {%
+  client.global.set("bountyId", response.body.id);
+  client.test("悬赏创建成功", () => client.assert(response.status === 201));
+%}
+
+### 9. 查看悬赏状态
+GET {{host}}/api/v1/questions/{{bountyQuestionId}}/bounty
+
+> {%
+  client.test("悬赏为 OPEN", () => client.assert(response.body.status === "OPEN"));
+  client.test("悬赏 50 分", () => client.assert(response.body.points === 50));
+  client.log("悬赏：" + response.body.status + " / " + response.body.points + " 分");
+%}
+
+### 10. 查看发起后教师积分（+50 冻结，-50 可用）
+GET {{host}}/api/v1/users/{{teacherId}}/reputation
+
+> {%
+  const availableBefore = Number(client.global.get("availableBefore"));
+  const frozenBefore = Number(client.global.get("frozenBefore"));
+  client.test("可用积分减少 50", () =>
+    client.assert(response.body.availablePoints === availableBefore - 50,
+      "expected available=" + (availableBefore - 50) + ", got " + response.body.availablePoints));
+  client.test("冻结积分增加 50", () =>
+    client.assert(response.body.frozenPoints === frozenBefore + 50,
+      "expected frozen=" + (frozenBefore + 50) + ", got " + response.body.frozenPoints));
+  client.log("发起后：available=" + response.body.availablePoints + ", frozen=" + response.body.frozenPoints);
+%}

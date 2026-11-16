@@ -28,13 +28,40 @@ public class DiscoveryQueryService {
         this.identity = identity;
     }
 
+    private static final int CANDIDATE_LIMIT = 50;
+
     public PageResult<SearchResultView> search(SearchQuery query) {
-        // TODO(S3)：实现 DiscoveryQueryService.search——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：DiscoveryQueryService.search 尚未实现");
+        PageResult<SearchHit> hits = search.search(query);
+        Map<Long, UserSummary> authors = identity.findUsers(hits.items().stream()
+                .map(SearchHit::authorId)
+                .collect(java.util.stream.Collectors.toSet()));
+        return hits.map(hit -> toView(hit, authors.get(hit.authorId())));
     }
 
     public List<RelatedQuestionView> related(long questionId, int limit) {
-        // TODO(S3)：实现 DiscoveryQueryService.related——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：DiscoveryQueryService.related 尚未实现");
+        if (limit <= 0) {
+            return List.of();
+        }
+        List<String> ownTags = index.findTags(questionId);
+        if (ownTags == null || ownTags.isEmpty()) {
+            return List.of();
+        }
+        int ownTagCount = ownTags.size();
+        return RelatedQuestionPolicy.rank(
+                        index.findCandidatesSharingTags(questionId, ownTags, CANDIDATE_LIMIT),
+                        ownTagCount, limit)
+                .stream()
+                .map(candidate -> new RelatedQuestionView(candidate.questionId(), candidate.title(),
+                        candidate.answerCount(), candidate.accepted(),
+                        RelatedQuestionPolicy.jaccard(candidate.sharedTags(), ownTagCount, candidate.tagCount())))
+                .toList();
+    }
+
+    private SearchResultView toView(SearchHit hit, UserSummary user) {
+        SearchResultView.Author author = user == null
+                ? new SearchResultView.Author(0, "未知用户", "STUDENT", false)
+                : new SearchResultView.Author(user.id(), user.displayName(), user.role().name(), user.verified());
+        return new SearchResultView(hit.questionId(), hit.title(), hit.snippet(), hit.tags(), hit.courseId(),
+                author, hit.score(), hit.answerCount(), hit.accepted(), hit.bountyOpen(), hit.createdAt());
     }
 }

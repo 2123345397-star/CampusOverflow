@@ -15,6 +15,7 @@ import com.campusoverflow.qa.api.event.CommentPostedEvent;
 import com.campusoverflow.reputation.api.event.BadgeAwardedEvent;
 import com.campusoverflow.reputation.api.event.BountyAwardedEvent;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,53 +37,91 @@ public class NotificationProjector {
     @EventListener
     @Transactional
     public void on(AnswerSubmittedEvent e) {
-        // TODO(S3)：实现 NotificationProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.on 尚未实现");
+        if (e.answerAuthorId() == e.questionAuthorId()) {
+            return;
+        }
+        notify(e.questionAuthorId(), NotificationType.ANSWER_RECEIVED,
+                name(e.answerAuthorId()) + " 回答了你的问题：" + e.questionTitle(),
+                "/questions/" + e.questionId(), e.eventId(), e.occurredAt());
     }
 
     @EventListener
     @Transactional
     public void on(AnswerAcceptedEvent e) {
-        // TODO(S3)：实现 NotificationProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.on 尚未实现");
+        if (e.acceptedById() == e.answerAuthorId()) {
+            return;
+        }
+        notify(e.answerAuthorId(), NotificationType.ANSWER_ACCEPTED,
+                "你的回答被采纳：" + e.questionTitle(),
+                "/questions/" + e.questionId(), e.eventId(), e.occurredAt());
     }
 
     @EventListener
     @Transactional
     public void on(AnswerEndorsedEvent e) {
-        // TODO(S3)：实现 NotificationProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.on 尚未实现");
+        if (e.endorserId() == e.answerAuthorId()) {
+            return;
+        }
+        notify(e.answerAuthorId(), NotificationType.ANSWER_ENDORSED,
+                "你的回答被教师认证：" + e.questionTitle(),
+                "/questions/" + e.questionId(), e.eventId(), e.occurredAt());
     }
 
     @EventListener
     @Transactional
     public void on(CommentPostedEvent e) {
-        // TODO(S3)：实现 NotificationProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.on 尚未实现");
+        Set<String> mentioned = MentionParser.extract(e.body());
+        if (mentioned.isEmpty()) {
+            return;
+        }
+        String who = name(e.authorId());
+        String title = questionTitle(e.questionId());
+        for (String displayName : mentioned) {
+            Optional<UserSummary> target = identity.findByDisplayName(displayName);
+            if (target.isEmpty() || target.get().id() == e.authorId()) {
+                continue;
+            }
+            notify(target.get().id(), NotificationType.MENTIONED,
+                    who + " 在《" + title + "》的评论中提到了你",
+                    "/questions/" + e.questionId(), e.eventId(), e.occurredAt());
+        }
     }
 
     @EventListener
     @Transactional
     public void on(BountyAwardedEvent e) {
-        // TODO(S3)：实现 NotificationProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.on 尚未实现");
+        notify(e.winnerId(), NotificationType.BOUNTY_AWARDED,
+                "恭喜！你获得《" + questionTitle(e.questionId()) + "》的悬赏 " + e.points() + " 分",
+                "/questions/" + e.questionId(), e.eventId(), e.occurredAt());
     }
 
     @EventListener
     @Transactional
     public void on(BadgeAwardedEvent e) {
-        // TODO(S3)：实现 NotificationProjector.on——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.on 尚未实现");
+        notify(e.userId(), NotificationType.BADGE_AWARDED,
+                "你获得了新徽章：" + e.badgeName(),
+                "/me/reputation", e.eventId(), e.occurredAt());
     }
 
+    /**
+     * 幂等写入：同一 (sourceEventId, recipientId) 只保存一条。
+     * 一个事件可能通知多个人（如 @提及），他们共用同一个 eventId，靠接收者区分。
+     */
     private void notify(long recipientId, NotificationType type, String title, String link, String eventId,
                         java.time.Instant at) {
-        // TODO(S3)：实现 NotificationProjector.notify——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.notify 尚未实现");
+        if (notifications.exists(eventId, recipientId)) {
+            return;
+        }
+        notifications.save(Notification.create(recipientId, type, title, link, eventId, at));
     }
 
+    /** 取昵称用于通知文案；用户被删除时降级为中性称呼，不让通知发不出去。 */
     private String name(long userId) {
-        // TODO(S3)：实现 NotificationProjector.name——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S3)：NotificationProjector.name 尚未实现");
+        return identity.findUser(userId).map(UserSummary::displayName).orElse("某位用户");
+    }
+
+    /** 评论事件与悬赏事件不带标题，回查问答上下文的发布语言。 */
+    private String questionTitle(long questionId) {
+        return qa.findQuestion(questionId).map(QuestionRef::title).orElse("一个问题");
     }
 }

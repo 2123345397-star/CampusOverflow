@@ -1,0 +1,74 @@
+# 前置条件：
+# 1. 后端以 dev profile 启动（Sprint 0 不要加 demo）
+# 2. 数据库中已有一门课程（教师账号创建），否则第 4 步 courseId 为空，第 6 步 join 会失败
+# 3. 首次运行前修改 username/email；重复运行会因用户名已存在返回 409
+
+### 0. 获取 CSRF
+GET {{host}}/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  // SPA 场景服务端按原始 Cookie 值校验；响应体里的 token 是 XOR 掩码值。
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
+%}
+
+### 1. 注册
+POST {{host}}/api/v1/auth/register
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "username": "student2026",
+  "displayName": "测试学生",
+  "email": "student2026@example.com",
+  "password": "Passw0rd123",
+  "college": "计算机学院",
+  "className": "软工2401"
+}
+
+### 2. 登录
+POST {{host}}/api/v1/auth/login
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "username": "student2026",
+  "password": "Passw0rd123"
+}
+
+### 3. 当前用户
+GET {{host}}/api/v1/auth/me
+
+### 4. 课程列表
+GET {{host}}/api/v1/courses
+> {%
+  if (response.body.length > 0) {
+    client.global.set("courseId", response.body[0].id);
+  }
+%}
+
+### 5. 登录后重新获取 CSRF
+GET {{host}}/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
+%}
+
+### 6. 加入课程
+POST {{host}}/api/v1/courses/{{courseId}}/join
+{{csrfHeader}}: {{csrfToken}}

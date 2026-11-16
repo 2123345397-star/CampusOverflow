@@ -8,11 +8,14 @@ import com.campusoverflow.qa.domain.CommentRepository;
 import com.campusoverflow.qa.domain.Question;
 import com.campusoverflow.qa.domain.QuestionRepository;
 import com.campusoverflow.qa.domain.TargetType;
+import com.campusoverflow.shared.domain.BusinessRuleException;
+import com.campusoverflow.shared.domain.ForbiddenException;
 import com.campusoverflow.shared.domain.NotFoundException;
 import com.campusoverflow.shared.event.EventIds;
 import com.campusoverflow.shared.event.IntegrationEventPublisher;
 import com.campusoverflow.shared.security.Actor;
 import java.time.Clock;
+import java.time.Instant;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +40,54 @@ public class CommentService {
 
     @Transactional
     public long post(Actor actor, PostCommentCommand cmd) {
-        // TODO(S2)：实现 CommentService.post——参考领域单元测试与 arc42 文档中的业务规则
-        throw new UnsupportedOperationException("TODO(S2)：CommentService.post 尚未实现");
+        long questionId = resolveQuestionId(cmd.targetType(), cmd.targetId());
+
+        Comment parent = null;
+        if (cmd.parentId() != null) {
+            parent = comments.findById(cmd.parentId())
+                    .orElseThrow(() -> new NotFoundException("QA-4003", "父评论不存在"));
+        }
+
+        Instant now = clock.instant();
+        Comment saved = comments.save(Comment.post(cmd.targetType(), cmd.targetId(), questionId, actor.userId(),
+                parent, cmd.body(), now));
+        events.publish(new CommentPostedEvent(EventIds.next(), now, saved.id(), questionId, actor.userId(),
+                saved.body()));
+        return saved.id();
+    }
+
+    /**
+     * 删除评论。只有作者或管理员可以删；删除顶层评论时级联删除它的全部回复，
+     * 避免留下挂在不存在的父评论下的孤儿回复。
+     */
+    @Transactional
+    public void delete(Actor actor, long commentId) {
+        Comment comment = comments.findById(commentId)
+                .orElseThrow(() -> new NotFoundException("QA-4003", "评论不存在"));
+
+        if (!actor.isAdmin() && !actor.is(comment.authorId())) {
+            throw new ForbiddenException("QA-1018", "只能删除自己的评论");
+        }
+
+        if (comment.parentId() == null) {
+            comments.findReplies(comment.id()).forEach(comments::delete);
+        }
+        comments.delete(comment);
+    }
+
+    private long resolveQuestionId(TargetType type, long targetId) {
+        if (type == TargetType.QUESTION) {
+            Question question = questions.findById(targetId)
+                    .filter(q -> !q.isDeleted())
+                    .orElseThrow(() -> new NotFoundException("QA-4001", "问题不存在"));
+            return question.id();
+        }
+        if (type == TargetType.ANSWER) {
+            Answer answer = answers.findById(targetId)
+                    .filter(a -> !a.isDeleted())
+                    .orElseThrow(() -> new NotFoundException("QA-4002", "回答不存在"));
+            return answer.questionId();
+        }
+        throw new BusinessRuleException("QA-4003", "不支持的评论目标");
     }
 }

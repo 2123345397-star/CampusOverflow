@@ -14,6 +14,8 @@ import jakarta.validation.constraints.Size;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +39,13 @@ public class CommentController {
         long id = comments.post(actor, new PostCommentCommand(req.targetType(), req.targetId(), req.parentId(),
                 req.body()));
         return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("id", id));
+    }
+
+    @Operation(summary = "删除评论（删除顶层评论时级联删除回复）")
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<Void> delete(@Parameter(hidden = true) Actor actor, @PathVariable long commentId) {
+        comments.delete(actor, commentId);
+        return ResponseEntity.noContent().build();
     }
 
     public record CommentRequest(@NotNull TargetType targetType, @NotNull Long targetId, Long parentId,

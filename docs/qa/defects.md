@@ -1,0 +1,19 @@
+# Sprint 0 缺陷与差距清单
+
+> 负责人：青岑（QA）
+> 记录规则：严重程度（高/中/低）、复现步骤、预期、实际、负责人、状态
+> 说明：部分条目基于仓库与 GitHub 页面静态核查；2026-11-15 由陈明哲（E）按仓库树、GitHub API 与 Actions 记录复核，更新了已解决项的状态与证据。
+
+| 编号 | 严重程度 | 模块 | 现象 | 复现/证据 | 预期 | 实际 | 负责人 | 状态 |
+|---|---|---|---|---|---|---|---|---|
+| BUG-001 | 高 | 课程页 | 前端没有课程页，无法在 UI 完成课程列表/我的课程/加入课程 | `frontend/src/App.tsx` 已注册 `/courses`、`/courses/mine`；页面在 `frontend/src/pages/courses/`（`CourseListPage.tsx`、`MyCoursesPage.tsx`），PR #81 合入 | 存在课程页，支持列表/我的课程/加入 | 已具备 | 房国栋 | 已修复 |
+| BUG-002 | 中 | CI | PR 上没有 CI 检查运行 | `.github/workflows/ci.yml` 已在 `pull_request` 上触发；PR #96、#101、#103 的 Checks 均运行且为绿（后端构建与验证 / 前端构建） | PR 触发 CI 并显示检查结果 | 已触发并显示 | 刘俊琒 | 已修复 |
+| BUG-003 | 中 | 分支保护 | develop 允许管理员绕过，main/develop 未启用必需状态检查 | GitHub API `branches/develop/protection`：`enforce_admins=true`（管理员不可绕过）、`required_approving_review_count=1`；但 `required_status_checks` 仍为空 | 不允许绕过；必需 CI 检查开启 | 绕过已关闭；必需检查未开 | 刘俊琒/魏志国 | 部分修复 |
+| BUG-004 | 中 | 文档一致性 | 事件风暴图仍是 6 个上下文、28 个事件，与 V3 4 上下文和 D1 30 事件不一致 | `docs/ddd/event-storming.png`；`docs/ddd/glossary.md` 仍写“通知上下文” | 4 个上下文；通知归 Discovery | 6 个上下文 | 魏志国/陈明哲 | 待修复 |
+| BUG-005 | 低 | 流程 | 房国栋提交使用 baigui 身份，Contributors 只有 4 人 | 新提交已绑定 GitHub 账号：`房国栋 <333220585+2177023844@users.noreply.github.com>`；历史 `baigui` 提交仍保留在 git 历史中（不改写历史） | 提交邮箱绑定 GitHub 账号 2177023844 | 新提交已绑定 | 房国栋 | 已修复（新提交） |
+| BUG-006 | 低 | 文档 | `docs/team.md`、`docs/team-agreement.md`、ADR-009 缺失 | 三个文件均已存在：`docs/team.md`、`docs/team-agreement.md`、`docs/adv/ADR-009-ci-strategy.md`（建议后续统一到 `docs/adr/`） | V3 C2/C3/C4/A4 要求存在 | 均存在 | 陈明哲/刘俊琒 | 已修复 |
+
+## 复核记录
+
+- 2026-11-15：陈明哲复核 BUG-001/002/003/005/006，依据仓库文件树、GitHub Branch Protection API、Actions 运行记录；BUG-004 保留待修复。
+- T1-15 冒烟脚本已补齐：`scripts/smoke/smoke.ps1`、`scripts/smoke/smoke.sh`，用法见 `scripts/smoke/README.md`。

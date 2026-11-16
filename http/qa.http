@@ -1,0 +1,95 @@
+# 前置条件：
+# 1. 先跑 http/auth.http 完成登录（会话 Cookie 自动保存）
+# 2. http-client.env.json 的 questionId 指向一个已存在、且不是你本人发布的问题（步骤 1~4 投票/评论用）
+# 3. 本项目使用 SESSION + CSRF，不使用 Bearer token；{{csrfHeader}}/{{csrfToken}} 由下面第 0 步写入
+# 4. 步骤 5 起会创建属于自己的问题，写入 createdQuestionId；不能拿它给自己投票（QA-1015）
+
+### 0. 获取 CSRF
+GET {{host}}/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  // SPA 场景服务端按原始 Cookie 值校验；响应体里的 token 是 XOR 掩码值，不能直接回传。
+  // 这里从 Set-Cookie 中取 XSRF-TOKEN 的原始值。
+  let raw = null;
+  const setCookies = response.headers.valuesOf("Set-Cookie");
+  for (const header of setCookies) {
+    if (header.startsWith("XSRF-TOKEN=")) {
+      raw = header.substring("XSRF-TOKEN=".length).split(";")[0];
+      break;
+    }
+  }
+  client.global.set("csrfToken", raw);
+%}
+
+### 1. 投票 +1
+PUT {{host}}/api/v1/votes
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "targetType": "QUESTION",
+  "targetId": {{questionId}},
+  "value": 1
+}
+
+### 2. 改投 -1
+PUT {{host}}/api/v1/votes
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "targetType": "QUESTION",
+  "targetId": {{questionId}},
+  "value": -1
+}
+
+### 3. 撤票
+PUT {{host}}/api/v1/votes
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "targetType": "QUESTION",
+  "targetId": {{questionId}},
+  "value": 0
+}
+
+### 4. 评论
+POST {{host}}/api/v1/comments
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "targetType": "QUESTION",
+  "targetId": {{questionId}},
+  "body": "这条评论来自 qa.http 冒烟脚本"
+}
+
+### 5. 发布问题（问题侧，自动写入 createdQuestionId）
+POST {{host}}/api/v1/questions
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "title": "qa.http 冒烟：红黑树插入后为什么必须旋转？",
+  "body": "这是 qa.http 自动创建的问题，用于验证发布、详情、编辑整条问题侧链路。",
+  "tags": ["冒烟测试", "数据结构"]
+}
+
+> {%
+  client.global.set("createdQuestionId", response.body.id);
+%}
+
+### 6. 查看刚发布的问题详情
+GET {{host}}/api/v1/questions/{{createdQuestionId}}
+
+### 7. 编辑刚发布的问题（作者本人）
+PUT {{host}}/api/v1/questions/{{createdQuestionId}}
+Content-Type: application/json
+{{csrfHeader}}: {{csrfToken}}
+
+{
+  "title": "qa.http 冒烟：红黑树插入后为什么必须旋转？（已编辑）",
+  "body": "这是 qa.http 自动创建的问题，用于验证发布、详情、编辑整条问题侧链路。",
+  "tags": ["冒烟测试", "数据结构"]
+}

@@ -1,0 +1,25 @@
+﻿=== CampusOverflow qa.http smoke: vote + comment ===
+Time: 2026-11-15 15:50:06
+
+POST /api/v1/auth/login       -> 200
+{"id":2,"username":"student2026","displayName":"TestStudent","email":"student2026@example.com","role":"STUDENT","verified":false,"college":"CS","className":"SE2401","courses":[]}
+
+PUT  /api/v1/votes            -> 200
+{"myVote":1,"scoreDelta":1}
+
+PUT  /api/v1/votes            -> 200
+{"myVote":-1,"scoreDelta":-2}
+
+PUT  /api/v1/votes            -> 200
+{"myVote":0,"scoreDelta":1}
+
+POST /api/v1/comments         -> 201
+{"id":10}
+
+=== Summary ===
+POST /api/v1/auth/login       -> 200  {"id":2,"username":"student2026","displayName":"TestStudent","email":"student2026@example.com","role":"STUDENT","verified":false,"college":"CS","className":"SE2401","courses":[]}
+PUT  /api/v1/votes            -> 200  {"myVote":1,"scoreDelta":1}
+PUT  /api/v1/votes            -> 200  {"myVote":-1,"scoreDelta":-2}
+PUT  /api/v1/votes            -> 200  {"myVote":0,"scoreDelta":1}
+POST /api/v1/comments         -> 201  {"id":10}
+=== All requests completed ===
