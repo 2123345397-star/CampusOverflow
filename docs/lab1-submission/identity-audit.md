@@ -84,7 +84,7 @@ bash scripts/dev-env/audit-authors.sh 2177023844
 | --- | --- | --- | --- | --- | --- |
 | 房国栋 | `2177023844` | `W13636786666@163.com` | ⚠️ `Baigui-Yexing`（个人小号） | ⚠️ **已整改**（改用课程账号 noreply） | 历史提交 `57dd52c`、`0c8f980`、`c796c11` 等归属于小号 |
 | 魏志国 | `2123345397-star` | ⬜ 待填 | ⬜ | ⬜ | |
-| 陈明哲 | `cmz666-BOT` | ⬜ 待填 | ⬜ | ⬜ | 网页端提交的 committer 为 `noreply@github.com`，属正常 |
+| 陈明哲 | `cmz666-BOT` | `750183023@qq.com` | `cmz666-BOT`（id 329059311） | ✅ 已绑定 | 提交 `d586002` 的 GitHub 作者为 `cmz666-BOT`；网页端提交的 committer 为 `noreply@github.com`，属正常 |
 | 刘俊琒 | `Liujunfeng520` | ⬜ 待填 | ⬜ | ⬜ | |
 | 青岑 | `qing963666` | `1350735644@qq.com` | `qing963666` | ✅ 已绑定（Primary + Verified） | 提交作者 `qing963666 <1350735644@qq.com>` |
 
@@ -153,6 +153,7 @@ bash scripts/dev-env/audit-authors.sh 2177023844
 | 2026-10-28 | 房国栋 | 初查：发现提交作者为 `baigui <W13636786666@163.com>`，登记为"待确认" |
 | 2026-10-29 | 房国栋 | 复核：该邮箱已验证，但绑定在 `Baigui-Yexing`；课程账号 `2177023844` 贡献为 0 → 改判"需整改" |
 | 2026-10-29 | 房国栋 | 整改：改用课程账号 noreply `333220585+2177023844@users.noreply.github.com`，`rebase --exec --reset-author` 重写本分支提交 |
+| 2026-11-16 | 陈明哲 | 复核本人：`750183023@qq.com` → GitHub 账号 `cmz666-BOT`（id 329059311），提交 `d586002` 作者一致 |
 
 ---
 
