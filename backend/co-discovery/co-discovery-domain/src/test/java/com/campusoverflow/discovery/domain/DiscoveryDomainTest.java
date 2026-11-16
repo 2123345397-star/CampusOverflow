@@ -31,6 +31,12 @@ class DiscoveryDomainTest {
     }
 
     @Test
+    void searchQueryDeduplicatesTermsAndCapsAtFive() {
+        SearchQuery q = new SearchQuery("红黑树 红黑树 旋转 结构 算法 查找 排序", null, null, null, false, false, null);
+        assertThat(q.terms()).containsExactly("红黑树", "旋转", "结构", "算法", "查找");
+    }
+
+    @Test
     void singleCharacterTermsAreRejectedBecauseOfNgramTokenSize() {
         assertThatThrownBy(() -> new SearchQuery("树", null, null, null, false, false, null))
                 .isInstanceOf(BusinessRuleException.class);
