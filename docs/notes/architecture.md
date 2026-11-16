@@ -66,3 +66,17 @@ backend/pom.xml（父 POM）
 3. `co-qa-domain` 的领域测试（需求说明书）
 4. `docs/ddd/` 的事件、上下文映射、聚合与不变式
 5. `ArchitectureTest`（架构适应度函数）
+
+## 8. 各成员讲解分工与署名（T0-05）
+
+> 验收口径（角色卡全员任务 T0-05）：每人认领 1~2 条 ADR + 一层代码，讲透关键点后在本表署名。
+
+| 成员 | 认领内容 | 关键点（讲什么） | 状态 |
+| --- | --- | --- | --- |
+| 青岑 | ADR-001 模块化单体 + 全文整理 | 4 上下文物理分模块；domain 零框架依赖；跨上下文只走 api/事件（即第 1~7 节） | 已署名（第 1~7 节） |
+| 魏志国 | ADR-002 事务性发件箱 + application 层 | 业务数据与 `outbox_event` 同事务写入；中继异步投递；消费端按 `(event_id, user_id, reason)` / `processed_event` 幂等；`AnswerCommandService` 为典型编排：save → 原子计数 → 发事件 → 失效缓存 | 已整理（2026-11-16） |
+| 刘俊琒 | ADR-008 领域与持久化分离 + co-qa-domain | 聚合只引用 ID、不直接持有其他聚合对象；score/answerCount 用原子 SQL 而非整行回写；`Question` 五方法的不变式即领域测试 | 内容已整理（魏志国代整理，待本人复核后讲评署名） |
+| 房国栋 | ADR-003 服务端会话 + interfaces 层 | Spring Session + Redis；HttpOnly / SameSite=Lax / CSRF 双提交；控制器不写业务规则，前端按 `permissions` 渲染按钮 | 待整理 |
+| 陈明哲 | ArchUnit 架构适应度函数 + ADR-009 渐进门禁 | `ArchitectureTest` 分层断言；`SPRINT_MODULES` 随 Sprint 扩容；覆盖率门槛 0.70 起 | 待整理 |
+
+> 讲评排期：Sprint 3 计划会上每人约 5 分钟讲完各自认领项，讲完即更新本表状态。
