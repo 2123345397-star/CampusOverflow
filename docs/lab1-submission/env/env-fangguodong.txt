@@ -31,3 +31,11 @@ Tests run: 18, Failures: 2, Errors: 13
 已通过模块: co-shared-kernel 2 个、co-identity-domain 9 个（含 CourseTest 3 个）
 说明: 属于 Sprint 0 的预期状态（TDD 先落测试、领域实现留桩），非环境问题。
      完整日志见 docs/lab1-submission/logs/mvn-test-fangguodong.log
+
+Docker 二采（2026-11-15，青岑机器代跑）
+---------------------------------------
+Docker : 29.9.3 / build 5457199（Engine running）
+docker info --format '{{.ServerVersion}}' -> 29.9.3
+说明  : 首采（2026-10-29）记录为“未安装”；二采由青岑在本机代跑确认，
+        版本与 Engine 状态已同步到 env-matrix.md 第 2 节。
+        房国栋本机截图仍待其本人补交；本文件只记录已核实的二采结果。
