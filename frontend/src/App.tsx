@@ -12,6 +12,7 @@ import { NotificationsPage } from './pages/NotificationsPage';
 import { CourseListPage } from './pages/courses/CourseListPage';
 import { MyCoursesPage } from './pages/courses/MyCoursesPage';
 import { NotFoundPage } from './pages/NotFoundPage';
+import { AdminUsersPage } from './pages/AdminUsersPage';
 
 function Header() {
   const { me, logout } = useAuth();
@@ -35,6 +36,7 @@ function Header() {
         {me && <Link to="/courses/mine">我的课程</Link>}
         <Link to="/leaderboard">排行榜</Link>
         {me && <Link to="/notifications">通知{unread > 0 && <span className="badge">{unread}</span>}</Link>}
+        {me?.role === 'ADMIN' && <Link to="/admin">管理</Link>}
       </nav>
       <div className="spacer" />
       {me ? (
@@ -56,6 +58,23 @@ function RequireAuth({ children }: { children: JSX.Element }) {
   return me ? children : <Navigate to="/login" replace />;
 }
 
+/** 管理页只给 ADMIN；非管理员即使手输 URL 也只看到无权限页。 */
+function RequireAdmin({ children }: { children: JSX.Element }) {
+  const { me, loading } = useAuth();
+  if (loading) return <p className="muted">加载中…</p>;
+  if (!me) return <Navigate to="/login" replace />;
+  if (me.role !== 'ADMIN') {
+    return (
+      <div className="state-page">
+        <h1>无权限访问</h1>
+        <p className="muted">管理页仅管理员可用。</p>
+        <Link to="/">返回首页</Link>
+      </div>
+    );
+  }
+  return children;
+}
+
 export function App() {
   return (
     <BrowserRouter>
@@ -72,6 +91,7 @@ export function App() {
             <Route path="/leaderboard" element={<LeaderboardPage />} />
             <Route path="/users/:id/reputation" element={<ReputationPage />} />
             <Route path="/notifications" element={<RequireAuth><NotificationsPage /></RequireAuth>} />
+            <Route path="/admin" element={<RequireAdmin><AdminUsersPage /></RequireAdmin>} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>

@@ -1,6 +1,6 @@
 import type {
-  Bounty, Course, LeaderboardEntry, LedgerEntry, Me, Notification, Page, QuestionDetail, QuestionSummary,
-  ReputationProfile, SearchResult,
+  AdminUser, Bounty, Course, LeaderboardEntry, LedgerEntry, Me, Notification, Page, QuestionDetail,
+  QuestionSummary, ReputationProfile, Role, SearchResult,
 } from './types';
 
 /** 后端以 RFC 9457 Problem Details 返回错误，这里统一转成带业务码的异常。 */
@@ -97,4 +97,14 @@ export const api = {
   unreadCount: () => get<{ count: number }>('/v1/notifications/unread-count'),
   readOne: (id: number) => request<void>('POST', `/v1/notifications/${id}/read`, {}),
   readAll: () => request<{ updated: number }>('POST', '/v1/notifications/read-all', {}),
+
+  // 管理页（T4-05）：后端列表参数是 verified，不是 status=PENDING。
+  adminUsers: (page = 1, size = 20, verified = false) =>
+    get<Page<AdminUser>>(`/v1/admin/users?verified=${verified}&page=${page}&size=${size}`),
+  verifyUser: (userId: number) => request<void>('POST', `/v1/admin/users/${userId}/verify`, {}),
+  createStaff: (body: {
+    username: string; displayName: string; email: string; password: string; role: Role; college?: string;
+  }) => request<{ id: number }>('POST', '/v1/admin/users', body),
+  changeRole: (userId: number, role: Role) =>
+    request<void>('PUT', `/v1/admin/users/${userId}/role`, { role }),
 };
