@@ -4,7 +4,7 @@
 > 时间盒：2026-11-09（周一）～ 2026-11-20（周五），共 10 个工作日
 > 范围：PB-20～PB-30（Reputation / 悬赏）
 > 范围来源：[`docs/backlog/product-backlog.md`](../backlog/product-backlog.md)
-> 燃尽图：待补（数据截至 2026-11-14）
+> 燃尽图：[`sprint-2-burndown.png`](sprint-2-burndown.png)（数据截至 2026-11-15）
 
 ---
 
@@ -107,7 +107,7 @@ bounty        : status=AWARDED, points=50
 
 ## 三、燃尽图与数据
 
-口径：纵轴为 Sprint 2 迭代范围内尚未完成的 Story Point；完成指代码合入 `develop` 且对应验收通过。S2 范围 PB-20～PB-30 合计 42 SP，数据截至 2026-11-14，后续站会续绘。
+口径：纵轴为 Sprint 2 迭代范围内尚未完成的 Story Point；完成指代码合入 `develop` 且对应验收通过。S2 范围 PB-20～PB-30 合计 42 SP，数据截至 2026-11-15。
 
 | 日期 | 工作日 | 理想剩余 | 实际剩余 | 当日完成 |
 | --- | --- | --- | --- | --- |
@@ -117,7 +117,11 @@ bounty        : status=AWARDED, points=50
 | 2026-11-14 | D3 | 30 | 29 | PR #98 合并，CI #50 全绿；后续待续绘 |
 | 2026-11-15 | D4 | 26 | 24 | 悬赏边界/顺序测试、`http/bounty.http`、S2 收尾补测 |
 
-燃尽图：待补（S2 评审前归档）。
+燃尽图：
+
+![Sprint 2 burndown](sprint-2-burndown.png)
+
+生成脚本：[`scripts/dev-env/make-sprint2-burndown.ps1`](../../scripts/dev-env/make-sprint2-burndown.ps1)。
 
 ## 四、看板状态
 
@@ -125,15 +129,16 @@ bounty        : status=AWARDED, points=50
   - T2-03 Bounty 聚合（PR #92）
   - T2-07 BountyService（PR #92）
   - Bounty 边界与到期/结算顺序测试（PR #110）
-  - 悬赏 950/50 与结算/退款演示（PR #111）
+  - 悬赏 950/50 与结算/退款演示（PR #111、#112）
+  - Reputation 查询授权（PR #109）
   - E3 环境证据（PR #98，属 Lab 1 交付）
   - 悬赏对话框与个人声誉主页（PR #100）
-- In Progress：
-  - Sprint 2 评审彩排与燃尽图归档
+  - Sprint 2 燃尽图与回顾/彩排记录
+- In Progress：无
 - In Review：无
-- To Do：
-  - PB-23 徽章、PB-26 排行榜、PB-28 对账查看
-  - PB-30 Reputation 应用层测试补全
+- To Do（S3 起）：
+  - SearchQuery / RelatedQuestionPolicy / DiscoveryQueryService
+  - 通知、搜索与相关推荐
 
 ## 五、风险与对策
 
@@ -157,7 +162,7 @@ bounty        : status=AWARDED, points=50
 - [x] 教师 50 分 / 7 天悬赏：可用 950、冻结 50（`sprint-2-bounty.log`）
 - [x] 结算端到端：回答者声誉 35 → 100（采纳 +15 + 悬赏 +50），发起人冻结归零（`sprint-2-bounty-settle.log`）
 - [x] 到期退款端到端：950/50 → 1000/0，悬赏 EXPIRED（`sprint-2-bounty-expiry.log`）
-- [ ] Sprint 2 燃尽图归档
+- [x] Sprint 2 燃尽图归档（`sprint-2-burndown.png`）
 
 ## 七、关联链接
 
@@ -165,3 +170,49 @@ bounty        : status=AWARDED, points=50
 - 环境证据 PR：[#94](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/94)、[#98](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/98)
 - 合并提交：`edbf5c8`（PR #98）
 - 团队仓库：<https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow>
+- Bounty 测试与脚本：[#110](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/110)
+- Bounty 950/50 证据：[#111](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/111)
+- 结算/到期退款证据：[#112](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/112)
+- Reputation 查询授权：[#109](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/109)
+- 前端悬赏对话框与声誉页：[#100](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/100)
+
+## 八、Sprint 2 回顾与改进项
+
+### 做得好的
+
+- Bounty 从聚合、服务到 HTTP 脚本、950/50、结算、到期退款形成了可重复的端到端证据；
+- 并发/重复提交和事件幂等被测试锁住，而不是只靠口头约定；
+- 仓库改为 Public 后 CI 恢复，外部依赖（ReputationAccount、事件处理器）合入后 Bounty 链路顺利联调；
+- 前端 #100 补齐悬赏对话框、个人声誉页，后端接口字段一次对齐。
+
+### 遇到的问题
+
+| 问题 | 影响 | 改进 |
+| --- | --- | --- |
+| GitHub Actions 额度与重复 `ci.yaml` | PR 长期红灯 | 仓库改 Public；只保留 `ci.yml` |
+| ReputationAccount 未合入时 Bounty 无法端到端 | 只能先用 fake 测试 | 先锁依赖顺序，再做跨模块联调 |
+| demo 种子自带一笔 OPEN 悬赏 | 950/50 演示前需重置账户 | 把重置 SQL 写进脚本前置说明 |
+| IntelliJ Community 不能运行 `.http` | 投票/悬赏脚本无法直接执行 | 增加 PowerShell 等价脚本，日志作为证据 |
+| PowerShell 5.1 对无 BOM 中文脚本不友好 | 脚本解析失败 | 证据脚本使用 ASCII 请求体，日志固定为英文摘要 |
+
+### 下一 Sprint 改进
+
+1. 跨上下文依赖先确认合并顺序，再开始跨模块验收；
+2. demo 数据每次演示前执行固定的重置/种子脚本；
+3. 所有验收证据同时保留脚本、日志和截图三类，避免只有口头结论；
+4. 代码 PR 与 SM 文档 PR 分开，减少合并冲突。
+
+## 九、Sprint 2 评审彩排记录
+
+日期：2026-11-16　主持人：青岑　范围：S2 六条验收
+
+| # | 验收点 | 彩排结果 | 证据 |
+| --- | --- | --- | --- |
+| 1 | 教师初始 1000、学生 0 | ✅ | `ReputationRulebookTest`、demo 账户 |
+| 2 | 采纳 +15、徽章、自答不变 | ✅ | `ReputationSettlementTest`、`ReputationEventHandlersTest` |
+| 3 | 赞 +10 / 踩 −2 / 改投 −12 / 每日 200 上限 | ✅ | `ReputationRulebookTest` |
+| 4 | 50 分 / 7 天悬赏、结算、到期退款 | ✅ | `sprint-2-bounty*.log`、`bounty-smoke.ps1` |
+| 5 | 排行榜、流水 403、对账 | ✅ | `ReputationQueryAuthorizationTest`、`ReputationApiImplTest`、#100 |
+| 6 | 全量测试与发布标签 | ⚠️ 测试通过；`v0.3.0` 标签待发布 | CI、测试流水 |
+
+彩排结论：第 1～5 条可以在评审时按顺序演示；第 6 条的版本标签需在评审前由发布负责人补打。
