@@ -1,31 +1,34 @@
-# 9.4 最终交付物索引（草案）
+# CampusOverflow · 最终答辩材料（docs/final）
 
-> 负责人：魏志国（PO / 发布经理）　日期：2026-11-16
-> 用途：对照指导书 9.4 的七项交付物逐项给链接；缺项标明责任人与阻塞。
+> 维护：陈明哲（E，Sprint 4 SM）　创建：2026-11-16
+> 用途：Sprint 4 答辩与 v1.0.0 发布的材料索引；答辩前只填内容，不再改结构。
 
-| # | 交付物 | 链接 / 命令 | 状态 |
-| --- | --- | --- | --- |
-| 1 | `main` 上 v1.0.0 与完整提交历史 | <https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/commits/main> · tag `v1.0.0` | ⬜ 待 S4 发布 PR 合入并打 tag（当前 main 为 v0.3.0） |
-| 2 | GitHub Release | <https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/releases> · [v0.9.0 RC](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/releases/tag/v0.9.0) | 🟨 v0.9.0 RC 已发布；v1.0.0 Release 待正式发布 |
-| 3 | `docs/ddd/` | [`context-map.md`](../ddd/context-map.md)、[`events.md`](../ddd/events.md)、[`glossary.md`](../ddd/glossary.md)、[`aggregates.md`](../ddd/aggregates.md)、[`event-storming.png`](../ddd/event-storming.png) | ✅ |
-| 4 | `docs/adr/` | [`docs/adr/`](../adr/)（001–009，ADR-009 已就位） | ✅ |
-| 5 | `docs/scrum/sprint-0~4.md` | [`sprint-0.md`](../scrum/sprint-0.md) · [`sprint-1.md`](../scrum/sprint-1.md) · [`sprint-2.md`](../scrum/sprint-2.md) · [`sprint-3.md`](../scrum/sprint-3.md) · [`sprint-4.md`](../scrum/sprint-4.md) | 🟨 0–3 有；4 为本次新增草案 |
-| 6 | 覆盖率报告 | CI `覆盖率门禁` job（`.github/workflows/ci.yml` 阶段 4，JDK 21 / JaCoCo 0.70） | 🟨 CI 结果为准；最终报告链接待补 |
-| 7 | `docs/final/` 答辩材料 + ≤5 分钟视频 + 每人个人总结 | 本文件；视频与个人总结见下方 | ⬜ 视频、5 份个人总结待各成员提交 |
+## 六节结构
 
-## 个人总结 / 视频（待补）
+| # | 章节 | 文件 | 内容 | 状态 |
+| --- | --- | --- | --- | --- |
+| 1 | 架构 | [`01-architecture.md`](01-architecture.md) | 模块化单体 + 六边形分层、4 上下文、关键流程 | 骨架已入库 |
+| 2 | 关键 ADR | [`02-adr.md`](02-adr.md) | ADR-001～009 一句话决策与影响 | 骨架已入库 |
+| 3 | 质量证据 | [`03-quality.md`](03-quality.md) | 测试/覆盖率/CI/冒烟/缺陷台账 | 数据已填（S3 收口口径） |
+| 4 | 过程证据 | [`04-process.md`](04-process.md) | Sprint 0～4 记录、燃尽图、评审与回顾 | 骨架已入库 |
+| 5 | 演示脚本 | [`05-demo-script.md`](05-demo-script.md) | ≤15 分钟彩排脚本与 ≤5 分钟视频分镜 | 骨架已入库 |
+| 6 | 个人总结 | [`06-personal-summary-template.md`](06-personal-summary-template.md) | 模板 + 每人一份 | 模板已入库 |
 
-| 成员 | 个人总结 | 视频片段 |
-| --- | --- | --- |
-| 魏志国 | ⬜ | ⬜ |
-| 刘俊琒 | ⬜ | ⬜ |
-| 陈明哲 | ⬜ | ⬜ |
-| 青岑 | ⬜ | ⬜ |
-| 房国栋 | ⬜ | ⬜ |
+## 配套材料
 
-## 发布阻塞
+- 彩排排期与计时：[`rehearsal-log.md`](rehearsal-log.md)
+- 已完成的个人总结：[`personal-summary-chenmingzhe.md`](personal-summary-chenmingzhe.md)
+- DDD 原文：[`docs/ddd/`](../ddd/README.md)（上下文映射、事件风暴、词汇表）
+- ADR 原文：[`docs/adr/`](../adr/README.md)
+- 覆盖率与测试报告：CI Actions 构件 + [`03-quality.md`](03-quality.md)
+- 发布记录：[`docs/release/v0.3.0.md`](../release/v0.3.0.md)、[`docs/reports/release-v0.2.0-v0.3.0.md`](../reports/release-v0.2.0-v0.3.0.md)
 
-1. S3/S4 的 PR 需要至少 1 名非作者 Approve（v1.0.0 走 develop→main，需 ≥2 Approve 含 SM/PO）；
-2. 陈明哲的最终彩排/CI 全绿确认；
-3. 个人总结与 5 分钟视频由全员提交；
-4. 覆盖率报告链接需在最终 CI run 后回填。
+## 交付检查（对应指导书 9.4）
+
+- [ ] main 上的 `v1.0.0` 与完整提交历史
+- [ ] GitHub Release（Release Notes + 部署说明）
+- [x] `docs/ddd/`、`docs/adr/`（S3 已就位）
+- [x] `docs/scrum/sprint-0～3`（sprint-4 待 S4 结束补）
+- [ ] 覆盖率报告归档
+- [ ] `docs/final` 答辩材料 + ≤5 分钟演示视频
+- [ ] 每人一份个人总结
