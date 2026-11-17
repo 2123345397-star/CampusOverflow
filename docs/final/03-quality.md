@@ -41,6 +41,10 @@ co-discovery/co-discovery-domain,co-discovery/co-discovery-application
 
 > 覆盖率来自 JaCoCo `jacoco.csv` 汇总（LINE COVERED / (COVERED+MISSED)）；四个 domain 模块均通过 `check-domain-coverage`。
 
+![co-discovery-domain JaCoCo 行覆盖 78.26%](screenshots/coverage/coverage-discovery.png)
+
+截图与原始数据：[`screenshots/coverage/`](screenshots/coverage/README.md)（`coverage-discovery.png` + `coverage-discovery.csv`）。
+
 ## 3.3 端到端与冒烟
 
 - **T1-15 主链路脚本**：CSRF → 注册 → 登录 → 发问题 → 另一账号回答 → 投票 → 采纳 → 详情校验，`SMOKE PASS`（2026-11-15，demo profile + MySQL/Redis）；用法见 [`scripts/smoke/README.md`](../../scripts/smoke/README.md)。
