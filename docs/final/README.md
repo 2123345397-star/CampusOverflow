@@ -17,6 +17,7 @@
 ## 配套材料
 
 - 用户手册：[`user-guide.md`](user-guide.md)
+- 演示视频（55s，1280×800）：[`demo-v1.0.0.webm`](demo-v1.0.0.webm)
 - 彩排排期与计时：[`rehearsal-log.md`](rehearsal-log.md)
 - 青岑彩排计时稿：[`rehearsal-qingcen.md`](rehearsal-qingcen.md)
 - 个人总结：[陈明哲](personal-summary-chenmingzhe.md)、[青岑](personal-summary-qingcen.md)
@@ -38,5 +39,5 @@
 - [x] `docs/ddd/`、`docs/adr/`（S3 已就位）
 - [x] `docs/scrum/sprint-0～4`（S4 记录已入库）
 - [x] 覆盖率报告归档（`docs/final/screenshots/coverage/`）
-- [ ] `docs/final` 答辩材料 + ≤5 分钟演示视频
+- [x] `docs/final` 答辩材料 + ≤5 分钟演示视频（`demo-v1.0.0.webm`）
 - [ ] 每人一份个人总结

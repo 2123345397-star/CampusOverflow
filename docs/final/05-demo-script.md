@@ -1,5 +1,6 @@
 # 5. 演示脚本（≤15 分钟彩排 / ≤5 分钟视频）
 
+> 录制文件：[`demo-v1.0.0.webm`](demo-v1.0.0.webm)（55 秒，无旁白，覆盖登录/提问/回答/投票/采纳/通知/搜索/排行榜）
 > 目标：15 分钟内讲完六段，每人 ≥2 分钟；留 1 分钟给提问与异常分支。
 > 前置：`docker compose -f deploy/docker-compose.yml --profile observability up -d --build`，demo profile 已加载数据；用两个浏览器窗口（学生 A / 学生 B）。
 
