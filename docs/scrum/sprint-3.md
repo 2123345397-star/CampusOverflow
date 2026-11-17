@@ -74,6 +74,9 @@
 | ADR-009 | 状态改为“已完成” | [`docs/adr/009-渐进式质量门禁.md`](../adr/009-渐进式质量门禁.md) |
 
 > 复核人：陈明哲（E）　日期：2026-11-16。S3 的搜索/通知/前端验收项仍以 C、D 的实测记录为准。
+>
+> 青岑复核（2026-11-17）：按 `co-discovery-domain/target/site/jacoco/jacoco.csv` 重算 LINE 72/92 = **78.26%**；
+> 报告截图与 CSV 见 [`docs/final/screenshots/coverage/`](../final/screenshots/coverage/README.md)。
 
 ## 七、关联
 

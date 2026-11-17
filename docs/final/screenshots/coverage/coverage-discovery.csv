@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.notification,Notification,51,73,3,5,12,19,12,5,9,4
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.notification,NotificationType,0,39,0,0,0,7,0,1,0,1
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.notification,MentionParser,2,33,2,6,1,7,2,4,0,2
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.search,SearchDocument,27,0,0,0,3,0,1,0,1,0
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.search,SearchSort,0,27,0,0,0,5,0,1,0,1
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.search,SearchHit,36,0,0,0,1,0,1,0,1,0
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.search,SearchIndex.RelatedCandidate,0,24,0,0,0,1,0,1,0,1
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.search,SearchQuery,13,133,9,25,1,20,9,13,0,5
+Discovery 内容发现 :: domain（纯 Java）,com.campusoverflow.discovery.domain.search,RelatedQuestionPolicy,4,51,5,5,2,13,5,3,0,3

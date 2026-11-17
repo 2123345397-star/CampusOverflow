@@ -23,6 +23,7 @@
 - DDD 原文：[`docs/ddd/`](../ddd/)（上下文映射、事件风暴、词汇表）
 - ADR 原文：[`docs/adr/`](../adr/README.md)（含 ADR-010 禁用账号与会话清理）
 - T4-05 管理页截图：[`screenshots/admin/`](screenshots/admin/README.md)
+- Discovery 覆盖率截图与 CSV：[`screenshots/coverage/`](screenshots/coverage/README.md)
 - 覆盖率与测试报告：CI Actions 构件 + [`03-quality.md`](03-quality.md)
 - 发布记录：[`docs/release/v0.3.0.md`](../release/v0.3.0.md)、[`docs/reports/release-v0.2.0-v0.3.0.md`](../reports/release-v0.2.0-v0.3.0.md)
 - v1.0.0 发布草案：[`docs/release/v1.0.0.md`](../release/v1.0.0.md)（待 develop→main）
