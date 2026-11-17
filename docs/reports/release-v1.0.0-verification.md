@@ -31,7 +31,7 @@ v0.1.0 -> 704cd60   Sprint 0 基线（补打）
 v0.2.0 -> a381bb8   Sprint 1 基线（补打）
 v0.3.0 -> a4114dc   Sprint 2 发布（main）
 v0.9.0 -> 579ea59   Sprint 3 RC（develop）
-v1.0.0 -> 发布 PR 合并提交（待打）
+v1.0.0 -> 10925c7   v1.0.0 发布（main，PR #135）
 ```
 
 ## 四、遗留风险
@@ -43,9 +43,18 @@ v1.0.0 -> 发布 PR 合并提交（待打）
 | `docs/final` 视频与 3 份个人总结未交 | 9.4 交付不完整 | 责任人 S4 结束前补 |
 | 两次彩排未执行 | T4-08 未闭环 | 按 [`rehearsal-log.md`](../final/rehearsal-log.md) 排期 |
 
-## 五、签署
+## 五、干净环境部署验证
+
+| 项 | 结果 | 说明 |
+| --- | --- | --- |
+| 镜像构建 | ✅ backend / frontend Dockerfile 均 build success | CI `容器镜像构建` job（main `10925c7`） |
+| compose 配置 | ✅ 已入库并接入 observability profile | `deploy/docker-compose.yml`、`deploy/prometheus.yml`、`deploy/grafana/` |
+| 运行时 `docker compose up -d --build` | ⬜ 待有 Docker 的机器执行 | 负责人：房国栋 / 彩排机；执行后补 `docker compose ps` + health + Grafana 截图 |
+| 本机限制 | 无 Docker（WSL2/Hyper-V 未启用） | 不影响 v1.0.0 tag/Release，已记录为部署验证遗留 |
+
+## 六、签署
 
 | 角色 | 成员 | 结论 | 日期 |
 | --- | --- | --- | --- |
-| SM / E | 陈明哲 | 发布前技术检查通过，待审批与 tag | 2026-11-17 |
+| SM / E | 陈明哲 | 发布完成：PR #135、tag v1.0.0、GitHub Release | 2026-11-17 |
 | PO | 魏志国 | 已批准发布 PR #135 | 2026-11-17 |
