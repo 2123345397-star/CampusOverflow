@@ -28,14 +28,16 @@ public class AdminUserService {
     private final PasswordHasher hasher;
     private final IntegrationEventPublisher events;
     private final AuditTrail audit;
+    private final UserSessionRevoker sessions;
     private final Clock clock;
 
     public AdminUserService(UserRepository users, PasswordHasher hasher, IntegrationEventPublisher events,
-                            AuditTrail audit, Clock clock) {
+                            AuditTrail audit, UserSessionRevoker sessions, Clock clock) {
         this.users = users;
         this.hasher = hasher;
         this.events = events;
         this.audit = audit;
+        this.sessions = sessions;
         this.clock = clock;
     }
 
@@ -77,6 +79,16 @@ public class AdminUserService {
         user.changeRole(actor, role);
         users.save(user);
         audit.record("ROLE_CHANGED", actor.userId(), "USER", String.valueOf(userId), old + " -> " + role);
+    }
+
+    /** 禁用账号：领域校验（ADMIN、不能禁自己 ID-1007）→ 保存 → 撤销全部会话 → 审计。 */
+    @Transactional
+    public void disable(Actor actor, long userId) {
+        User user = load(userId);
+        user.disable(actor);
+        users.save(user);
+        sessions.revokeAll(user.username());
+        audit.record("DISABLE_USER", actor.userId(), "USER", String.valueOf(userId), null);
     }
 
     private User load(long userId) {
