@@ -1,0 +1,10 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,Title,0,13,0,0,0,3,0,1,0,1
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,Question,40,298,8,28,10,67,15,28,7,18
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,MarkdownBody,0,26,0,0,0,3,0,3,0,3
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,Tags,6,45,1,5,1,9,1,5,0,3
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,TagName,6,32,1,3,1,7,1,3,0,2
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,Comment,32,116,4,10,6,31,8,11,4,8
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,Vote,30,86,0,6,8,23,7,8,7,5
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,Answer,50,188,5,19,13,46,12,19,7,12
+Q&A 问答核心 :: domain（纯 Java）,com.campusoverflow.qa.domain,TargetType,0,15,0,0,0,3,0,1,0,1
