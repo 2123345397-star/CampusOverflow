@@ -19,10 +19,10 @@
 
 ## 二、发布步骤与结果
 
-1. `develop → main` 发布 PR：**待创建/审批**（main 保护：≥2 Approve + 后端/前端/镜像三项必需检查）；
-2. 合并后在 main 合并提交上打 annotated tag `v1.0.0`；
-3. 用 `docs/release/v1.0.0.md` 创建 GitHub Release（附件：无；部署说明见 Release Notes）；
-4. 记录 main 合并提交与 Release URL 到 [`docs/final/README.md`](../final/README.md)。
+1. 发布 PR [#135](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/135)：魏志国、青岑 Approve，后端/前端/镜像三检查绿，已合并 `10925c7`；
+2. annotated tag `v1.0.0` 打在 main `10925c7`；
+3. GitHub Release 已发布：https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/releases/tag/v1.0.0；
+4. [`docs/final/README.md`](../final/README.md) 已更新 9.4 勾选。
 
 ## 三、Tag 与历史版本
 
@@ -48,4 +48,4 @@ v1.0.0 -> 发布 PR 合并提交（待打）
 | 角色 | 成员 | 结论 | 日期 |
 | --- | --- | --- | --- |
 | SM / E | 陈明哲 | 发布前技术检查通过，待审批与 tag | 2026-11-17 |
-| PO | 魏志国 | 待签 | |
+| PO | 魏志国 | 已批准发布 PR #135 | 2026-11-17 |
