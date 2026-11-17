@@ -17,6 +17,12 @@ export interface Me {
   courses: { id: number; code: string; name: string; term: string; teacherName: string }[];
 }
 
+/** 管理员用户视图（后端 UserView）：学号/工号已脱敏。 */
+export interface AdminUser {
+  id: number; maskedUsername: string; displayName: string; role: Role; verified: boolean;
+  college?: string | null; className?: string | null; createdAt: string;
+}
+
 export interface QuestionSummary {
   id: number; title: string; excerpt: string; tags: string[]; courseId?: number;
   author: Author; score: number; answerCount: number; viewCount: number; accepted: boolean; createdAt: string;

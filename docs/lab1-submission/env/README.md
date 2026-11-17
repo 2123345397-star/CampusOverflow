@@ -49,9 +49,9 @@ mvn clean test
 
 | 成员 | GitHub | env 截图 | env 文本 | mvn 测试截图 | 采集日期 |
 | --- | --- | --- | --- | --- | --- |
-| 房国栋 | `2177023844` | ✅ [`env-fangguodong.png`](env-fangguodong.png) | ✅ [`env-fangguodong.txt`](env-fangguodong.txt) | ✅ [`mvn-test-fangguodong.log`](../logs/mvn-test-fangguodong.log)（完整构建日志，78 KB；截图待补） | 2026-10-29 |
-| 魏志国 | `2123345397-star` | ⬜ 待补 | ⬜ | ⬜ | |
-| 陈明哲 | `cmz666-BOT` | ⬜ 待补 | ⬜ | ⬜ | |
+| 房国栋 | `2177023844` | ✅ [`env-fangguodong.png`](env-fangguodong.png) | ✅ [`env-fangguodong.txt`](env-fangguodong.txt) | ✅ [`mvn-test-fangguodong.log`](../logs/mvn-test-fangguodong.log)（完整构建日志，78 KB；截图待补） | 2026-11-15 |
+| 魏志国 | `2123345397-star` | ✅ [`env-weizhiguo.png`](env-weizhiguo.png) | ✅ [`env-weizhiguo.txt`](env-weizhiguo.txt) | ✅ [`mvn-test-weizhiguo.png`](../screenshots/mvn-test-weizhiguo.png) + [`完整日志`](../logs/mvn-test-weizhiguo.log)（121 绿 + co-discovery `TODO(S3)` 预期红） | 2026-11-16 |
+| 陈明哲 | `cmz666-BOT` | ✅ [`env-chenmingzhe.png`](env-chenmingzhe.png) | ✅ [`env-chenmingzhe.txt`](env-chenmingzhe.txt) | ✅ 同图（含 `mvn -B test` 摘要） | 2026-11-16 |
 | 刘俊琒 | `Liujunfeng520` | ⬜ 待补 | ⬜ | ⬜ | |
 | 青岑 | `qing963666` | ✅ [`env-qingcen.png`](env-qingcen.png) | ✅ [`env-qingcen.txt`](env-qingcen.txt) | ✅ [`mvn-test-qingcen.png`](../screenshots/mvn-test-qingcen.png) | 2026-11-15 |
 
@@ -79,4 +79,4 @@ mvn clean test
 | 成员 | 差异 | 处置 |
 | --- | --- | --- |
 | 房国栋 | 命令行 `java` 默认指向 JDK 1.8（系统 PATH 里 Oracle `javapath` 排在前面），但 Maven 实际使用 JDK 21（编译日志 `release 21`） | 截图前执行 `$env:JAVA_HOME="E:\IntelliJ IDEA 2025.3.3\jbr"; $env:Path="$env:JAVA_HOME\bin;"+$env:Path`；长期方案见 `env-matrix.md` §6 |
-| 房国栋 | Docker Desktop：10-29 记为 `not installed`，之后已安装，**版本号与 `docker info` 截图待采集** | 执行 `docker --version` + `docker info` 后回填 `env-matrix.md` 第 2 节与本表，并补 `env-fangguodong.png` 第二次截图 |
+| 房国栋 | Docker Desktop：版本已由青岑在本机代跑确认 | `docker --version` → `Docker version 29.9.3, build 5457199`；`docker info --format '{{.ServerVersion}}'` → `29.9.3`；已同步 `env-matrix.md` 第 2 节 |

@@ -87,8 +87,8 @@
 
 - 汇总表：[`env-matrix.md`](env-matrix.md)（五人 JDK/Maven/Node/Docker 版本 + `mvn clean test` 结果登记）
 - 原始证据目录：[`env/`](env/)（目录说明见 [`env/README.md`](env/README.md)）
-  - 已归档：`env/env-fangguodong.png`、`env/env-fangguodong.txt`、`env/env-qingcen.png`、`env/env-qingcen.txt`
-  - 其余四人：`env/env-<拼音>.png` + `env/env-<拼音>.txt` 待各自采集
+  - 已归档：`env/env-fangguodong.png`、`env/env-fangguodong.txt`、`env/env-qingcen.png`、`env/env-qingcen.txt`、`env/env-chenmingzhe.png`、`env/env-chenmingzhe.txt`
+  - 其余三人（魏志国、刘俊琒、房国栋之外缺的成员）：`env/env-<拼音>.png` + `env/env-<拼音>.txt` 待各自采集
 - 采集脚本：[`scripts/dev-env/collect-env.ps1`](../../scripts/dev-env/collect-env.ps1) / [`collect-env.sh`](../../scripts/dev-env/collect-env.sh)
 - 达标线：Git 2.40+、JDK 21、Node.js 20+、Docker 可运行
 - 已知情况：`backend` 整体 `mvn clean test` 现阶段为红（`co-qa-domain` 的 `TODO(S2)` 桩未实现），
@@ -118,6 +118,7 @@
 | 5 | 成员 PR 合并截图 | `pr-<拼音>.png` ×5 | ✅ | 各成员 |
 | + | 初始 Backlog | `backlog.md` | ✅ | 魏志国 |
 | + | 成员环境截图（青岑） | `env/env-qingcen.png` | ✅ | 青岑 |
+| + | 成员环境截图（陈明哲） | `env/env-chenmingzhe.png` + `.txt` | ✅ 2026-11-16 补采 | 陈明哲 |
 
 ---
 

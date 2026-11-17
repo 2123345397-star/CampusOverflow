@@ -1,0 +1,21 @@
+﻿=== CampusOverflow Sprint 3 search smoke ===
+Time: 2026-11-16 20:29:51
+
+POST /api/v1/auth/login                         -> 200
+{"id":6,"username":"2023001","displayName":"å°æ","email":"ming@campus.edu.cn","role":"STUDENT","verified":true,"college":"è®¡ç®æºå·¥ç¨å­¦é¢","className":"è®¡ç§2301","courses":[{"id":1,"code":"CS2001","name":"æ°æ®ç»æ","term":"2026-ç§","teacherId":4,"teacherName":"çèå¸","myRole":"STUDENT"}]}
+
+POST /api/v1/questions                          -> 201
+{"id":7}
+
+POST /api/v1/questions                          -> 201
+{"id":8}
+
+Search term: 红黑树
+Search total: 2
+  hit id=8, title=æç´¢éªæ¶ï¼çº¢é»æ çé»é«ä¸ºä»ä¹ä¸åéä¸è½ç ´åï¼
+  hit id=7, title=æç´¢éªæ¶ï¼çº¢é»æ æå¥åä¸ºä»ä¹å¿é¡»æè½¬ï¼
+
+Related count: 1
+  related id=8, similarity=1.0, title=æç´¢éªæ¶ï¼çº¢é»æ çé»é«ä¸ºä»ä¹ä¸åéä¸è½ç ´åï¼
+
+=== All checks passed ===

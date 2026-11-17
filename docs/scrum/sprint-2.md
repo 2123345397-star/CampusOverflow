@@ -164,6 +164,9 @@ bounty        : status=AWARDED, points=50
 - [x] 到期退款端到端：950/50 → 1000/0，悬赏 EXPIRED（`sprint-2-bounty-expiry.log`）
 - [x] Sprint 2 燃尽图归档（`sprint-2-burndown.png`）
 
+- [x] demo profile 启动并能加载演示数据（证据：[docs/reports/t2-14-demo-profile.md](../reports/t2-14-demo-profile.md)）
+- [x] T2-14 DemoDataSeeder 数据落库核对（6 账号 / 1 课程 / 3 问题）
+
 ## 七、关联链接
 
 - Bounty PR：[#92](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/pull/92)

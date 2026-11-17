@@ -1,7 +1,7 @@
 # CampusOverflow 持续集成流水线（对应 arc42 第 10 章适应度函数与第 7 章部署视图）
 name: CI
 env:
-  SPRINT_MODULES: co-shared-kernel,co-identity/co-identity-domain,co-qa/co-qa-domain,co-qa/co-qa-application,co-reputation/co-reputation-domain,co-reputation/co-reputation-application
+  SPRINT_MODULES: co-shared-kernel,co-identity/co-identity-domain,co-qa/co-qa-domain,co-qa/co-qa-application,co-reputation/co-reputation-domain,co-reputation/co-reputation-application,co-discovery/co-discovery-domain,co-discovery/co-discovery-application
 on:
   push:
     branches: [main, develop, "sprint/**"]
@@ -72,7 +72,8 @@ jobs:
     name: 容器镜像构建
     runs-on: ubuntu-latest
     needs: [backend, frontend]
-    if: github.event_name == 'push'
+    # push 与"目标为 main 的 PR（发布）"都要产出镜像检查，否则发布 PR 永远等不到该必需检查
+    if: github.event_name == 'push' || github.event.pull_request.base.ref == 'main'
     steps:
       - uses: actions/checkout@v4
       - name: 构建后端镜像

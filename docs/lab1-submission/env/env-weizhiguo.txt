@@ -1,0 +1,53 @@
+# CampusOverflow 开发环境取证 · 魏志国（2026-11-16）
+
+## 1. 版本采集（scripts/dev-env/collect-env.sh 魏志国 2123345397）
+
+
+=== CampusOverflow 开发环境采集 ===
+姓名   : 魏志国
+GitHub : 2123345397
+OS     : MINGW64_NT-10.0-26200 3.6.10-710e5275.x86_64 x86_64
+JDK    : java 25.0.2 / javac 25.0.2
+Maven  : 3.9.13 (39d686bd50d8e054301e3a68ad44781df6f80dda)
+Node   : v24.21.0 / npm 11.19.0
+Docker : 29.9.2, build a82e528
+Git    : 2.55.0.windows.5
+
+=== 粘贴下面这一行到 env-matrix.md 第 2 节表格 ===
+| 魏志国 | `2123345397` | MINGW64_NT-10.0-26200 3.6.10-710e5275.x86_64 x86_64 | 25.0.2 | 3.9.13 (39d686bd50d8e054301e3a68ad44781df6f80dda) | v24.21.0 | 29.9.2, build a82e528 | 2026-11-16 | ⬜ |
+
+=== 达标检查（JDK 21 / Maven 3.9+ / Node 20+ / Git 2.40+） ===
+[PASS] JDK 21  25.0.2
+[PASS] Maven 3.9+  3.9.13 (39d686bd50d8e054301e3a68ad44781df6f80dda)
+[PASS] Node.js 20+  v24.21.0
+[PASS] Git 2.40+  2.55.0.windows.5
+
+提示：紧接着执行 cd backend && mvn clean test 并截图，一张图同时覆盖 E3 的版本与测试结果。
+
+## 2. mvn clean test（backend，JDK 25.0.2 / Maven 3.9.13）
+
+命令：mvn -B clean test -Djacoco.skip=true -Dnet.bytebuddy.experimental=true
+（JDK 25 下 JaCoCo 0.8.12 agent 不支持，本地跳过；CI 用 JDK 21 正常出覆盖率）
+
+Building CampusOverflow :: Parent 0.1.0-SNAPSHOT                  [1/27]
+Building CampusOverflow :: Shared Kernel 0.1.0-SNAPSHOT           [2/27]
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0
+Building CampusOverflow :: Identity 身份与认证 0.1.0-SNAPSHOT          [3/27]
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0
+Building CampusOverflow :: Q&A 问答核心 0.1.0-SNAPSHOT                [9/27]
+Tests run: 42, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 32, Failures: 0, Errors: 0, Skipped: 0
+Building CampusOverflow :: Reputation 声誉与激励 0.1.0-SNAPSHOT       [15/27]
+Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
+Tests run: 36, Failures: 0, Errors: 0, Skipped: 0
+Building CampusOverflow :: Discovery 内容发现 0.1.0-SNAPSHOT         [21/27]
+Tests run: 5, Failures: 1, Errors: 2, Skipped: 0
+
+失败模块根因：TODO(S3) 桩（Sprint 3 未开工，预期红）
+TODO(S3)：SearchQuery.terms 尚未实现
+TODO(S3)：RelatedQuestionPolicy.jaccard 尚未实现
+TODO(S3)：SearchQuery.terms 尚未实现
+TODO(S3)：RelatedQuestionPolicy.jaccard 尚未实现
+TODO(S3)：SearchQuery.terms 尚未实现
+
+完整日志：logs/mvn-test-weizhiguo.log

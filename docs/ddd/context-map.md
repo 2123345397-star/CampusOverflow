@@ -2,7 +2,7 @@
 
 > 负责人：青岑（Dev-1）
 > 依据：《实验指导书 V3》第 3.2 节
-> 口径：本图按《V3 指导书》3.2 的 4 上下文；`event-storming.png` 与 `glossary.md` 为 Lab3 旧稿，待负责人按 V3 对齐。
+> 口径：本图按《V3 指导书》3.2 的 4 上下文；`event-storming.png`、`events.md` 与 `glossary.md` 已于 2026-11-02 按 V3 对齐（30 事件 / 4 上下文）。
 
 ## 一、限界上下文
 

@@ -1,0 +1,35 @@
+# 前置条件：
+# 1. 先跑 http/auth.http 完成登录（会话 Cookie 自动保存）
+# 2. http-client.env.json 的 questionId 指向一个已存在的问题
+# 3. 通知相关请求需要登录；写请求需要 CSRF（第 0 步写入）
+# 4. 搜索/相关问题接口是公开的，未登录也能调
+
+### 0. 获取 CSRF
+GET {{host}}/api/v1/auth/csrf
+> {%
+  client.global.set("csrfHeader", response.body.headerName);
+  client.global.set("csrfToken", response.body.token);
+%}
+
+### 1. 中文全文搜索：q=红黑树
+GET {{host}}/api/v1/search/questions?q=红黑树&sort=relevance&page=1&size=20
+
+### 2. 搜索 + 筛选（标签 / 仅未回答 / 仅悬赏）
+GET {{host}}/api/v1/search/questions?q=结构&tag=数据结构&unanswered=true&bounty=false&sort=newest&page=1&size=20
+
+### 3. 相关问题（标签 Jaccard 相似度）
+GET {{host}}/api/v1/questions/{{questionId}}/related?limit=5
+
+### 4. 我的通知列表
+GET {{host}}/api/v1/notifications?page=1&size=20
+
+### 5. 未读通知数
+GET {{host}}/api/v1/notifications/unread-count
+
+### 6. 标记单条通知已读
+POST {{host}}/api/v1/notifications/{{notificationId}}/read
+{{csrfHeader}}: {{csrfToken}}
+
+### 7. 全部标记已读
+POST {{host}}/api/v1/notifications/read-all
+{{csrfHeader}}: {{csrfToken}}
