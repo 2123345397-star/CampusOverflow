@@ -17,9 +17,9 @@
 | 工件 | 位置 | 说明 |
 | --- | --- | --- |
 | 团队章程 / 角色承诺 | [`docs/team/`](../team/) | 5 人签署（2026-10-26） |
-| 工作约定 / DoR / DoD | [`docs/team/team-agreement.md`](../team/team-agreement.md)、[`dor-dod.md`](../team/dor-dod.md) | 含 CI 红灯 30 分钟认领、事件重放命令 |
+| 工作约定 / DoR / DoD | [`docs/team-agreement.md`](../team-agreement.md)、[`dor-dod.md`](../team/dor-dod.md) | 含 CI 红灯 30 分钟认领、事件重放命令 |
 | Product Backlog | [`docs/backlog/product-backlog.md`](../backlog/product-backlog.md) | PB-01～48，含 PBI/Issue 映射 |
-| Sprint 计划与记录 | [`docs/scrum/`](../scrum/) | S0～S3；每个 Sprint 含目标、范围、站会、验收 |
+| Sprint 计划与记录 | [`docs/scrum/`](../scrum/) | S0～S4（S4 为发布草案）；每个 Sprint 含目标、范围、站会、验收 |
 | 燃尽图 | `sprint-1-burndown.png`、`sprint-2-burndown.png` | S1/S2 已归档 |
 | 评审与回顾 | 各 `sprint-N.md` 的 Review / 回顾章节 | 含未达标项与行动项 |
 | CI 运行记录 | GitHub Actions | 每次 PR 的后端/前端检查；v0.3.0 三阶段绿 |
