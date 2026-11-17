@@ -20,6 +20,7 @@
 - 已完成的个人总结：[`personal-summary-chenmingzhe.md`](personal-summary-chenmingzhe.md)
 - DDD 原文：[`docs/ddd/`](../ddd/README.md)（上下文映射、事件风暴、词汇表）
 - ADR 原文：[`docs/adr/`](../adr/README.md)
+- T4-05 管理页截图：[`screenshots/admin/`](screenshots/admin/README.md)
 - 覆盖率与测试报告：CI Actions 构件 + [`03-quality.md`](03-quality.md)
 - 发布记录：[`docs/release/v0.3.0.md`](../release/v0.3.0.md)、[`docs/reports/release-v0.2.0-v0.3.0.md`](../reports/release-v0.2.0-v0.3.0.md)
 - v1.0.0 发布草案：[`docs/release/v1.0.0.md`](../release/v1.0.0.md)（待 develop→main）
