@@ -18,7 +18,8 @@
 
 - 用户手册：[`user-guide.md`](user-guide.md)
 - 彩排排期与计时：[`rehearsal-log.md`](rehearsal-log.md)
-- 已完成的个人总结：[`personal-summary-chenmingzhe.md`](personal-summary-chenmingzhe.md)
+- 青岑彩排计时稿：[`rehearsal-qingcen.md`](rehearsal-qingcen.md)
+- 个人总结：[陈明哲](personal-summary-chenmingzhe.md)、[青岑](personal-summary-qingcen.md)
 - DDD 原文：[`docs/ddd/`](../ddd/)（上下文映射、事件风暴、词汇表）
 - ADR 原文：[`docs/adr/`](../adr/README.md)（含 ADR-010 禁用账号与会话清理）
 - T4-05 管理页截图：[`screenshots/admin/`](screenshots/admin/README.md)
