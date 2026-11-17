@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,ReputationRulebook,5,46,1,9,1,13,1,10,0,5
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,ReputationReason,0,52,0,4,0,10,0,6,0,4
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,LedgerEntry,40,5,0,0,3,2,1,1,1,1
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,ReputationAccount,43,96,3,5,9,29,8,10,5,9
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,BadgeAward,12,0,0,0,1,0,1,0,1,0
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,BadgePolicy,4,38,3,5,1,12,3,3,0,2
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,BadgeType,0,68,0,0,0,13,0,4,0,4
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,AcademicTerm,0,79,0,4,0,15,0,6,0,4
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,BountyStatus,0,21,0,0,0,4,0,1,0,1
+Reputation 声誉与激励 :: domain（纯 Java）,com.campusoverflow.reputation.domain,Bounty,54,156,3,19,15,38,11,18,9,9
