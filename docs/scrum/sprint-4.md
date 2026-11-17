@@ -22,7 +22,7 @@
 | T4-07 | README、ADR-010、用户手册 | 青岑 | ✅ #130 |
 | T4-01 | develop→main 发布 PR、v1.0.0 tag、GitHub Release、部署验证 | 陈明哲（SM）/ 魏志国（PO 审批） | ✅ PR #135 → `10925c7`；tag `v1.0.0`；[Release](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/releases/tag/v1.0.0) |
 | T4-08 | 两次彩排：≤15 分钟、每人 ≥2 分钟、两次顺利 | 陈明哲组织 / 全员 | ⬜ 第一次 2026-11-17、第二次发布后，见 [`rehearsal-log.md`](../final/rehearsal-log.md) |
-| 9.4 交付物 | 七项索引、个人总结、≤5 分钟视频 | 全员 | 🟨 索引与 2 份总结已入库；视频、其余总结待补 |
+| 9.4 交付物 | 七项索引、个人总结、≤5 分钟视频 | 全员 | 🟨 索引、视频（`docs/final/demo-v1.0.0.webm`）与 2 份总结已入库；其余 3 份总结待补 |
 
 ## 三、发布检查（T4-01）
 
