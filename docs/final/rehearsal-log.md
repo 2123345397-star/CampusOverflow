@@ -1,7 +1,7 @@
 # 彩排记录（T4-08）
 
 > 组织：陈明哲（E，S4 SM）　脚本：[`05-demo-script.md`](05-demo-script.md)
-> 青岑个人计时稿：[`rehearsal-qingcen.md`](rehearsal-qingcen.md)
+> 个人计时稿：[青岑](rehearsal-qingcen.md)（声誉与悬赏、搜索/通知/管理页）、[刘俊琒](rehearsal-liujunfeng.md)（问答主流程 4:00）
 > 要求：≤15 分钟、每人 ≥2 分钟、两次都顺利；本文件记录掐表与卡点。
 
 ## 一、排期
