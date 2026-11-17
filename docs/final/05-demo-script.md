@@ -54,7 +54,7 @@
    [`screenshots/admin/admin-users-pending.png`](screenshots/admin/admin-users-pending.png)
    与 [`screenshots/admin/admin-forbidden.png`](screenshots/admin/admin-forbidden.png)。
 
-> 青岑的完整计时讲稿见 [`rehearsal-qingcen.md`](rehearsal-qingcen.md)。
+> 青岑的完整计时讲稿见 [`rehearsal-qingcen.md`](rehearsal-qingcen.md)，刘俊琒（问答主流程 4:00）见 [`rehearsal-liujunfeng.md`](rehearsal-liujunfeng.md)。
 
 **D. CI 与可观测性（陈明哲）**
 
