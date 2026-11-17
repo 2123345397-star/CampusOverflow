@@ -58,8 +58,9 @@ co-discovery/co-discovery-domain,co-discovery/co-discovery-application
 
 | 状态 | 条目 |
 | --- | --- |
-| 已修复 | BUG-001 课程页、BUG-002 PR 无 CI、BUG-004 DDD 不一致、BUG-005 提交身份、BUG-006 团队文档/ADR-009 |
-| 部分修复 | BUG-003 分支保护：管理员绕过已关闭、1 个 Approve 已开；`required_status_checks` 仍待启用（发布流程阻塞项） |
+| 已修复 | BUG-001 课程页、BUG-002 PR 无 CI、BUG-003 分支保护必需检查、BUG-004 DDD 不一致、BUG-005 提交身份、BUG-006 团队文档/ADR-009 |
+
+BUG-003 于 2026-11-17 复核关闭：`main` 为 2 Approve + 后端/前端/容器三项必需检查，`develop` 为 1 Approve + 后端/前端两项必需检查（规则集 `develop required checks`，`enforce_admins=true`）；`容器镜像构建` 因 `if` 限定 `push` / `base=main`，只挂 `main`。证据见 [`docs/qa/defects.md`](../qa/defects.md#复核记录)。
 
 ## 3.5 发布验证
 
@@ -87,6 +88,6 @@ mvn -B -f backend/pom.xml verify -DskipITs -Djacoco.skip=false `
 
 | 风险 | 影响 | 处置 |
 | --- | --- | --- |
-| BUG-003 `required_status_checks` 为空 | 发布 PR 的 CI 失败不一定阻断合并 | S4 前按 V3 开启必需检查（需先确认发布流程触发条件） |
+| BUG-003 `required_status_checks` 为空 | 发布 PR 的 CI 失败不一定阻断合并 | 已于 2026-11-17 关闭：`main` 三项、`develop` 两项必需检查 + `enforce_admins`；改 CI 作业名后需同步核对，否则必需检查永远 pending |
 | 本地 JDK 25 下 JaCoCo 0.8.12 agent 不兼容 | 本机取证需 `-Djacoco.skip=true` | 统一用 JDK 21 取证；CI 固定 21 |
 | 集成测试仍允许失败 | 端到端问题可能漏过 CI | S4 彩排必须手工跑 T1-15 冒烟 + demo 走查 |
