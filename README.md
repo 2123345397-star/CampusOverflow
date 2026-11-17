@@ -62,7 +62,8 @@ npm install
 npm run dev
 ```
 
-打开终端打印的地址，通常是 <http://localhost:5173/>。  
+打开终端打印的地址，通常是 <http://localhost:5173/>。
+
 如果 `localhost:5173` 被解析到 IPv6 而连不上，改用 <http://127.0.0.1:5173/>；Vite 已把 `/api` 代理到 `http://localhost:8080`。
 
 ## 3. 演示账号
