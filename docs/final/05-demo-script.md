@@ -46,7 +46,8 @@
 管理页（约 1 分钟）：
 
 5. `admin01 / Campus2026` 登录 → 导航「管理」→ `/admin`；
-6. 「待认证学生」列表 → 对 `TestStudent` 点「认证」→ 列表人数减少；
+6. 「待认证学生」列表 → 对 `SeedUser` 点「认证」→ 列表人数减少
+   （`TestStudent` 已在 2026-11-17 截图时认证，现场改用仍在待认证列表的 `SeedUser`）；
 7. 学生 `2023002` 直接访问 `/admin` → 「无权限访问」；
 8. 时间够再演示「建教职工」/「改角色」，不够则口述并展示
    [`screenshots/admin/admin-users-pending.png`](screenshots/admin/admin-users-pending.png)
