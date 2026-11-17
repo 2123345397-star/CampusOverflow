@@ -1,128 +1,221 @@
-# CampusOverflow · 学生初始框架（Java / Spring Boot 3）
+# CampusOverflow · 校园问答与声誉平台
 
-这是《软件工程》贯穿项目的**起始代码**。整体骨架、构建脚本、部署与 CI 已经就位，
-**四个限界上下文中的 Identity（身份与认证）是完整的参考实现**，其余三个上下文的核心业务留给你们按 Sprint 实现。
+TeamX（cs2412-team04）《软件工程》课程项目。基于 Spring Boot + React 的校园问答社区：
+提问、回答、采纳、投票、评论、悬赏、声誉与徽章、中文搜索与相关问题、通知、管理员认证与账号管理。
 
-现在克隆下来直接跑 `mvn test`，你会看到**大量失败的测试**——这不是环境坏了，这是你们这学期的需求说明书。
+## 1. 技术栈
 
-## 1. 五分钟跑起来
+| 层 | 技术 |
+| --- | --- |
+| 后端 | Java 21、Spring Boot 3、Spring Security、Spring Data JPA、Flyway、Spring Session |
+| 前端 | React 18、TypeScript、Vite、React Router |
+| 数据 | MySQL 8.0.39（ngram 中文全文索引）、Redis 7（会话、限流、视图计数） |
+| 构建 | Maven 多模块、JUnit 5、AssertJ、JaCoCo、ArchUnit、Testcontainers |
+| 交付 | Docker Compose、Nginx、Prometheus、Grafana、GitHub Actions |
+
+后端是模块化单体，按限界上下文分为 `co-identity`、`co-qa`、`co-reputation`、`co-discovery`，
+每个上下文内部再分 domain / application / infrastructure / interfaces / api。领域层不依赖框架。
+
+## 2. 五分钟跑起来（本地开发）
+
+### 2.1 前置条件
+
+- JDK 21
+- Maven 3.9+
+- Node.js 20+ / npm
+- Docker Desktop（MySQL、Redis、集成测试都需要）
+
+### 2.2 起中间件
+
+在仓库根目录：
 
 ```bash
-# 1) 起中间件（需要 Docker）
 docker compose -f deploy/docker-compose.yml up -d mysql redis
-
-# 2) 编译并跑测试（第一次会红，这是预期的）
-cd backend && mvn clean test
-
-# 3) 启动后端（dev profile，不要加 demo，因为演示数据依赖尚未实现的业务代码）
-mvn spring-boot:run -pl co-bootstrap -Dspring-boot.run.profiles=dev
-
-# 4) 启动前端
-cd ../frontend && npm install && npm run dev      # http://localhost:5173
 ```
 
-接口文档：http://localhost:8080/swagger-ui.html
+默认端口：MySQL `3306`、Redis `6379`。如果本机已有 MySQL 占用 3306，先停掉本机服务，或修改 compose 的端口映射。
 
-### 1.1 测试账号
+### 2.3 启动后端（demo profile）
 
-**学生账号（现在就能用）**：打开 <http://localhost:5173/login>，切到“注册”页，填写学号/工号（4–20 位）、密码（8–64 位）、昵称、校园邮箱、学院、班级，点“注册并登录”。教师/管理员账号没有自助注册入口，不能用这个入口创建。
+```bash
+cd backend
+mvn -pl co-bootstrap -am -DskipTests package
+java -jar co-bootstrap/target/campus-overflow.jar --spring.profiles.active=demo
+```
 
-**demo 演示账号**（`demo` profile 自动生成，密码统一为 `Campus2026`）：
+也可以在 IntelliJ 里直接运行 `CampusOverflowApplication`，或用
+`mvn -pl co-bootstrap spring-boot:run -Dspring-boot.run.profiles=demo`
+（后者要求依赖已经在本地 Maven 仓库中）。
+
+- 后端：<http://localhost:8080>
+- Swagger：<http://localhost:8080/swagger-ui.html>
+- 健康检查：<http://localhost:8080/actuator/health>
+
+`demo` profile 会由 `DemoDataSeeder` 写入演示账号、课程、问题和悬赏；重复启动会跳过已存在的数据。
+如果只想启动空库，把 profile 换成 `dev`。
+
+### 2.4 启动前端
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+打开终端打印的地址，通常是 <http://localhost:5173/>。  
+如果 `localhost:5173` 被解析到 IPv6 而连不上，改用 <http://127.0.0.1:5173/>；Vite 已把 `/api` 代理到 `http://localhost:8080`。
+
+## 3. 演示账号
+
+`demo` profile 下密码统一为 `Campus2026`：
 
 | 账号 | 角色 | 昵称 |
 | --- | --- | --- |
-| `admin01` | 管理员 | 系统管理员 |
-| `T2001` | 教师 | 王老师 |
-| `TA3001` | 助教 | 李助教 |
-| `2023001` | 学生 | 小明 |
-| `2023002` | 学生 | 小红 |
-| `2023003` | 学生 | 小刚 |
+| `admin01` | 管理员 ADMIN | 系统管理员 |
+| `T2001` | 教师 TEACHER | 王老师 |
+| `TA3001` | 助教 TA | 李助教 |
+| `2023001` | 学生 STUDENT | 小明 |
+| `2023002` | 学生 STUDENT | 小红 |
+| `2023003` | 学生 STUDENT | 小刚 |
 
-启用方式：启动后端时把 profile 换成 `demo`（`mvn spring-boot:run -pl co-bootstrap -Dspring-boot.run.profiles=demo`，需先起 MySQL/Redis）。
+管理员登录后，右上角导航会出现「管理」，进入：
 
-> 注意：demo 种子会创建课程、问题、回答等演示数据，依赖 Q&A 应用层。Sprint 2 的相关 TODO 实现前启动会抛 `UnsupportedOperationException`，此时请先用上面的学生注册路径登录。
-> 教师/管理员也可以由已登录的管理员调用 `POST /api/v1/admin/users` 创建（字段：`username`、`displayName`、`email`、`password`、`role`、`college`）。
+```text
+http://localhost:5173/admin
+```
 
-**教师/管理员账号（Sprint 0–2 开发期，demo 暂不可用）**：先按上面的学生流程注册账号（用户名用 `T2001` 或 `admin01`），再进入 MySQL 提升角色。改完需重新登录，因为会话里缓存了 Actor：
+可查看待认证学生、完成认证、创建教职工账号、调整角色。非管理员看不到入口，直接访问 URL 会显示“无权限访问”。
+
+### 3.1 自定义账号提权（不用 demo 时）
+
+学生可以在登录页「注册」自助注册；教师/管理员没有自助入口。先用学生流程注册 `T2001` / `admin01`，
+再进 MySQL 提升角色并标记为已认证：
+
+```bash
+docker exec -it co-mysql mysql -ucampus -pcampus_dev_pwd campus_overflow
+```
 
 ```sql
-docker exec -it co-mysql mysql -ucampus -pcampus_dev_pwd campus_overflow
 UPDATE id_user SET role = 'TEACHER', verified = TRUE WHERE username = 'T2001';
 UPDATE id_user SET role = 'ADMIN',   verified = TRUE WHERE username = 'admin01';
 ```
 
-教师建课后，学生调用 `POST /api/v1/courses/{id}/join` 加入；教师可通过 `PUT /api/v1/courses/{id}/members/{userId}` 任命助教（`role: TA`）。
+改完退出并重新登录，因为会话里缓存了 Actor。
 
-## 2. 已经给你们的 vs 需要你们写的
+## 4. 测试与质量门禁
 
-| 已提供（读懂它，不要重写） | 需要你们实现 |
+### 4.1 后端
+
+```bash
+cd backend
+mvn test                 # 单元测试
+mvn verify               # 单元测试 + 架构检查 + 覆盖率门禁 + 集成测试（需要 Docker）
+```
+
+- 领域层覆盖率门槛：`backend/pom.xml` 中 `domain.coverage.minimum=0.70`；
+- 架构约束：`mvn test -pl co-bootstrap -Dtest=ArchitectureTest`；
+- 集成测试用 Testcontainers 启动 MySQL 8.0.39 与 Redis 7-alpine，必须保证 Docker 可用。
+
+### 4.2 前端
+
+```bash
+cd frontend
+npm run typecheck
+npm run build
+```
+
+### 4.3 CI
+
+GitHub Actions 的 `CI` 流水线包含后端编译、Sprint 范围单元测试、ArchUnit、覆盖率门禁、
+集成测试（容错阶段）和前端类型检查/构建。发布到 `main` 的 PR 还会构建前后端镜像。
+
+## 5. Docker 一键部署
+
+完整环境（MySQL + Redis + 后端 + 前端 Nginx）：
+
+```bash
+docker compose -f deploy/docker-compose.yml up -d --build
+```
+
+访问：
+
+| 服务 | 地址 |
 | --- | --- |
-| 27 个 Maven 模块的骨架与依赖关系 | Q&A、Reputation、Discovery 三个上下文的**领域层**（聚合、值对象、业务规则） |
-| `co-shared-kernel`：领域异常、Actor、事件契约、分页 | 上述三个上下文的**应用层**（用例编排、事务边界、事件发布） |
-| **Identity 上下文完整实现**（注册、登录、课程、角色）——当作范例 | 前端页面的功能增强（见第 6 节） |
-| 所有 `*-api` 发布语言、所有基础设施适配器（JPA / Redis / JDBC）与 REST 控制器 | 你们自己补充的单元测试（领域层覆盖率要求见第 5 节） |
-| 安全链、发件箱中继、全局异常处理、Flyway 迁移、Docker、CI | |
-| **107 个 `TODO` 方法与 38 个随之失败的测试**（领域测试 + 应用层用例测试 + 端到端集成测试） | |
+| 前端 | <http://localhost/> |
+| 后端 API | <http://localhost:8080/> |
+| Swagger | <http://localhost:8080/swagger-ui.html> |
+| 健康检查 | <http://localhost:8080/actuator/health> |
 
-> 为什么基础设施是给好的？因为本课程要考察的是**领域建模与架构约束**，而不是 JPA 映射的熟练度。
-> 你只要把领域方法写对，适配器就能正常工作。
+加上监控（Prometheus + Grafana）：
 
-## 3. 怎么开始：跟着测试走
+```bash
+docker compose -f deploy/docker-compose.yml --profile observability up -d --build
+```
 
-1. 打开 `docs/学生任务清单.md`，里面列出了全部 107 个 `TODO` 方法及其所在文件。
-2. 从 Q&A 的领域层开始：`co-qa/co-qa-domain/src/test/java/.../QuestionTest.java` 就是规格说明。
-3. 运行单个测试类：`mvn test -pl co-qa/co-qa-domain -Dtest=QuestionTest`
-4. 红 → 绿 → 重构，逐个把测试变绿；再写应用层，让 `AnswerAndVoteServiceTest` 变绿。
-5. 三个上下文都绿之后，跑 `mvn verify`（需要 Docker），端到端集成测试会验证“提问 → 回答 → 采纳 → 声誉 → 搜索 → 通知”整条链路。
-
-**允许你们增加方法、增加类、增加测试**，但**不要修改已有测试的断言**——那相当于改需求；
-如果你确信某条测试与文档矛盾，在 PR 里说明并与教师确认。
-
-## 4. Sprint 与任务对应
-
-| Sprint | 周次 | 目标 | 对应任务 |
-| --- | --- | --- | --- |
-| S0 | 1–2 | 跑通环境、读懂 Identity 参考实现与架构文档 | 无编码任务；提交环境验证截图与架构理解笔记 |
-| S1 | 3–6 | 身份与课程：读懂并**扩展** Identity（如选课审批、个人资料） | 在 Identity 上下文中自行设计增量需求 |
-| S2 | 7–10 | 问答核心：Q&A 上下文全部 TODO | `docs/学生任务清单.md` 中标记 **S2** 的 36 个方法 |
-| S3 | 11–13 | 声誉与发现：Reputation + Discovery 上下文全部 TODO | 标记 **S3** 的 71 个方法 |
-| S4 | 14–15 | 打磨：性能、可观测性、前端体验、演示准备 | 第 6 节的增强任务 + 压测与指标 |
-
-## 5. 验收门槛（对应课程考核）
-
-| 项目 | 要求 | 如何自检 |
+| 服务 | 地址 | 默认凭据 |
 | --- | --- | --- |
-| 单元测试 | 全部通过 | `mvn test` |
-| 领域层覆盖率 | ≥ 70%（把 `backend/pom.xml` 中的 `domain.coverage.minimum` 从 `0` 改成 `0.70` 后仍能通过） | `mvn verify` |
-| 架构约束 | ArchUnit 全部通过（领域层零框架依赖、跨上下文只经 api、无环、实体表名前缀） | `mvn test -pl co-bootstrap -Dtest=ArchitectureTest` |
-| 集成测试 | 端到端链路通过 | `mvn verify`（需要 Docker） |
-| 前端 | 类型检查与构建通过 | `cd frontend && npm run typecheck && npm run build` |
-| 流水线 | GitHub Actions 全绿 | 推送后看 Actions 页 |
+| Prometheus | <http://localhost:9090/> | — |
+| Grafana | <http://localhost:3000/> | `admin` / `admin`（可用 `GRAFANA_PASSWORD` 覆盖） |
 
-**不要为了让测试通过而删测试或放宽断言**——CI 的历史记录会保留每一次改动，这属于学术诚信范畴。
+常用环境变量：
 
-## 6. 前端增强任务（S4 建议）
+```text
+DB_PASSWORD         MySQL campus 用户密码
+MYSQL_ROOT_PASSWORD MySQL root 密码
+SPRING_PROFILES    后端 profile，默认 prod,demo
+CO_FIELD_KEY       字段加密密钥，生产必须替换
+COOKIE_SECURE      HTTPS 部署时设为 true
+GRAFANA_PASSWORD   Grafana 管理员密码
+```
 
-前端已提供可运行的骨架（登录/注册、问题列表与搜索、详情页投票与采纳、提问、排行榜、通知）。建议自行完成：
+停止：
 
-- 分页与无限滚动、加载骨架屏与错误重试；
-- Markdown 实时预览与代码高亮；
-- 悬赏发起对话框（当前是 `prompt()` 占位）、悬赏倒计时展示；
-- 通知红点的实时刷新（当前是 30 秒轮询，可改 SSE）；
-- 移动端适配与可访问性（键盘操作、对比度）。
+```bash
+docker compose -f deploy/docker-compose.yml down
+# 连数据卷一起清掉：docker compose -f deploy/docker-compose.yml down -v
+```
 
-## 7. 你必须先读的三份材料
+> `SPRING_PROFILES` 默认包含 `demo`，会写入演示数据；正式部署时去掉 `demo`。
 
-1. `docs/adr/`：8 条架构决策记录——**为什么**这样设计比代码本身更重要；
-2. 《CampusOverflow 软件架构设计文档（arc42）》：第 5 章构建块视图、第 6 章运行时视图、第 10 章质量场景；
-3. `docs/错误码.md`：错误码分段与 HTTP 状态映射，实现领域异常时必须遵守。
+## 6. 项目结构
 
-## 8. 常见坑
+```text
+backend/
+  co-shared-kernel/        共享内核（Actor、异常、事件、分页）
+  co-identity/             身份、课程、角色、管理员
+  co-qa/                   问题、回答、投票、评论、标签
+  co-reputation/           声誉账本、徽章、排行榜、悬赏
+  co-discovery/            搜索投影、全文检索、相关问题、通知
+  co-bootstrap/            启动模块、安全配置、demo 数据
+frontend/                  React + Vite 前端
+deploy/                    Dockerfile、Compose、Nginx、Prometheus、Grafana
+docs/
+  adr/                     架构决策记录
+  ddd/                     上下文映射、事件风暴、统一语言
+  scrum/                   Sprint 计划、评审、回顾、燃尽图
+  final/                   最终答辩材料与用户手册
+  qa/                      测试计划与缺陷台账
+```
 
-| 现象 | 原因 |
+## 7. 文档入口
+
+- 用户手册：[`docs/final/user-guide.md`](docs/final/user-guide.md)
+- 最终答辩材料：[`docs/final/README.md`](docs/final/README.md)
+- 架构决策：[`docs/adr/README.md`](docs/adr/README.md)
+- DDD 设计：[`docs/ddd/`](docs/ddd/)
+- Scrum 记录：[`docs/scrum/`](docs/scrum/)
+- 测试计划与缺陷：[`docs/qa/`](docs/qa/)
+- 发布记录：[`docs/release/`](docs/release/)、[`docs/reports/`](docs/reports/)
+
+## 8. 常见问题
+
+| 现象 | 处理 |
 | --- | --- |
-| `UnsupportedOperationException: TODO(S2)...` | 正常，说明这个方法还没实现 |
-| 声誉不变化 | 声誉是异步结算的：事件先落 `outbox_event`，由中继投递；检查 `last_error` 字段 |
-| 中文搜索没结果 | 必须用 compose 里的 MySQL（已配置 `ngram_token_size=2`），自建库请对照参数 |
-| 事件重复导致加分两次 | 消费端必须幂等：账本唯一键 `(event_id, user_id, reason)` 或 `processed_event` 表 |
-| 提交后 CI 红 | 先本地跑 `mvn verify`，再推送；不要把红的分支合并到 `main` |
+| `localhost:5173` 拒绝连接 | 确认 `npm run dev` 的终端还开着；改用终端打印的地址，或 `http://127.0.0.1:5173/` |
+| 登录 403 / CSRF 校验失败 | 刷新页面重新取 `XSRF-TOKEN`；不要手工构造 Cookie |
+| 搜索单字返回 422 `DIS-1001` | 中文 ngram 最小长度为 2，改用两个及以上字符 |
+| 中文搜索无结果 | 必须使用 compose 里的 MySQL（`ngram_token_size=2`），并等待 outbox 投影完成 |
+| 声誉或通知没变化 | 走事务性发件箱异步投递，检查 `outbox_event.last_error` |
+| `mvn verify` 失败 | 确认 Docker 可用；Testcontainers 需要拉取 MySQL/Redis 镜像 |
+| demo 启动报 `UnsupportedOperationException` | 使用最新 `develop`；S3 收口后业务代码已实现 |
+| 管理员入口看不到 | 当前账号必须是 `ADMIN`；学生账号不会显示「管理」，直接访问 `/admin` 会显示无权限 |
