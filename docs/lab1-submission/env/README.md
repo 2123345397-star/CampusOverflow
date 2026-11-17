@@ -52,13 +52,13 @@ mvn clean test
 | 房国栋 | `2177023844` | ✅ [`env-fangguodong.png`](env-fangguodong.png) | ✅ [`env-fangguodong.txt`](env-fangguodong.txt) | ✅ [`mvn-test-fangguodong.log`](../logs/mvn-test-fangguodong.log)（完整构建日志，78 KB；截图待补） | 2026-11-15 |
 | 魏志国 | `2123345397-star` | ✅ [`env-weizhiguo.png`](env-weizhiguo.png) | ✅ [`env-weizhiguo.txt`](env-weizhiguo.txt) | ✅ [`mvn-test-weizhiguo.png`](../screenshots/mvn-test-weizhiguo.png) + [`完整日志`](../logs/mvn-test-weizhiguo.log)（121 绿 + co-discovery `TODO(S3)` 预期红） | 2026-11-16 |
 | 陈明哲 | `cmz666-BOT` | ✅ [`env-chenmingzhe.png`](env-chenmingzhe.png) | ✅ [`env-chenmingzhe.txt`](env-chenmingzhe.txt) | ✅ 同图（含 `mvn -B test` 摘要） | 2026-11-16 |
-| 刘俊琒 | `Liujunfeng520` | ⬜ 待补 | ⬜ | ⬜ | |
+| 刘俊琒 | `Liujunfeng520` | ✅ [`env-liujunfeng.png`](env-liujunfeng.png) | ✅ [`env-liujunfeng.txt`](env-liujunfeng.txt) | ✅ [`mvn-test-liujunfeng.png`](../screenshots/mvn-test-liujunfeng.png) + [`完整日志`](../logs/mvn-test-liujunfeng.log)（27 模块 165 用例全绿） | 2026-11-17 |
 | 青岑 | `qing963666` | ✅ [`env-qingcen.png`](env-qingcen.png) | ✅ [`env-qingcen.txt`](env-qingcen.txt) | ✅ [`mvn-test-qingcen.png`](../screenshots/mvn-test-qingcen.png) | 2026-11-15 |
 
 图例：✅ 已交　⬜ 待补
 
-> 其余四人补齐后，把对应的 `env-<拼音>.png` / `env-<拼音>.txt` 放进本目录，并把上表改成 ✅，
-> 同时更新 [`../env-matrix.md`](../env-matrix.md) 第 2 节的汇总行。
+> 五人已齐（2026-11-17）。后续如重跑采集，替换同名文件即可，并同步更新
+> [`../env-matrix.md`](../env-matrix.md) 第 2 节的汇总行。`mvn` 测试截图仅房国栋待补（已有完整日志）。
 
 ---
 

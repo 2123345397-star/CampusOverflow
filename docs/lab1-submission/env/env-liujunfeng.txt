@@ -2,7 +2,7 @@
 
 > 对应实验：Lab 1 E3【环境与前置准备】　汇总表：[`../env-matrix.md`](../env-matrix.md) §2
 > 机器：Microsoft Windows 10.0.19045　GitHub：`Liujunfeng520`
-> 采集时间：2026-11-17 14:46　测试时间：2026-11-17 14:48（+08:00）
+> 采集时间：2026-11-17 14:46　测试时间：2026-11-17 14:48　截图取证：2026-11-17 16:06（同机复跑）
 
 ---
 
@@ -90,6 +90,7 @@ mvn -B clean test -DfailIfNoTests=false
 | 模块 | 27 个（Reactor 全量）全部 `SUCCESS` |
 | 用例 | **165 个，Failures 0 / Errors 0 / Skipped 0** |
 | 耗时 | 36.573 s |
+| 截图那次复跑 | 2026-11-17 16:07，`BUILD SUCCESS`，28.045 s，27 个模块全 `SUCCESS`（见 [`../../screenshots/mvn-test-liujunfeng.png`](../../screenshots/mvn-test-liujunfeng.png)） |
 | 完整日志 | [`../logs/mvn-test-liujunfeng.log`](../logs/mvn-test-liujunfeng.log)（64 KB，UTF-8） |
 
 各模块用例数：

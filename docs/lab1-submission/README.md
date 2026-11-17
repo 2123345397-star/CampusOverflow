@@ -87,12 +87,14 @@
 
 - 汇总表：[`env-matrix.md`](env-matrix.md)（五人 JDK/Maven/Node/Docker 版本 + `mvn clean test` 结果登记）
 - 原始证据目录：[`env/`](env/)（目录说明见 [`env/README.md`](env/README.md)）
-  - 已归档：`env/env-fangguodong.png`、`env/env-fangguodong.txt`、`env/env-qingcen.png`、`env/env-qingcen.txt`、`env/env-chenmingzhe.png`、`env/env-chenmingzhe.txt`
-  - 其余三人（魏志国、刘俊琒、房国栋之外缺的成员）：`env/env-<拼音>.png` + `env/env-<拼音>.txt` 待各自采集
+  - 已归档（5/5 齐）：`env/env-fangguodong`、`env/env-qingcen`、`env/env-chenmingzhe`、`env/env-weizhiguo`、`env/env-liujunfeng`，每人 `.png` + `.txt` 成对
+  - 待补：房国栋的 `mvn` 测试截图（已有完整日志）；其余 4 人的 `screenshots/mvn-test-<拼音>.png` 已齐
 - 采集脚本：[`scripts/dev-env/collect-env.ps1`](../../scripts/dev-env/collect-env.ps1) / [`collect-env.sh`](../../scripts/dev-env/collect-env.sh)
 - 达标线：Git 2.40+、JDK 21、Node.js 20+、Docker 可运行
-- 已知情况：`backend` 整体 `mvn clean test` 现阶段为红（`co-qa-domain` 的 `TODO(S2)` 桩未实现），
-  按「整体红 + 附原因」与「已实现模块绿」两段取证，避免被误判为环境问题；日志见 [`logs/mvn-test-fangguodong.log`](logs/mvn-test-fangguodong.log)
+- 已知情况：Lab 1 时期 `backend` 整体 `mvn clean test` 为红（`co-qa-domain` 的 `TODO(S2)` 桩未实现），
+  当时按「整体红 + 附原因」与「已实现模块绿」两段取证，避免被误判为环境问题；日志见 [`logs/mvn-test-fangguodong.log`](logs/mvn-test-fangguodong.log)。
+  **2026-11-17 更新**：S4 收口后桩已全部落地，本机全量复跑为 `BUILD SUCCESS`（27 模块 / 165 用例 / 0 失败），
+  见 [`env/env-liujunfeng.txt`](env/env-liujunfeng.txt) §3 与 [`screenshots/mvn-test-liujunfeng.png`](screenshots/mvn-test-liujunfeng.png)。
 
 ## 7. 身份绑定核查（E4）
 

@@ -42,7 +42,7 @@ mvn clean test          # 结果决定第 3 节怎么填，红也要截，见 3.
 | 房国栋 | `2177023844` | Windows 11（`10.0.26200`） | 21.0.10（JBR-21.0.10+1-1163.110） | 3.9.11 | v24.18.1 / npm 11.16.0 | 29.9.3（青岑机器代跑，Engine running） | 2026-11-15 | ✅ [`env-fangguodong.png`](env/env-fangguodong.png) | ✅ [`logs/mvn-test-fangguodong.log`](logs/mvn-test-fangguodong.log)（截图待补） |
 | 魏志国 | `2123345397-star` | Windows 11（`10.0.26200`）Git Bash（MINGW64） | ⚠️ 25.0.2（达标线 21；本机为更高版本，CI 固定 JDK 21） | 3.9.13 | v24.21.0 / npm 11.19.0 | 29.9.2（Engine running） | 2026-11-16 | ✅ [`env-weizhiguo.png`](env/env-weizhiguo.png) | ✅ [`logs/mvn-test-weizhiguo.log`](logs/mvn-test-weizhiguo.log) + [`screenshots/mvn-test-weizhiguo.png`](screenshots/mvn-test-weizhiguo.png) |
 | 陈明哲 | `cmz666-BOT` | Windows 11（`10.0.26200`） | 21.0.10 | 3.9.9 | v24.21.0 / npm 11.19.0 | ⬜ 未安装 | 2026-11-16 | ✅ [`env-chenmingzhe.png`](env/env-chenmingzhe.png) | ✅ 同图（含 `mvn -B test` 摘要） |
-| 刘俊琒 | `Liujunfeng520` | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ | ⬜ 待补 | ⬜ 待补 |
+| 刘俊琒 | `Liujunfeng520` | Microsoft Windows 10.0.19045 | 21.0.11（java/javac 同版本） | 3.9.11 | v24.20.0 / npm 11.19.0 | ⬜ 未安装（见 §6） | 2026-11-17 | ✅ [`env-liujunfeng.png`](env/env-liujunfeng.png) | ✅ [`mvn-test-liujunfeng.png`](screenshots/mvn-test-liujunfeng.png) + [`logs/mvn-test-liujunfeng.log`](logs/mvn-test-liujunfeng.log) |
 | 青岑 | `qing963666` | Microsoft Windows 10.0.26200 | 21.0.10 | 3.9.2 | v26.13.0 / npm 11.20.0 | 29.9.2 | 2026-11-09 | ✅ [`env-qingcen.png`](env/env-qingcen.png) | ✅ [`screenshots/mvn-test-qingcen.png`](screenshots/mvn-test-qingcen.png) |
 
 图例：✅ 达标　⚠️ 版本不符但已记录　⬜ 待采集
@@ -106,7 +106,7 @@ mvn -pl co-shared-kernel test                        # 单独跑，应全绿
 | 房国栋 | ❌ 红（预期） | `co-qa-domain`：`TODO(S2)：MarkdownBody.ofQuestion 尚未实现`；18 个用例中 2 失败 13 错误 | ✅ `co-shared-kernel` 2、`co-identity-domain` 9 全绿 | [`logs/mvn-test-fangguodong.log`](logs/mvn-test-fangguodong.log) |
 | 魏志国 | ❌ 红（预期） | `co-discovery-domain`：`TODO(S3)：SearchQuery.terms / RelatedQuestionPolicy 尚未实现`（S3 未开工的 TDD 桩）；1 失败 2 错误 | ✅ shared-kernel 2、identity 9、qa-domain 42、qa-application 32、reputation 36，共 121 条全绿 | [`logs/mvn-test-weizhiguo.log`](logs/mvn-test-weizhiguo.log)、[`screenshots/mvn-test-weizhiguo.png`](screenshots/mvn-test-weizhiguo.png) |
 | 陈明哲 | ⬜ | ⬜ | ⬜ | ⬜ |
-| 刘俊琒 | ✅ 全绿（S4 收口后） | 无 | ✅ 27 个模块、165 个用例全绿 | [`logs/mvn-test-liujunfeng.log`](logs/mvn-test-liujunfeng.log)（[截图](screenshots/mvn-test-liujunfeng.png)待补） |
+| 刘俊琒 | ✅ 全绿（S4 收口后） | 无 | ✅ 27 个模块、165 个用例全绿 | [`logs/mvn-test-liujunfeng.log`](logs/mvn-test-liujunfeng.log) + [`screenshots/mvn-test-liujunfeng.png`](screenshots/mvn-test-liujunfeng.png) |
 | 青岑 | ✅ QA 两模块绿（42+32） | 无 | ✅ `co-qa-domain` 42、`co-qa-application` 32 | [`screenshots/mvn-test-qingcen.png`](screenshots/mvn-test-qingcen.png) |
 
 ---
