@@ -106,7 +106,7 @@ mvn -pl co-shared-kernel test                        # 单独跑，应全绿
 | 房国栋 | ❌ 红（预期） | `co-qa-domain`：`TODO(S2)：MarkdownBody.ofQuestion 尚未实现`；18 个用例中 2 失败 13 错误 | ✅ `co-shared-kernel` 2、`co-identity-domain` 9 全绿 | [`logs/mvn-test-fangguodong.log`](logs/mvn-test-fangguodong.log) |
 | 魏志国 | ❌ 红（预期） | `co-discovery-domain`：`TODO(S3)：SearchQuery.terms / RelatedQuestionPolicy 尚未实现`（S3 未开工的 TDD 桩）；1 失败 2 错误 | ✅ shared-kernel 2、identity 9、qa-domain 42、qa-application 32、reputation 36，共 121 条全绿 | [`logs/mvn-test-weizhiguo.log`](logs/mvn-test-weizhiguo.log)、[`screenshots/mvn-test-weizhiguo.png`](screenshots/mvn-test-weizhiguo.png) |
 | 陈明哲 | ⬜ | ⬜ | ⬜ | ⬜ |
-| 刘俊琒 | ⬜ | ⬜ | ⬜ | ⬜ |
+| 刘俊琒 | ✅ 全绿（S4 收口后） | 无 | ✅ 27 个模块、165 个用例全绿 | [`logs/mvn-test-liujunfeng.log`](logs/mvn-test-liujunfeng.log)（[截图](screenshots/mvn-test-liujunfeng.png)待补） |
 | 青岑 | ✅ QA 两模块绿（42+32） | 无 | ✅ `co-qa-domain` 42、`co-qa-application` 32 | [`screenshots/mvn-test-qingcen.png`](screenshots/mvn-test-qingcen.png) |
 
 ---
@@ -143,6 +143,8 @@ mvn -pl co-shared-kernel test                        # 单独跑，应全绿
 | 房国栋 | 命令行 `java` 默认指向 JDK **1.8.0_481**（系统 PATH 里 Oracle `javapath` 排在前面），但 IDEA/JBR 的 21 可用；Maven 实际已用 21（编译日志 `release 21` 且无 `invalid target release`） | 截图前执行 `$env:JAVA_HOME="E:\IntelliJ IDEA 2025.3.3\jbr"; $env:Path="$env:JAVA_HOME\bin;"+$env:Path`；长期方案见文末"PATH 修正" | ✅ 已解决（临时） |
 | 房国栋 | Docker Desktop：10-29 记录为"未安装"，之后已安装；版本已由青岑在本机代跑确认 | `docker --version` → `Docker version 29.9.3, build 5457199`；`docker info --format '{{.ServerVersion}}'` → `29.9.3`；与 `env-matrix` 第 2 节同步 | ✅ 已记录（2026-11-16，青岑代跑） |
 | 魏志国 | 本机 JDK 为 25.0.2（达标线 21） | 高于达标线、可编译运行；JaCoCo 0.8.12 agent 不支持 JDK 25，本地取证用 `-Djacoco.skip=true`（CI 用 JDK 21 正常出覆盖率）；不再为此降级本机环境 | ⚠️ 已记录 |
+| 刘俊琒 | 系统 PATH 里 `java` 指向 `...\Oracle\Java\javapath` 转发存根（本机已无对应 JDK，执行无输出）；`mvn` 完全未入 PATH（Maven 由 IDEA 内置，在 `D:\ideal\IntelliJ IDEA 2026.1\plugins\maven\lib\maven3\bin`）；`C:\Program Files\nodejs` 条目被截断成 `gram Files\nodejs\`（丢了 `C:\Pro`），导致终端里 `node` 找不到 | 采集前在同一窗口临时修正（命令见 [`env/env-liujunfeng.txt`](env/env-liujunfeng.txt) §0）；长期方案同本文末「PATH 修正」，把三条写进系统变量 | ⚠️ 已记录（2026-11-17） |
+| 刘俊琒 | Docker Desktop 未安装（`C:\Program Files\Docker` 不存在） | 本机不参与容器化冒烟与镜像构建；Docker 相关验证由房国栋/青岑代跑，与本表房国栋 2026-10-29 同一处置 | ⚠️ 已记录 |
 
 ### PATH 修正（长期，一次到位）
 

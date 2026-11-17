@@ -1,0 +1,134 @@
+# CampusOverflow 开发环境取证 · 刘俊琒（2026-11-17）
+
+> 对应实验：Lab 1 E3【环境与前置准备】　汇总表：[`../env-matrix.md`](../env-matrix.md) §2
+> 机器：Microsoft Windows 10.0.19045　GitHub：`Liujunfeng520`
+> 采集时间：2026-11-17 14:46　测试时间：2026-11-17 14:48（+08:00）
+
+---
+
+## 0. 采集前必须先在同一个窗口修正 PATH
+
+本机三个工具**已安装但不在系统 PATH 里**，不修正会得到假的"未安装"：
+
+| 工具 | 实际位置 | 系统 PATH 里的情况 |
+| --- | --- | --- |
+| JDK 21 | `C:\Program Files\Java\latest\jdk-21` | 只有 `...\Oracle\Java\javapath` 的转发存根，执行 `java -version` **无输出**（本机已无对应 JDK） |
+| Maven 3.9.11 | `D:\ideal\IntelliJ IDEA 2026.1\plugins\maven\lib\maven3\bin` | 完全未加入 |
+| Node.js 24.20.0 | `C:\Program Files\nodejs` | 条目被截断成 `gram Files\nodejs\`（丢了 `C:\Pro` 前缀），等于失效 |
+
+采集与截图前，**在同一个终端窗口**先执行这三行（只影响当前窗口，不改系统设置）：
+
+```powershell
+$env:JAVA_HOME = "C:\Program Files\Java\latest\jdk-21"
+$env:Path = "$env:JAVA_HOME\bin;D:\ideal\IntelliJ IDEA 2026.1\plugins\maven\lib\maven3\bin;C:\Program Files\nodejs;" + $env:Path
+```
+
+> 长期修正见 [`../env-matrix.md`](../env-matrix.md) §6「PATH 修正」：把这三条写进系统变量，可免去每次设置。
+
+---
+
+## 1. 版本采集原始输出
+
+命令：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts/dev-env/collect-env.ps1 -Name 刘俊琒 -GitHub Liujunfeng520
+```
+
+输出：
+
+```text
+=== CampusOverflow development environment ===
+Name   : 刘俊琒
+GitHub : Liujunfeng520
+OS     : Microsoft Windows 10.0.19045
+JDK    : java 21.0.11 / javac 21.0.11
+Maven  : 3.9.11
+Node   : v24.20.0 / npm 11.19.0
+Docker : not installed
+Git    : 2.56.0.windows.2
+
+=== Paste the line below into env-matrix.md section 2 ===
+| 刘俊琒 | `Liujunfeng520` | Microsoft Windows 10.0.19045 | 21.0.11 | 3.9.11 | v24.20.0 / npm 11.19.0 | not installed | 2026-11-17 | [ ] |
+
+=== Checklist ===
+[PASS] JDK 21       21.0.11
+[PASS] Maven 3.9+   3.9.11
+[PASS] Node.js 20+  v24.20.0
+[PASS] Git 2.40+    2.56.0.windows.2
+[SKIP] Docker       not installed or not in PATH
+```
+
+---
+
+## 2. 达标判定
+
+| 工具 | 达标线 | 实测 | 判定 |
+| --- | --- | --- | --- |
+| Git | 2.40+ | 2.56.0.windows.2 | ✅ PASS |
+| JDK | 21（java 与 javac 同版本） | 21.0.11 / 21.0.11 | ✅ PASS |
+| Maven | 3.9+ | 3.9.11 | ✅ PASS |
+| Node.js | 20+ | v24.20.0（npm 11.19.0） | ✅ PASS |
+| Docker | Desktop 可运行 | **未安装** | ⬜ 未达标，处置见 §4 |
+
+---
+
+## 3. `mvn clean test` 结果
+
+命令（同一窗口，`backend` 目录）：
+
+```bash
+cd backend
+mvn -B clean test -DfailIfNoTests=false
+```
+
+结果（2026-11-17 14:48）：
+
+| 项 | 值 |
+| --- | --- |
+| 构建结果 | `BUILD SUCCESS` |
+| 模块 | 27 个（Reactor 全量）全部 `SUCCESS` |
+| 用例 | **165 个，Failures 0 / Errors 0 / Skipped 0** |
+| 耗时 | 36.573 s |
+| 完整日志 | [`../logs/mvn-test-liujunfeng.log`](../logs/mvn-test-liujunfeng.log)（64 KB，UTF-8） |
+
+各模块用例数：
+
+| 模块 | 用例 |
+| --- | --- |
+| `co-shared-kernel` | 2 |
+| `co-identity-domain` | 9 |
+| `co-identity-application` | 3 |
+| `co-qa-domain` | 42 |
+| `co-qa-application` | 32 |
+| `co-reputation-domain` | 20 |
+| `co-reputation-application` | 36 |
+| `co-discovery-domain` | 6 |
+| `co-discovery-application` | 14 |
+| `co-bootstrap`（ArchUnit 分层约束） | 1 |
+| **合计** | **165** |
+
+> 与 Lab 1 时期的"红"不同，S4 收口后 `TODO(S2/S3)` 桩已全部落地，本机全量测试**全绿**，
+> 因此 E3 的"红要截原因"条款不适用；本条可作为"S3/S4 已收口"的旁证。
+
+---
+
+## 4. 已知差异：Docker 未安装
+
+| 项 | 说明 |
+| --- | --- |
+| 现象 | `docker --version`、`docker info` 均不可用，`C:\Program Files\Docker` 不存在 |
+| 影响 | 本机不参与容器化冒烟与镜像构建；`容器镜像构建` 工作流本就限定 `push` 到 `main`，日常开发不受阻塞 |
+| 处置 | 与团队已有先例一致（房国栋 2026-10-29 同为"未安装"，后由青岑代跑确认版本），Docker 相关验证由**房国栋/青岑**代跑并记录在 [`../env-matrix.md`](../env-matrix.md) §6 |
+| 状态 | ⚠️ 已记录，未装 Docker Desktop |
+
+---
+
+## 5. 证据文件
+
+| 文件 | 内容 |
+| --- | --- |
+| [`env-liujunfeng.png`](env-liujunfeng.png) | 终端截图：PATH 修正 + 采集脚本输出（含提示符与执行路径） |
+| `env-liujunfeng.txt` | 本文件，采集原始输出 |
+| [`../../screenshots/mvn-test-liujunfeng.png`](../../screenshots/mvn-test-liujunfeng.png) | 终端截图：`mvn clean test` 结尾 `BUILD SUCCESS` 与 `Tests run` 汇总 |
+| [`../logs/mvn-test-liujunfeng.log`](../logs/mvn-test-liujunfeng.log) | 完整构建日志 |
