@@ -33,7 +33,7 @@ co-discovery/co-discovery-domain,co-discovery/co-discovery-application
 | co-identity-domain | 9 | 75.74% | ✅ ≥70% |
 | co-qa-domain | 30 | 83.12% | ✅ |
 | co-qa-application | 28 | —（应用层不进门槛） | — |
-| co-reputation-domain | 18 | 80.72% | ✅ |
+| co-reputation-domain | 18 | 81.93% | ✅ |
 | co-reputation-application | 21 | — | — |
 | co-discovery-domain | 6 | 78.26% | ✅ |
 | co-discovery-application | 6 | — | — |

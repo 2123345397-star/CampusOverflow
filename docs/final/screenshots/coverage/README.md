@@ -1,45 +1,46 @@
-# Discovery domain 覆盖率证据（S3 收口）
+# 四个 domain 覆盖率证据（v1.0.0）
 
-> 采集人：青岑　日期：2026-11-17
-> 对应角色卡：S34_3「CI 收口」的“覆盖率报告截图”
-> 目标模块：`co-discovery-domain`　门槛：`domain.coverage.minimum=0.70`
+> 采集人：陈明哲（E）　日期：2026-11-17（S3/S4 收口口径）
+> 门槛：根 POM `domain.coverage.minimum=0.70`，四个 domain 模块各自 `check-domain-coverage` 通过
+> 数据来源：全仓 `mvn verify -DskipITs -Djacoco.skip=false`（JDK 21）后生成的 JaCoCo HTML/CSV
 
 ## 结果
 
-| 指标 | 数值 |
-| --- | ---: |
-| 行覆盖（LINE COVERED） | 72 |
-| 行未覆盖（LINE MISSED） | 20 |
-| 行总数 | 92 |
-| 行覆盖率 | **78.26%**（72 / 92） |
+| 模块 | 行覆盖 | 行覆盖率 | 分支覆盖 | 分支覆盖率 |
+| --- | ---: | ---: | ---: | ---: |
+| `co-identity-domain` | 103 / 136 | **75.74%** | 40 / 66 | 60.61% |
+| `co-qa-domain` | 192 / 231 | **83.12%** | 71 / 90 | 78.89% |
+| `co-reputation-domain` | 136 / 166 | **81.93%** | 46 / 56 | 82.14% |
+| `co-discovery-domain` | 72 / 92 | **78.26%** | 41 / 60 | 68.33% |
+
+四个模块行覆盖率均 ≥ 70%，CI 覆盖率门禁阶段（`mvn verify -DskipITs -Djacoco.skip=false -pl $SPRINT_MODULES -am`）通过。
 
 ## 文件
 
-- [`coverage-discovery.png`](coverage-discovery.png)：JaCoCo HTML `target/site/jacoco/index.html` 截图；
-- [`coverage-discovery.csv`](coverage-discovery.csv)：同一份报告的 `jacoco.csv`，用于复核行数。
+| 模块 | 截图（JaCoCo HTML） | CSV（复核用） |
+| --- | --- | --- |
+| Identity | [`coverage-identity.png`](coverage-identity.png) | [`coverage-identity.csv`](coverage-identity.csv) |
+| Q&A | [`coverage-qa.png`](coverage-qa.png) | [`coverage-qa.csv`](coverage-qa.csv) |
+| Reputation | [`coverage-reputation.png`](coverage-reputation.png) | [`coverage-reputation.csv`](coverage-reputation.csv) |
+| Discovery | [`coverage-discovery.png`](coverage-discovery.png) | [`coverage-discovery.csv`](coverage-discovery.csv) |
 
-> 截图里 Lines 一列显示的是 `Missed=20` 和 `Total=92`，不是覆盖率百分比；
-> 覆盖率按 CSV 的 `LINE_COVERED / (LINE_COVERED + LINE_MISSED) = 72/92 = 78.26%` 计算。
+> 截图是 `target/site/jacoco/index.html` 的原样页面；百分比按 CSV 的
+> `LINE_COVERED / (LINE_COVERED + LINE_MISSED)` 计算，避免把页面里的 Missed/Total 当成覆盖率。
 
 ## 复现
 
-在 JDK 21 下运行 discovery domain 测试并生成报告：
-
-```bash
-cd backend
-mvn -B test -pl co-discovery/co-discovery-domain -am \
-  -Djacoco.skip=true \
-  -DargLine="-javaagent:$HOME/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=$PWD/co-discovery/co-discovery-domain/target/jacoco.exec -Djdk.net.URLClassPath.disableClassPathURLCheck=true"
-
-mvn -B org.jacoco:jacoco-maven-plugin:0.8.12:report \
-  -pl co-discovery/co-discovery-domain
+```powershell
+# JDK 21
+mvn -B -f backend/pom.xml verify -DskipITs -Djacoco.skip=false
 ```
 
-打开：
+然后打开各模块报告：
 
 ```text
+backend/co-qa/co-qa-domain/target/site/jacoco/index.html
+backend/co-identity/co-identity-domain/target/site/jacoco/index.html
+backend/co-reputation/co-reputation-domain/target/site/jacoco/index.html
 backend/co-discovery/co-discovery-domain/target/site/jacoco/index.html
 ```
 
-> Windows 本机如果直接 `mvn verify`，Surefire 的 manifest-JAR/跨盘符问题会让 JaCoCo 跳过执行数据；
-> 上面的手动 agent 参数是为了本机取证，CI（Linux）仍用 `mvn verify -Djacoco.skip=false`。
+CI（Linux）上同一命令由「覆盖率门禁」阶段执行；本机若 JDK 25 + JaCoCo 0.8.12 不兼容，请改用 JDK 21 取证。
