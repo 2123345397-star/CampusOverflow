@@ -153,6 +153,12 @@
 
 ![管理员：待认证学生列表](screenshots/admin/admin-users-pending.png)
 
+![认证成功](screenshots/admin/admin-verify.png)
+
+![创建教职工成功](screenshots/admin/admin-create-staff.png)
+
+![改角色成功](screenshots/admin/admin-change-role.png)
+
 ![学生：直接访问 /admin 的无权限页](screenshots/admin/admin-forbidden.png)
 
 > 管理员页面的错误会直接显示后端返回的中文提示，例如“该用户已完成认证”“工号、昵称或邮箱已被使用”。
