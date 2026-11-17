@@ -33,8 +33,8 @@
 
 ## 交付检查（对应指导书 9.4）
 
-- [ ] main 上的 `v1.0.0` 与完整提交历史
-- [ ] GitHub Release（Release Notes + 部署说明）
+- [x] main 上的 `v1.0.0` 与完整提交历史（tag `v1.0.0` → `10925c7`）
+- [x] GitHub Release（[v1.0.0](https://github.com/hbuas-se-2026fall/cs2412-team04-campus-overflow/releases/tag/v1.0.0)，含 Release Notes 与部署说明）
 - [x] `docs/ddd/`、`docs/adr/`（S3 已就位）
 - [x] `docs/scrum/sprint-0～4`（S4 记录已入库）
 - [x] 覆盖率报告归档（`docs/final/screenshots/coverage/`）
